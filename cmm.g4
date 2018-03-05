@@ -1,4 +1,4 @@
-grammar SB;
+grammar cmm;
 
 options{
     language = cpp;
@@ -10,7 +10,8 @@ expr:
     main
     |Value
     |assignment
-    |declaring;
+    |declaring
+    |functionDeclaring;
 
 main:
     Void main inbrackets innsqbrackets;
@@ -22,6 +23,9 @@ inbrackets: (LeftBrace expr* RightBrace);
 innsqbrackets: (LeftParen expr* RightParen);
 
 assignment: VarName AssignOperator (VarName|Value) Semi;
+
+functionDeclaring :
+    Void VarName innsqbrackets
 
 //lexer
 
