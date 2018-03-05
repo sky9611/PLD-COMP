@@ -5,27 +5,57 @@ options{
 }
 
 //parser
+main:
+    Void main brace block;
+
+definition:
+    Type VarName (Assign expr)? Semi;
+
+arrayDecl:
+    Type VarName LeftBracket Value RightBracket Semi;
+arrayDef :
+    Type LeftBracket Digit* RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
+
+block: LeftBrace statement* RightBrace;
+brace: LeftParen exprList RightParen;
+fctBrace: LeftParen (Type VarName (Comma Type VarName)*)? RightParen;
+
+assignment: VarName AssignOperator (expr) Semi;
+
+fctDeclaration :
+    Void VarName fctBrace Semi;
+
+fctDefinition :
+    Void VarName fctBrace block;
+
+//sentences
+statement : block
+    |definition
+    |assignment
+    |fctDeclaration
+    |fctDefinition
+    |If expr Then statement (Else statement)?
+    |While brace statement
+    |Return expr? Semi
+    |expr Semi //appel de fct
+    |VarName LeftParen exprList? RightParen Semi
+    |arrayDef
+    |arrayDecl;
+
 
 expr:
     main
-    |Value
-    |assignment
-    |declaring
-    |functionDeclaring;
+    |Value|VarName
+    |expr BinaryLogicOperator expr (BinaryLogicOperator expr)*
+    |Not expr
+    |Minus expr
+    |expr (Star|Div) expr
+    |expr (Plus|Minus) expr
+    |expr Comparison expr
+    |LeftParen expr RightParen
+    |VarName LeftBracket expr RightBracket; //array index comme a[i]
 
-main:
-    Void main inbrackets innsqbrackets;
-
-declaring:
-    Type VarName Semi;
-
-inbrackets: (LeftBrace expr* RightBrace);
-innsqbrackets: (LeftParen expr* RightParen);
-
-assignment: VarName AssignOperator (VarName|Value) Semi;
-
-functionDeclaring :
-    Void VarName innsqbrackets
+exprList : expr (Comma expr)* ;
 
 //lexer
 
@@ -36,7 +66,9 @@ Void : 'void';
 
 While : 'while';
 If : 'if';
+Then : 'then';
 Else : 'else';
+Return : 'return';
 
 LeftParen : '(';
 RightParen : ')';
@@ -60,6 +92,7 @@ Star : '*';
 Div : '/';
 Mod : '%';
 
+BinaryLogicOperator : AndAnd|OrOr;
 And : '&';
 Or : '|';
 AndAnd : '&&';
@@ -89,6 +122,8 @@ AndAssign : '&=';
 XorAssign : '^=';
 OrAssign : '|=';
 
+Comparison :
+    Equal|NotEqual;
 Equal : '==';
 NotEqual : '!=';
 
@@ -105,11 +140,10 @@ Digit
     ;
 
 fragment
-Nondigit
-    :   [a-zA-Z_]
-    ;
+Nondigit:
+    [a-zA-Z_];
 
-Space:
+WS:
     [ \t\n\r]+ -> skip ;
 
 Comment:
