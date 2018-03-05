@@ -1,29 +1,30 @@
 grammar cmm;
 
 options{
-    language = cpp;
+    //language = cpp;
 }
-
+file:   (fctDefinition | fctDeclaration | definition | main)+ ;
 //parser
 main:
-    Void main fctBrace fctBlock;
+    Void 'main' fctBrace fctBlock;
+type: 'char'|'int';
 
 definition:
-    Type VarName (Assign expr)? Semi;
+    type VarName (Assign expr)? Semi;
 
 arrayDecl:
     Type VarName LeftBracket Value RightBracket Semi;
 arrayDef :
-    Type LeftBracket Digit* RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
+    Type LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 
 //zones
 
 block: LeftBrace statement* RightBrace;
 brace: LeftParen exprList RightParen;
-fctBlock : Leftbrace definition* statement* RightBrace;
+fctBlock : LeftBrace definition* statement* RightBrace;
 fctBrace: LeftParen (Type VarName (Comma Type VarName)*)? RightParen;
 
-assignment: VarName AssignOperator (expr) Semi;
+assignment: VarName AssignOperator expr Semi;
 
 fctDeclaration :
     Void VarName fctBrace Semi;
@@ -35,10 +36,9 @@ fctDefinition :
 statement : block
     |assignment
     |fctDeclaration
-    |fctDefinition
     |If expr Then statement (Else statement)?
     |While brace statement
-    |Return expr? Semi
+    |Return Semi
     |expr Semi //appel de fct
     |VarName LeftParen exprList? RightParen Semi
     |arrayDef
@@ -55,11 +55,20 @@ expr:
     |expr Comparison expr
     |LeftParen expr RightParen
     |VarName LeftBracket expr RightBracket //array index comme a[i]
-    |Quote Nondigit Quote;
+    |VarName LeftParen exprList? RightParen //appel de fonction
+    |Quote Character Quote;
 
 exprList : expr (Comma expr)* ;
 
 //lexer
+WS:
+    [ \t\n\r]+ -> skip ;
+Comment:
+    '//' ~[\r\n]* -> skip ;
+
+Character:~'\'';
+Digit:[0-9];
+Nondigit:[a-zA-Z_];
 
 Char : 'char';
 Int32_t : 'int';
@@ -132,22 +141,6 @@ NotEqual : '!=';
 
 VarName: Nondigit (Digit|Nondigit)*;
 
-
 Type : Char|Int32_t|Int64_t;
 
 Value: Digit+;
-
-fragment
-Digit
-    :   [0-9]
-    ;
-
-fragment
-Nondigit:
-    [a-zA-Z_];
-
-WS:
-    [ \t\n\r]+ -> skip ;
-
-Comment:
-    '//' ~[\r\n]* -> skip ;
