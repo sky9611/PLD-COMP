@@ -6,7 +6,7 @@ options{
 
 //parser
 main:
-    Void main brace block;
+    Void main fctBrace fctBlock;
 
 definition:
     Type VarName (Assign expr)? Semi;
@@ -16,8 +16,11 @@ arrayDecl:
 arrayDef :
     Type LeftBracket Digit* RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 
+//zones
+
 block: LeftBrace statement* RightBrace;
 brace: LeftParen exprList RightParen;
+fctBlock : Leftbrace definition* statement* RightBrace;
 fctBrace: LeftParen (Type VarName (Comma Type VarName)*)? RightParen;
 
 assignment: VarName AssignOperator (expr) Semi;
@@ -26,11 +29,10 @@ fctDeclaration :
     Void VarName fctBrace Semi;
 
 fctDefinition :
-    Void VarName fctBrace block;
+    Void VarName fctBrace fctBlock;
 
 //sentences
 statement : block
-    |definition
     |assignment
     |fctDeclaration
     |fctDefinition
@@ -42,7 +44,6 @@ statement : block
     |arrayDef
     |arrayDecl;
 
-
 expr:
     main
     |Value|VarName
@@ -53,7 +54,8 @@ expr:
     |expr (Plus|Minus) expr
     |expr Comparison expr
     |LeftParen expr RightParen
-    |VarName LeftBracket expr RightBracket; //array index comme a[i]
+    |VarName LeftBracket expr RightBracket //array index comme a[i]
+    |Quote Nondigit Quote;
 
 exprList : expr (Comma expr)* ;
 
@@ -102,6 +104,7 @@ Not : '!';
 Tilde : '~';
 
 Question : '?';
+Quote : '\'';
 Colon : ':';
 Semi : ';';
 Comma : ',';
