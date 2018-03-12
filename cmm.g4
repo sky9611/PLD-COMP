@@ -5,10 +5,10 @@ options{
 }
 file:   (preProcess | fctDefinition | fctDeclaration | definition | main)+ ;
 //parser
-preProcess : '#include' ('<' VarName '.h>'|'"' VarName '.h"');
+preProcess : '#include' ('\u003c' VarName '.h' '\u003e'|'"' VarName '.h"');
 main:
     Void 'main' fctBrace fctBlock;
-type: 'char'|'int';
+type: 'char'|'int'|'void';
 
 definition:
     type VarName (Assign expr)? Semi;
@@ -36,7 +36,7 @@ fctDefinition :
 statement : block
     |assignment
     |fctDeclaration
-    |If expr Then statement (Else statement)?
+    |If expr statement (Else statement)?
     |While brace statement
     |Return (expr)? Semi
     |expr Semi //appel de fct
@@ -66,10 +66,6 @@ WS:
 Comment:
     '//' ~[\r\n]* -> skip ;
 
-Character:~'\'';
-Digit:[0-9];
-Nondigit:[a-zA-Z_];
-
 Putchar:'putchar';
 Getchar:'getchar';
 
@@ -80,7 +76,6 @@ Void : 'void';
 
 While : 'while';
 If : 'if';
-Then : 'then';
 Else : 'else';
 Return : 'return';
 
@@ -121,7 +116,6 @@ Colon : ':';
 Semi : ';';
 Comma : ',';
 
-
 AssignOperator :
     Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign;
 Assign : '=';
@@ -143,7 +137,9 @@ Equal : '==';
 NotEqual : '!=';
 
 VarName: Nondigit (Digit|Nondigit)*;
-
 Type : Char|Int32_t|Int64_t;
-
 Value: Digit+;
+
+Digit:[0-9];
+Nondigit:[a-zA-Z_];
+Character:~'\'';
