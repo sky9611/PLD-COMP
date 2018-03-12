@@ -10,7 +10,9 @@ main:
 type: 'char'|'int';
 
 definition:
-    type VarName ('\u003d' expr)? Semi;
+    arrayDecl
+    |arrayDef
+    |type VarName ('\u003d' expr)? Semi;
 
 arrayDecl:
     Type VarName LeftBracket Value RightBracket Semi;
@@ -39,9 +41,7 @@ statement : block
     |While brace statement
     |Return (expr)? Semi
     |expr Semi //appel de fct
-    |VarName LeftParen exprList? RightParen Semi
-    |arrayDecl
-    |arrayDef;
+    |VarName LeftParen exprList? RightParen Semi;
 
 expr:
     main
