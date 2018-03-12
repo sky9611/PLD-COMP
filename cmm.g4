@@ -27,10 +27,10 @@ fctBrace: LeftParen (Type VarName (Comma Type VarName)*)? RightParen;
 assignment: VarName AssignOperator expr Semi;
 
 fctDeclaration :
-    Void VarName fctBrace Semi;
+    (Void|Type) VarName fctBrace Semi;
 
 fctDefinition :
-    Void VarName fctBrace fctBlock;
+    (Void|Type) VarName fctBrace fctBlock;
 
 //sentences
 statement : block
@@ -38,7 +38,7 @@ statement : block
     |fctDeclaration
     |If expr Then statement (Else statement)?
     |While brace statement
-    |Return Semi
+    |Return (expr)? Semi
     |expr Semi //appel de fct
     |VarName LeftParen exprList? RightParen Semi
     |arrayDef
@@ -69,6 +69,9 @@ Comment:
 Character:~'\'';
 Digit:[0-9];
 Nondigit:[a-zA-Z_];
+
+Putchar:'putchar';
+Getchar:'getchar';
 
 Char : 'char';
 Int32_t : 'int';
