@@ -11,7 +11,7 @@ main:
 type: 'char'|'int'|'void';
 
 definition:
-    type VarName (Assign expr)? Semi;
+    type VarName ('\u003d' expr)? Semi;
 
 arrayDecl:
     Type VarName LeftBracket Value RightBracket Semi;
@@ -56,7 +56,7 @@ expr:
     |LeftParen expr RightParen
     |VarName LeftBracket expr RightBracket //array index comme a[i]
     |VarName LeftParen exprList? RightParen //appel de fonction
-    |Quote Character Quote;
+    |Character;
 
 exprList : expr (Comma expr)* ;
 
@@ -135,11 +135,10 @@ Comparison :
     Equal|NotEqual;
 Equal : '==';
 NotEqual : '!=';
-
+Character: '\'' ~'\'' '\'';
 VarName: Nondigit (Digit|Nondigit)*;
 Type : Char|Int32_t|Int64_t;
 Value: Digit+;
 
 Digit:[0-9];
 Nondigit:[a-zA-Z_];
-Character:~'\'';
