@@ -3,21 +3,17 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file:   (fctDefinition | fctDeclaration | definition | main)*;
+file:   (fctDefinition | fctDeclaration | definition |arrayDecl | arrayDef | main)*;
 //parser
 main:
     Void 'main' fctBrace fctBlock;
-type: 'char'|'int';
 
-definition:
-    arrayDecl
-    |arrayDef
-    |type VarName ('\u003d' expr)? Semi;
+definition: Type VarName (Assign expr)? Semi;
 
+arrayDef :
+    Type VarName LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 arrayDecl:
     Type VarName LeftBracket Value RightBracket Semi;
-arrayDef :
-    Type LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 
 //zones
 block: LeftBrace statement* RightBrace;
@@ -41,11 +37,14 @@ statement : block
     |While brace statement
     |Return (expr)? Semi
     |expr Semi //appel de fct
-    |VarName LeftParen exprList? RightParen Semi;
+    |VarName LeftParen exprList? RightParen Semi
+    |arrayDecl
+    |arrayDef;
 
 expr:
     main
-    |Value|VarName
+    |Value
+    |VarName
     |expr BinaryLogicOperator expr (BinaryLogicOperator expr)*
     |Not expr
     |Minus expr
@@ -70,7 +69,7 @@ PreProcess : '#include' (|' ') ('<' VarName '.h' '>'|'"' VarName '.h"') -> skip;
 Putchar:'putchar';
 Getchar:'getchar';
 
-Type : Char|Int32_t|Int64_t;
+Type : (Char|Int32_t|Int64_t);
 Char : 'char';
 Int32_t : 'int';
 Int64_t : 'long';
@@ -103,7 +102,7 @@ Star : '*';
 Div : '/';
 Mod : '%';
 
-BinaryLogicOperator : AndAnd|OrOr;
+BinaryLogicOperator : (AndAnd|OrOr);
 And : '&';
 Or : '|';
 AndAnd : '&&';
@@ -118,10 +117,11 @@ Colon : ':';
 Semi : ';';
 Comma : ',';
 
+
 AssignOperator :
-    Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign;
-Assign : '=';
+    (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign);
 // '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|='
+Assign : '=';
 StarAssign : '*=';
 DivAssign : '/=';
 ModAssign : '%=';
@@ -134,7 +134,7 @@ XorAssign : '^=';
 OrAssign : '|=';
 
 Comparison :
-    Equal|NotEqual;
+    (Equal|NotEqual);
 Equal : '==';
 NotEqual : '!=';
 
