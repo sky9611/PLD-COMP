@@ -25,7 +25,7 @@ brace: LeftParen exprList RightParen;
 fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
 fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*|Void)? RightParen;
 
-assignment: VarName (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr Semi;
+//assignment: VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) exprList Semi;
 
 fctDeclaration :
     (Void|type) VarName fctBrace Semi;
@@ -34,28 +34,38 @@ fctDefinition :
     (Void|type) VarName fctBrace fctBlock;
 
 //sentences
-statement : block
-    |assignment
-    |If expr statement (Else statement)?
-    |While brace statement
-    |Return (expr)? Semi
-    |expr Semi //appel de fct
-    |VarName LeftParen exprList? RightParen Semi;
+statement :
+    block                                           #statementBlock
+    |VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) exprList Semi                         #statementAssiggnment
+    |If expr statement (Else statement)?            #statementIf
+    |While brace statement                          #statementWhile
+    |Return (expr)? Semi                            #statementReturn
+    |expr Semi                                      #statementAppelFoncSansAttribut
+    |VarName LeftParen exprList? RightParen Semi    #statementAppelFoncAvecAttribut;
 
 expr:
-    main
-    |Value
-    |VarName
-    |expr (AndAnd|OrOr) expr ((AndAnd|OrOr) expr)*
-    |Not expr
-    |Minus expr
-    |expr (Star|Div) expr
-    |expr (Plus|Minus) expr
-    |expr (Equal|NotEqual) expr
-    |LeftParen expr RightParen
-    |VarName LeftBracket expr RightBracket //array index comme a[i]
-    |VarName LeftParen exprList? RightParen //appel de fonction
-    |Character;
+    main                                                                #exprMain
+    |Value                                                              #exprValue
+    |VarName (LeftBracket Value RightBracket)?                          #exprVariable
+    |VarName (LeftBracket Value RightBracket)? (PlusPlus|MinusMinus)    #exprIncPost
+    |(PlusPlus|MinusMinus) VarName (LeftBracket Value RightBracket)?    #exprIncPre
+    |Not expr                                                           #exprNot
+    |Minus expr                                                         #exprMinus
+    |expr (Star|Div|Mod) expr                                           #exprMultiDivMod
+    |expr (Plus|Minus) expr                                             #exprPlusMinus
+    |expr (LeftShift|RightShift) expr                                   #exprShift
+    |expr (Less|LessEqual|Greater|GreaterEqual) expr                    #exprComparative
+    |expr (Equal|NotEqual) expr                                         #exprEqualNotEqual
+    |expr And expr                                                      #exprAnd
+    |expr Caret expr                                                    #exprCaret
+    |expr Or expr                                                       #exprOr
+    |expr AndAnd expr                                                   #exprAndAnd
+    |expr OrOr expr                                                     #exprOrOr
+    |LeftParen expr RightParen                                          #exprParen
+    |VarName LeftBracket expr RightBracket                              #exprArrayIndex //array index comme a[i]
+    |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
+    |Character                                                          #exprChar
+    ;
 
 exprList : expr (Comma expr)* ;
 
