@@ -60,12 +60,12 @@ expr:
 exprList : expr (Comma expr)* ;
 
 //lexer
-PreProcess : '#include' ('\u003c' VarName '.h' '\u003e'|'"' VarName '.h"') -> skip;
-
 WS:
     [ \t\n\r]+ -> skip ;
 Comment:
     '//' ~[\r\n]* -> skip ;
+PreProcess : '#include' (|' ') ('<' VarName '.h' '>'|'"' VarName '.h"') -> skip;
+
 
 Putchar:'putchar';
 Getchar:'getchar';
