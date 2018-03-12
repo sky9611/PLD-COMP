@@ -8,26 +8,31 @@ file:   (fctDefinition | fctDeclaration | definition |arrayDecl | arrayDef | mai
 main:
     Void 'main' fctBrace fctBlock;
 
-definition: Type VarName (Assign expr)? Semi;
+definition: type VarName (Assign expr)? Semi;
+
+type: (Char|Int32_t|Int64_t);
+
+read : Getchar LeftParen VarName RightParen Semi;
+write : Putchar LeftParen Character RightParen Semi;
 
 arrayDef :
-    Type VarName LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
+    type VarName LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 arrayDecl:
-    Type VarName LeftBracket Value RightBracket Semi;
+    type VarName LeftBracket Value RightBracket Semi;
 
 //zones
 block: LeftBrace statement* RightBrace;
 brace: LeftParen exprList RightParen;
-fctBlock : LeftBrace definition* statement* RightBrace;
-fctBrace: LeftParen (Type VarName (Comma Type VarName)*|Void)? RightParen;
+fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
+fctBrace: LeftParen (type VarName (Comma type VarName)*|Void)? RightParen;
 
-assignment: VarName AssignOperator expr Semi;
+assignment: VarName (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr Semi;
 
 fctDeclaration :
-    (Void|Type) VarName fctBrace Semi;
+    (Void|type) VarName fctBrace Semi;
 
 fctDefinition :
-    (Void|Type) VarName fctBrace fctBlock;
+    (Void|type) VarName fctBrace fctBlock;
 
 //sentences
 statement : block
@@ -38,19 +43,19 @@ statement : block
     |Return (expr)? Semi
     |expr Semi //appel de fct
     |VarName LeftParen exprList? RightParen Semi
-    |arrayDecl
-    |arrayDef;
+    |read
+    |write;
 
 expr:
     main
     |Value
     |VarName
-    |expr BinaryLogicOperator expr (BinaryLogicOperator expr)*
+    |expr (AndAnd|OrOr) expr ((AndAnd|OrOr) expr)*
     |Not expr
     |Minus expr
     |expr (Star|Div) expr
     |expr (Plus|Minus) expr
-    |expr Comparison expr
+    |expr (Equal|NotEqual) expr
     |LeftParen expr RightParen
     |VarName LeftBracket expr RightBracket //array index comme a[i]
     |VarName LeftParen exprList? RightParen //appel de fonction
@@ -69,7 +74,7 @@ PreProcess : '#include' (|' ') ('<' VarName '.h' '>'|'"' VarName '.h"') -> skip;
 Putchar:'putchar';
 Getchar:'getchar';
 
-Type : (Char|Int32_t|Int64_t);
+//Type : (Char|Int32_t|Int64_t);
 Char : 'char';
 Int32_t : 'int';
 Int64_t : 'long';
@@ -102,7 +107,7 @@ Star : '*';
 Div : '/';
 Mod : '%';
 
-BinaryLogicOperator : (AndAnd|OrOr);
+//BinaryLogicOperator : (AndAnd|OrOr);
 And : '&';
 Or : '|';
 AndAnd : '&&';
@@ -118,8 +123,8 @@ Semi : ';';
 Comma : ',';
 
 
-AssignOperator :
-    (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign);
+//AssignOperator :
+//    (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign);
 // '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|='
 Assign : '=';
 StarAssign : '*=';
@@ -133,8 +138,8 @@ AndAssign : '&=';
 XorAssign : '^=';
 OrAssign : '|=';
 
-Comparison :
-    (Equal|NotEqual);
+//Comparison :
+//    (Equal|NotEqual);
 Equal : '==';
 NotEqual : '!=';
 
