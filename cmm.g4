@@ -37,7 +37,6 @@ fctDefinition :
 //sentences
 statement : block
     |assignment
-    |fctDeclaration
     |If expr statement (Else statement)?
     |While brace statement
     |Return (expr)? Semi
