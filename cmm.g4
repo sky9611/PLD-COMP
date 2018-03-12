@@ -3,25 +3,27 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file:   (fctDefinition | fctDeclaration | definition |arrayDecl | arrayDef | main)*;
+file:   (fctDefinition | fctDeclaration | definition | main)*;
 //parser
 main:
     Void 'main' fctBrace fctBlock;
 
-definition: type VarName (Assign expr)? Semi;
+definition: type VarName(arrayDef|arrayDecl)? (Assign expr)? (Comma VarName(arrayDef|arrayDecl)? (Assign expr)?)* Semi;
+
+definitionAttributs : type VarName (LeftBracket Value? RightBracket)?;
 
 type: (Char|Int32_t|Int64_t);
 
 arrayDef :
-    type VarName LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
+    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace);
 arrayDecl:
-    type VarName LeftBracket Value RightBracket Semi;
+    LeftBracket Value RightBracket;
 
 //zones
 block: LeftBrace statement* RightBrace;
 brace: LeftParen exprList RightParen;
 fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
-fctBrace: LeftParen (type VarName (Comma type VarName)*|Void)? RightParen;
+fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*|Void)? RightParen;
 
 assignment: VarName (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr Semi;
 
@@ -66,8 +68,8 @@ PreProcess : '#include' (|' ') ('<' VarName '.h' '>'|'"' VarName '.h"') -> skip;
 
 //Type : (Char|Int32_t|Int64_t);
 Char : 'char';
-Int32_t : 'int';
-Int64_t : 'long';
+Int32_t : 'int32_t';
+Int64_t : 'int64_t';
 Void : 'void';
 
 While : 'while';
@@ -133,7 +135,7 @@ OrAssign : '|=';
 Equal : '==';
 NotEqual : '!=';
 
-Character: '\'' ~'\'' '\'';
+Character: '\'' ((~'\'')|'\\'~'\'') '\'';
 VarName: Nondigit (Digit|Nondigit)*;
 Value: Digit+;
 
