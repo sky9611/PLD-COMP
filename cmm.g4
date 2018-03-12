@@ -12,9 +12,6 @@ definition: type VarName (Assign expr)? Semi;
 
 type: (Char|Int32_t|Int64_t);
 
-read : Getchar LeftParen VarName RightParen Semi;
-write : Putchar LeftParen Character RightParen Semi;
-
 arrayDef :
     type VarName LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 arrayDecl:
@@ -41,9 +38,7 @@ statement : block
     |While brace statement
     |Return (expr)? Semi
     |expr Semi //appel de fct
-    |VarName LeftParen exprList? RightParen Semi
-    |read
-    |write;
+    |VarName LeftParen exprList? RightParen Semi;
 
 expr:
     main
@@ -68,10 +63,6 @@ WS:
 Comment:
     '//' ~[\r\n]* -> skip ;
 PreProcess : '#include' (|' ') ('<' VarName '.h' '>'|'"' VarName '.h"') -> skip;
-
-
-Putchar:'putchar';
-Getchar:'getchar';
 
 //Type : (Char|Int32_t|Int64_t);
 Char : 'char';
