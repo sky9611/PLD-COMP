@@ -3,12 +3,11 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file:   (preProcess | fctDefinition | fctDeclaration | definition | main)+ ;
+file:   (fctDefinition | fctDeclaration | definition | main)*;
 //parser
-preProcess : '#include' ('\u003c' VarName '.h' '\u003e'|'"' VarName '.h"');
 main:
     Void 'main' fctBrace fctBlock;
-type: 'char'|'int'|'void';
+type: 'char'|'int';
 
 definition:
     type VarName ('\u003d' expr)? Semi;
@@ -22,7 +21,7 @@ arrayDef :
 block: LeftBrace statement* RightBrace;
 brace: LeftParen exprList RightParen;
 fctBlock : LeftBrace definition* statement* RightBrace;
-fctBrace: LeftParen (Type VarName (Comma Type VarName)*)? RightParen;
+fctBrace: LeftParen (Type VarName (Comma Type VarName)*|Void)? RightParen;
 
 assignment: VarName AssignOperator expr Semi;
 
@@ -41,8 +40,8 @@ statement : block
     |Return (expr)? Semi
     |expr Semi //appel de fct
     |VarName LeftParen exprList? RightParen Semi
-    |arrayDef
-    |arrayDecl;
+    |arrayDecl
+    |arrayDef;
 
 expr:
     main
@@ -61,6 +60,8 @@ expr:
 exprList : expr (Comma expr)* ;
 
 //lexer
+PreProcess : '#include' ('\u003c' VarName '.h' '\u003e'|'"' VarName '.h"') -> skip;
+
 WS:
     [ \t\n\r]+ -> skip ;
 Comment:
@@ -69,6 +70,7 @@ Comment:
 Putchar:'putchar';
 Getchar:'getchar';
 
+Type : Char|Int32_t|Int64_t;
 Char : 'char';
 Int32_t : 'int';
 Int64_t : 'long';
@@ -135,10 +137,10 @@ Comparison :
     Equal|NotEqual;
 Equal : '==';
 NotEqual : '!=';
+
 Character: '\'' ~'\'' '\'';
 VarName: Nondigit (Digit|Nondigit)*;
-Type : Char|Int32_t|Int64_t;
 Value: Digit+;
 
-Digit:[0-9];
-Nondigit:[a-zA-Z_];
+fragment Digit:[0-9];
+fragment Nondigit:[a-zA-Z_];
