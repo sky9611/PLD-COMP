@@ -3,8 +3,9 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file:   (fctDefinition | fctDeclaration | definition | main)+ ;
+file:   (preProcess | fctDefinition | fctDeclaration | definition | main)+ ;
 //parser
+preProcess : '#include' ('<' VarName '.h>'|'"' VarName '.h"');
 main:
     Void 'main' fctBrace fctBlock;
 type: 'char'|'int';
@@ -18,7 +19,6 @@ arrayDef :
     Type LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace) Semi;
 
 //zones
-
 block: LeftBrace statement* RightBrace;
 brace: LeftParen exprList RightParen;
 fctBlock : LeftBrace definition* statement* RightBrace;
