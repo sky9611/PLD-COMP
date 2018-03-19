@@ -25,8 +25,6 @@ brace: LeftParen exprList RightParen;
 fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
 fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*|Void)? RightParen;
 
-//assignment: VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) exprList Semi;
-
 fctDeclaration :
     (Void|type) VarName fctBrace Semi;
 
