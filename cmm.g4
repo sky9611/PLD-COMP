@@ -56,7 +56,6 @@ expr:
     |expr AndAnd expr                                                   #exprAndAnd
     |expr OrOr expr                                                     #exprOrOr
     |LeftParen expr RightParen                                          #exprParen
-    |VarName LeftBracket expr RightBracket                              #exprArrayIndex //array index comme a[i]
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar
     ;
