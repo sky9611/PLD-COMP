@@ -31,4 +31,4 @@ read a
 git commit -m "generate antlr fils"
 echo "Finish... Enter for push"
 read a
-push
+git push
