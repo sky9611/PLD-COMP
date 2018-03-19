@@ -4,6 +4,8 @@
 #include "exprLexer.h"
 #include "exprParser.h"
 
+#include "dotexport.h"
+
 using namespace antlr4;
 
 int main(int , const char **) {
@@ -20,6 +22,14 @@ int main(int , const char **) {
   tree::ParseTree* tree = parser.expr();
 
   std::cout << tree->toStringTree(&parser) << std::endl << std::endl;
+
+  DotExport dotexport(&parser);
+  tree::ParseTreeWalker::DEFAULT.walk(&dotexport,tree);
+  ofstream out;
+  out.open("tmp.dot");
+  out<<dotexport.getDotFile();
+  out.close();
+  system("dot -Tpdf -o out.pdf tmp.dot");
 
   return 0;
 }

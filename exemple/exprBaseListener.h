@@ -16,6 +16,9 @@
 class  exprBaseListener : public exprListener {
 public:
 
+  virtual void enterAxiome(exprParser::AxiomeContext * /*ctx*/) override { }
+  virtual void exitAxiome(exprParser::AxiomeContext * /*ctx*/) override { }
+
   virtual void enterExpr(exprParser::ExprContext * /*ctx*/) override { }
   virtual void exitExpr(exprParser::ExprContext * /*ctx*/) override { }
 

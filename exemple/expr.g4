@@ -1,5 +1,6 @@
 grammar expr;
 
+axiome : expr ; 
 expr : expr '+' expr
      | INT
      ;

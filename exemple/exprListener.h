@@ -14,6 +14,9 @@
 class  exprListener : public antlr4::tree::ParseTreeListener {
 public:
 
+  virtual void enterAxiome(exprParser::AxiomeContext *ctx) = 0;
+  virtual void exitAxiome(exprParser::AxiomeContext *ctx) = 0;
+
   virtual void enterExpr(exprParser::ExprContext *ctx) = 0;
   virtual void exitExpr(exprParser::ExprContext *ctx) = 0;
 

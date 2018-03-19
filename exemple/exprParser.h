@@ -16,7 +16,7 @@ public:
   };
 
   enum {
-    RuleExpr = 0
+    RuleAxiome = 0, RuleExpr = 1
   };
 
   exprParser(antlr4::TokenStream *input);
@@ -29,7 +29,21 @@ public:
   virtual antlr4::dfa::Vocabulary& getVocabulary() const override;
 
 
+  class AxiomeContext;
   class ExprContext; 
+
+  class  AxiomeContext : public antlr4::ParserRuleContext {
+  public:
+    AxiomeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    ExprContext *expr();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  AxiomeContext* axiome();
 
   class  ExprContext : public antlr4::ParserRuleContext {
   public:
