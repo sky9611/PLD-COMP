@@ -40,9 +40,9 @@ statement :
 
 expr:
     Value                                                              #exprValue
-    |VarName (LeftBracket Value RightBracket)?                          #exprVariable
-    |VarName (LeftBracket Value RightBracket)? (PlusPlus|MinusMinus)    #exprIncPost
-    |(PlusPlus|MinusMinus) VarName (LeftBracket Value RightBracket)?    #exprIncPre
+    |VarName (LeftBracket expr RightBracket)?                          #exprVariable
+    |VarName (LeftBracket expr RightBracket)? (PlusPlus|MinusMinus)    #exprIncPost
+    |(PlusPlus|MinusMinus) VarName (LeftBracket expr RightBracket)?    #exprIncPre
     |Not expr                                                           #exprNot
     |Minus expr                                                         #exprMinus
     |expr operatorBinaire expr                                          #exprBinaire
