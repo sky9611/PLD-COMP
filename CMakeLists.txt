@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.5)
+project(antlr4cmm)
+SET (CMAKE_CXX_STANDARD 14)
+include_directories(/Library/antlr4-cpp-runtime-4/antlr4-runtime)
+add_executable(cmm_test cmmBaseVisitor.cpp)
