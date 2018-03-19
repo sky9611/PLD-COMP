@@ -5,7 +5,7 @@ options{
 }
 file:   (fctDefinition | fctDeclaration | definition)*      #progRule;
 //parser
-definition: type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl)? (Assign expr)?)* Semi  #defRule;
+definition: type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi  #defRule;
 
 definitionAttributs : type VarName (LeftBracket Value? RightBracket)?   #defAttributes;
 
