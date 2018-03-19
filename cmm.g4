@@ -3,33 +3,30 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file:   (fctDefinition | fctDeclaration | definition | main)*;
+file:   (fctDefinition | fctDeclaration | definition)*      #progRule;
 //parser
-main:
-    Void 'main' fctBrace fctBlock;
+definition: type VarName(arrayDef|arrayDecl)? (Assign expr)? (Comma VarName(arrayDef|arrayDecl)? (Assign expr)?)* Semi  #defRule;
 
-definition: type VarName(arrayDef|arrayDecl)? (Assign expr)? (Comma VarName(arrayDef|arrayDecl)? (Assign expr)?)* Semi;
+definitionAttributs : type VarName (LeftBracket Value? RightBracket)?   #defAttributes;
 
-definitionAttributs : type VarName (LeftBracket Value? RightBracket)?;
-
-type: (Char|Int32_t|Int64_t);
+type: (Char|Int32_t|Int64_t)    #typeRule;
 
 arrayDef :
-    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace);
+    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)     #arrayDefinition;
 arrayDecl:
-    LeftBracket Value RightBracket;
+    LeftBracket Value RightBracket      #arrayDeclaration;
 
 //zones
-block: LeftBrace statement* RightBrace;
-brace: LeftParen exprList RightParen;
-fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
-fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*|Void)? RightParen;
+block: LeftBrace statement* RightBrace      #blockZone;
+brace: LeftParen exprList RightParen        #braceZone;
+fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace     #functionBlock;
+fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*|Void)? RightParen     #functionBlock;
 
 fctDeclaration :
-    (Void|type) VarName fctBrace Semi;
+    (Void|type) VarName fctBrace Semi       #functionDeclaration;
 
 fctDefinition :
-    (Void|type) VarName fctBrace fctBlock;
+    (Void|type) VarName fctBrace fctBlock       #functionDefinition;
 
 //sentences
 statement :
@@ -42,8 +39,7 @@ statement :
     |VarName LeftParen exprList? RightParen Semi    #statementAppelFoncAvecAttribut;
 
 expr:
-    main                                                                #exprMain
-    |Value                                                              #exprValue
+    Value                                                              #exprValue
     |VarName (LeftBracket Value RightBracket)?                          #exprVariable
     |VarName (LeftBracket Value RightBracket)? (PlusPlus|MinusMinus)    #exprIncPost
     |(PlusPlus|MinusMinus) VarName (LeftBracket Value RightBracket)?    #exprIncPre
@@ -65,7 +61,7 @@ expr:
     |Character                                                          #exprChar
     ;
 
-exprList : expr (Comma expr)* ;
+exprList : expr (Comma expr)*       #listOfExpressions;
 
 //lexer
 WS:
