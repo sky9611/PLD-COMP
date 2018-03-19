@@ -194,10 +194,10 @@ public:
 
     antlr4::tree::TerminalNode *LeftBracket();
     antlr4::tree::TerminalNode *RightBracket();
+    antlr4::tree::TerminalNode *Value();
     antlr4::tree::TerminalNode *Assign();
     antlr4::tree::TerminalNode *LeftBrace();
     antlr4::tree::TerminalNode *RightBrace();
-    antlr4::tree::TerminalNode *Value();
     ExprListContext *exprList();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
