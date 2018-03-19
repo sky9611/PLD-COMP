@@ -541,7 +541,7 @@ public:
 
     antlr4::tree::TerminalNode *VarName();
     antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *Value();
+    ExprContext *expr();
     antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -574,7 +574,7 @@ public:
     antlr4::tree::TerminalNode *PlusPlus();
     antlr4::tree::TerminalNode *MinusMinus();
     antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *Value();
+    ExprContext *expr();
     antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -595,7 +595,7 @@ public:
     antlr4::tree::TerminalNode *PlusPlus();
     antlr4::tree::TerminalNode *MinusMinus();
     antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *Value();
+    ExprContext *expr();
     antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
