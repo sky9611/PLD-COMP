@@ -12,7 +12,7 @@ definitionAttributs : type VarName (LeftBracket Value? RightBracket)?   #defAttr
 type: (Char|Int32_t|Int64_t)    #typeRule;
 
 arrayDef :
-    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)     #arrayDefinition;
+    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?     #arrayDefinition;
 arrayDecl:
     LeftBracket Value RightBracket      #arrayDeclaration;
 
