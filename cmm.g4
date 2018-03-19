@@ -45,19 +45,23 @@ expr:
     |(PlusPlus|MinusMinus) VarName (LeftBracket Value RightBracket)?    #exprIncPre
     |Not expr                                                           #exprNot
     |Minus expr                                                         #exprMinus
-    |expr (Star|Div|Mod) expr                                           #exprMultiDivMod
-    |expr (Plus|Minus) expr                                             #exprPlusMinus
-    |expr (LeftShift|RightShift) expr                                   #exprShift
-    |expr (Less|LessEqual|Greater|GreaterEqual) expr                    #exprComparative
-    |expr (Equal|NotEqual) expr                                         #exprEqualNotEqual
-    |expr And expr                                                      #exprAnd
-    |expr Caret expr                                                    #exprCaret
-    |expr Or expr                                                       #exprOr
-    |expr AndAnd expr                                                   #exprAndAnd
-    |expr OrOr expr                                                     #exprOrOr
+    |expr operatorBinaire expr                                          #exprBinaire
     |LeftParen expr RightParen                                          #exprParen
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar
+    ;
+
+operatorBinaire:
+    (Star|Div|Mod)                                            #exprMultiDivMod
+    |(Plus|Minus)                                             #exprPlusMinus
+    |(LeftShift|RightShift)                                   #exprShift
+    |(Less|LessEqual|Greater|GreaterEqual)                    #exprComparative
+    |(Equal|NotEqual)                                         #exprEqualNotEqual
+    |And                                                      #exprAnd
+    |Caret                                                    #exprCaret
+    |Or                                                       #exprOr
+    |AndAnd                                                   #exprAndAnd
+    |OrOr                                                     #exprOrOr
     ;
 
 exprList : expr (Comma expr)*       #listOfExpressions;
