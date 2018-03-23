@@ -3,9 +3,9 @@
 //
 #include <iostream>
 #include <antlr4-runtime.h>
-#include "cmmParser.h"
-#include "cmmLexer.h"
-#include "cmmBaseVisitor.h"
+#include "cmm/cmmParser.h"
+#include "cmm/cmmLexer.h"
+#include "cmm/cmmBaseVisitor.h"
 int main() {
     std::cout << "Hello World" << std::endl;
     return 0;

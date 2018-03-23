@@ -1,6 +1,22 @@
 cmake_minimum_required(VERSION 3.5)
 project(antlr4cmm)
+
+if(EXISTS "/Library/antlr4-cpp-runtime-4/antlr4-runtim")
+	SET (ANTLR4_LIB_DIR /Library/antlr4-cpp-runtime-4/antlr4-runtim)
+elseif(EXISTS "/usr/local/lib/antlr4-runtim")
+	SET (ANTLR4_LIB_DIR /usr/local/lib/antlr4-runtim)
+else()
+	message( FATAL_ERROR "antlr4-runtim n'ai pas étais trouvé!\nAjouter antlr4 dans un des dossier suivant:\n- /Library/antlr4-cpp-runtime-4/antlr4-runtim\n- /usr/local/lib/antlr4-runtim" )
+endif()
+
 SET (CMAKE_CXX_STANDARD 14)
+SET (PROJECT_SRC src)
+SET (GLOB PROJECT_MODELS	${PROJECT_SRC}/structures/*.cpp)
+SET (GLOB PROJECT_ANTLR4_FILS	${PROJECT_SRC}/cmm/*.cpp)
+SET (PROJECT_MAIN		${PROJECT_SRC}/main.cpp)
+SET (PROJECT_CPP 		${PROJECT_MODELS} ${PROJECT_ANTLR4_FILS} ${PROJECT_MAIN})
 include_directories(/Library/antlr4-cpp-runtime-4/antlr4-runtime)
 include_directories(structures)
-add_executable(cmm_test cmmBaseVisitor.cpp structures/File.cpp structures/File.h structures/VarDefinition.cpp structures/VarDefinition.h structures/ArrayDefinition.cpp structures/ArrayDefinition.h structures/FuncDefinition.cpp structures/FuncDefinition.h structures/FuncBlock.cpp structures/FuncBlock.h structures/ParamsDefinition.cpp structures/ParamsDefinition.h structures/Type.cpp structures/Type.h structures/VarName.cpp structures/VarName.h structures/Expression.cpp structures/Expression.h structures/Statements.cpp structures/Statements.h structures/ReturnStatement.cpp structures/ReturnStatement.h structures/IfStatement.cpp structures/IfStatement.h)
+
+add_executable(cmm ${PROJECT_CPP})
+
