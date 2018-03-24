@@ -1,0 +1,1 @@
+ -L"D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/lib" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

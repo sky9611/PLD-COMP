@@ -69,8 +69,8 @@ exprList : expr (Comma expr)*       #listOfExpressions;
 //lexer
 WS:
     [ \t\n\r]+ -> skip ;
-Comment:
-    '//' ~[\r\n]* -> skip ;
+LINECOMMENT: '//' ~('\r' | '\n')* -> skip ;
+BLOCKCOMMENT: '/*' .*? '*/' -> skip ;
 PreProcess : '#include' (|' ') ('<' VarName '.h' '>'|'"' VarName '.h"') -> skip;
 
 //Type : (Char|Int32_t|Int64_t);
