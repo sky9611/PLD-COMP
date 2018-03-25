@@ -1,4 +1,4 @@
 
 .idea/workspace.xml
 *.xml
-**/cmake-build-debug
+cmake-build-debug/**
