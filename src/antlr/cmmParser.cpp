@@ -26,7 +26,7 @@ const std::vector<std::string>& cmmParser::getRuleNames() const {
   return _ruleNames;
 }
 
-dfa::Vocabulary& cmmParser::getVocabulary() const {
+const dfa::Vocabulary & cmmParser::getVocabulary() const {
   return _vocabulary;
 }
 
