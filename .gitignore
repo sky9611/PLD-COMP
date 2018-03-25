@@ -2,3 +2,6 @@
 .idea/workspace.xml
 */*.xml
 cmake-build-debug/**
+.idea/codeStyles/codeStyleConfig.xml
+.idea/codeStyles/Project.xml
+.idea/PLD-COMP.iml
