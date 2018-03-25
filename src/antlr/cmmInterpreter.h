@@ -52,8 +52,6 @@ public:
 
     antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx);
 
-    antlrcpp::Any visitStatementAppelFoncAvecAttribut(cmmParser::StatementAppelFoncAvecAttributContext *ctx);
-
     antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *ctx);
 
     antlrcpp::Any visitExprValue(cmmParser::ExprValueContext *ctx);
