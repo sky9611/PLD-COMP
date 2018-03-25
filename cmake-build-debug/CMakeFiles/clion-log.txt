@@ -1,4 +1,0 @@
-"D:\CLion 2017.3.4\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "D:\documents\INSA\4IF\PLD COMP\git\PLD-COMP"
--- Configuring done
--- Generating done
--- Build files have been written to: D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/cmake-build-debug
