@@ -8,7 +8,7 @@
 #include "../antlr/cmmParser.h"
 #include <bitset>
 #include "cmmOperator.h"
-#include "cmmRuntimeException.h"
+#include "../Exception/cmmRuntimeException.h"
 
 class Function
 {

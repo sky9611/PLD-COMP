@@ -9,11 +9,14 @@
 #include "cmmVar.h"
 #include <map>
 
-class ReferenceTable{
+using namespace std;
+
+class ReferenceTable
+{
 
 private:
-    std::map<std::string, cmmVar*> cmmVarReferences;
-    std::map<std::string, Function*> functionReferences;
+    map<string, map<string, cmmVar *>> cmmVarReferences;
+    map<string, Function *> functionReferences;
     bool cycle;
 
 public:
@@ -21,23 +24,25 @@ public:
 
     bool isCycle();
 
-    void setCycle ( bool isCycle );
+    void setCycle(bool isCycle);
 
-    bool isVarDeclared ( std::string ref );
+    bool isVarDeclared(string blkRef, string ref);
 
-    bool isFunctionDeclared ( std::string ref );
+    bool isFunctionDeclared(string ref);
 
-    cmmVar* getVar ( std::string ref );
+    cmmVar *getVar(string blkRef, string ref);
 
-    Function* getFunction ( std::string ref );
+    Function *getFunction(string ref);
 
-    void addcmmVar ( std::string ref, cmmVar* cmmVar );
+    void addcmmVar(string blkRef, string ref, cmmVar *cmmVar);
 
-    void addFunction ( std::string ref, Function* func );
+    void addFunction(string ref, Function *func);
 
-    std::map<std::string, cmmVar*> getVarReferences();
+    void deleteBlock(string ref);
 
-    std::map<std::string, Function*> getFunctionReferences();
+    map<string, map<string,cmmVar*>> getVarReferences();
+
+    map<string, Function*> getFunctionReferences();
 
 };
 

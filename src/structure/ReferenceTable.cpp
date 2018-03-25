@@ -4,52 +4,68 @@
 
 #include "ReferenceTable.h"
 
-ReferenceTable::ReferenceTable() {
+ReferenceTable::ReferenceTable()
+{
     cycle = false;
 }
 
-bool ReferenceTable::isCycle() {
+bool ReferenceTable::isCycle()
+{
     return cycle;
 }
 
-void ReferenceTable::setCycle ( bool isCycle ) {
+void ReferenceTable::setCycle(bool isCycle)
+{
     this->cycle = isCycle;
 }
 
-bool ReferenceTable::isVarDeclared ( std::string ref ) {
-    if ( cmmVarReferences.find ( ref ) == cmmVarReferences.end() ) {
+bool ReferenceTable::isVarDeclared(string blkRef, string ref)
+{
+    if (cmmVarReferences.at(blkRef).find(ref) == cmmVarReferences.at(blkRef).end()) {
         return false;
     }
     return true;
 }
 
-bool ReferenceTable::isFunctionDeclared ( std::string ref ) {
-    if ( functionReferences.find ( ref ) == functionReferences.end() ) {
+bool ReferenceTable::isFunctionDeclared(string ref)
+{
+    if (functionReferences.find(ref) == functionReferences.end()) {
         return false;
     }
     return true;
 }
 
-cmmVar* ReferenceTable::getVar ( std::string ref ) {
-    return cmmVarReferences.at ( ref );
+cmmVar *ReferenceTable::getVar(string blkRef, string ref)
+{
+    return cmmVarReferences.at(blkRef).at(ref);
 }
 
-Function* ReferenceTable::getFunction ( std::string ref ) {
-    return functionReferences.at ( ref );
+Function *ReferenceTable::getFunction(string ref)
+{
+    return functionReferences.at(ref);
 }
 
-void ReferenceTable::addcmmVar ( std::string ref, cmmVar* cmmVar ) {
-    cmmVarReferences.insert ( std::pair<std::string, cmmVar*> ( ref, cmmVar ) );
+void ReferenceTable::addcmmVar(string blkRef, string ref, cmmVar *cmmVar)
+{
+    cmmVarReferences.at(blkRef).insert(pair<string, cmmVar *>(ref, cmmVar));
 }
 
-void ReferenceTable::addFunction ( std::string ref, Function* func ) {
-    functionReferences[ref] = func;
+void ReferenceTable::addFunction(string ref, Function *func)
+{
+    functionReferences.insert(pair<string, Function *>(ref, func));
 }
 
-std::map<std::string, cmmVar*> ReferenceTable::getVarReferences() {
+map<string, map<string, cmmVar *>> ReferenceTable::getVarReferences()
+{
     return this->cmmVarReferences;
 }
 
-std::map<std::string, Function*> ReferenceTable::getFunctionReferences() {
+map<string, Function *> ReferenceTable::getFunctionReferences()
+{
     return this->functionReferences;
+}
+
+void ReferenceTable::deleteBlock(string ref)
+{
+    cmmVarReferences.erase(ref);
 }
