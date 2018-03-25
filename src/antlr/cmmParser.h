@@ -273,7 +273,7 @@ public:
     BraceZoneContext(BraceContext *ctx);
 
     antlr4::tree::TerminalNode *LeftParen();
-    ExprListContext *exprList();
+    ExprContext *expr();
     antlr4::tree::TerminalNode *RightParen();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -449,46 +449,10 @@ public:
     StatementIfContext(StatementContext *ctx);
 
     antlr4::tree::TerminalNode *If();
-    ExprContext *expr();
+    BraceContext *brace();
     std::vector<StatementContext *> statement();
     StatementContext* statement(size_t i);
     antlr4::tree::TerminalNode *Else();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StatementAssiggnmentContext : public StatementContext {
-  public:
-    StatementAssiggnmentContext(StatementContext *ctx);
-
-    antlr4::tree::TerminalNode *VarName();
-    ExprListContext *exprList();
-    antlr4::tree::TerminalNode *Semi();
-    antlr4::tree::TerminalNode *Assign();
-    antlr4::tree::TerminalNode *StarAssign();
-    antlr4::tree::TerminalNode *DivAssign();
-    antlr4::tree::TerminalNode *ModAssign();
-    antlr4::tree::TerminalNode *PlusAssign();
-    antlr4::tree::TerminalNode *MinusAssign();
-    antlr4::tree::TerminalNode *LeftShiftAssign();
-    antlr4::tree::TerminalNode *RightShiftAssign();
-    antlr4::tree::TerminalNode *AndAssign();
-    antlr4::tree::TerminalNode *XorAssign();
-    antlr4::tree::TerminalNode *OrAssign();
-    antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *Value();
-    antlr4::tree::TerminalNode *RightBracket();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StatementAppelFoncAvecAttributContext : public StatementContext {
-  public:
-    StatementAppelFoncAvecAttributContext(StatementContext *ctx);
-
-    antlr4::tree::TerminalNode *VarName();
-    antlr4::tree::TerminalNode *LeftParen();
-    antlr4::tree::TerminalNode *RightParen();
-    antlr4::tree::TerminalNode *Semi();
-    ExprListContext *exprList();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -583,6 +547,29 @@ public:
     ExprCharContext(ExprContext *ctx);
 
     antlr4::tree::TerminalNode *Character();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StatementAssiggnmentContext : public ExprContext {
+  public:
+    StatementAssiggnmentContext(ExprContext *ctx);
+
+    antlr4::tree::TerminalNode *VarName();
+    ExprContext *expr();
+    antlr4::tree::TerminalNode *Assign();
+    antlr4::tree::TerminalNode *StarAssign();
+    antlr4::tree::TerminalNode *DivAssign();
+    antlr4::tree::TerminalNode *ModAssign();
+    antlr4::tree::TerminalNode *PlusAssign();
+    antlr4::tree::TerminalNode *MinusAssign();
+    antlr4::tree::TerminalNode *LeftShiftAssign();
+    antlr4::tree::TerminalNode *RightShiftAssign();
+    antlr4::tree::TerminalNode *AndAssign();
+    antlr4::tree::TerminalNode *XorAssign();
+    antlr4::tree::TerminalNode *OrAssign();
+    antlr4::tree::TerminalNode *LeftBracket();
+    antlr4::tree::TerminalNode *Value();
+    antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 

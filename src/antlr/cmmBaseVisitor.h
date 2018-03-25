@@ -67,10 +67,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitStatementIf(cmmParser::StatementIfContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -84,10 +80,6 @@ public:
   }
 
   virtual antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitStatementAppelFoncAvecAttribut(cmmParser::StatementAppelFoncAvecAttributContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -120,6 +112,10 @@ public:
   }
 
   virtual antlrcpp::Any visitExprChar(cmmParser::ExprCharContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) override {
     return visitChildren(ctx);
   }
 

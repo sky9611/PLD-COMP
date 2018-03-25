@@ -18,7 +18,7 @@ arrayDecl:
 
 //zones
 block: LeftBrace statement* RightBrace      #blockZone;
-brace: LeftParen exprList RightParen        #braceZone;
+brace: LeftParen expr RightParen        #braceZone;
 fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace     #functionBlock;
 fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen     #functionBrace;
 
@@ -31,15 +31,15 @@ fctDefinition :
 //sentences
 statement :
     block                                           #statementBlock
-    |VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) exprList Semi                         #statementAssiggnment
-    |If expr statement (Else statement)?            #statementIf
+    |If brace statement (Else statement)?           #statementIf
     |While brace statement                          #statementWhile
     |Return (expr)? Semi                            #statementReturn
     |expr Semi                                      #statementAppelFoncSansAttribut
-    |VarName LeftParen exprList? RightParen Semi    #statementAppelFoncAvecAttribut;
+    ;
 
 expr:
     Value                                                              #exprValue
+    |VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr     #statementAssiggnment
     |VarName (LeftBracket expr RightBracket)?                          #exprVariable
     |VarName (LeftBracket expr RightBracket)? (PlusPlus|MinusMinus)    #exprIncPost
     |(PlusPlus|MinusMinus) VarName (LeftBracket expr RightBracket)?    #exprIncPre

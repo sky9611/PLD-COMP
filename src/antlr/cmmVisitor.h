@@ -45,8 +45,6 @@ public:
 
     virtual antlrcpp::Any visitStatementBlock(cmmParser::StatementBlockContext *context) = 0;
 
-    virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *context) = 0;
-
     virtual antlrcpp::Any visitStatementIf(cmmParser::StatementIfContext *context) = 0;
 
     virtual antlrcpp::Any visitStatementWhile(cmmParser::StatementWhileContext *context) = 0;
@@ -54,8 +52,6 @@ public:
     virtual antlrcpp::Any visitStatementReturn(cmmParser::StatementReturnContext *context) = 0;
 
     virtual antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *context) = 0;
-
-    virtual antlrcpp::Any visitStatementAppelFoncAvecAttribut(cmmParser::StatementAppelFoncAvecAttributContext *context) = 0;
 
     virtual antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *context) = 0;
 
@@ -72,6 +68,8 @@ public:
     virtual antlrcpp::Any visitExprIncPost(cmmParser::ExprIncPostContext *context) = 0;
 
     virtual antlrcpp::Any visitExprChar(cmmParser::ExprCharContext *context) = 0;
+
+    virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *context) = 0;
 
     virtual antlrcpp::Any visitExprIncPre(cmmParser::ExprIncPreContext *context) = 0;
 
