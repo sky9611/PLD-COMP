@@ -3,3 +3,9 @@
 //
 
 #include "ExprValue.h"
+
+ExprValue::ExprValue() {}
+
+ExprValue::~ExprValue() {
+
+}

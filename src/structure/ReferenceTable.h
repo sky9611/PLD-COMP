@@ -20,8 +20,7 @@ private:
     bool cycle;
 
 public:
-    ReferenceTable();
-
+	ReferenceTable();
     bool isCycle();
 
     void setCycle(bool isCycle);

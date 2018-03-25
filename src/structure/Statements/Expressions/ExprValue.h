@@ -9,7 +9,10 @@
 #include "Expression.h"
 
 class ExprValue : public Expression{
+public:
+	ExprValue();
 
+	virtual ~ExprValue();
 };
 
 

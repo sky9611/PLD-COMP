@@ -16,6 +16,8 @@ public:
 
     ~cmmInterpreter();
 
+	antlrcpp::Any visitFile(cmmParser::FileContext *ctx);
+
     antlrcpp::Any visitProgRule(cmmParser::ProgRuleContext *ctx);
 
     antlrcpp::Any visitDefRule(cmmParser::DefRuleContext *ctx);

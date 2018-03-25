@@ -4,14 +4,32 @@
 
 #include "cmmInterpreter.h"
 #include "../structure/Program.h"
+#include "../structure/Statements/Expressions/Expression.h"
+#include "../structure/Statements/Expressions/ExprVariable.h"
+#include "../structure/Statements/Expressions/ExprValue.h"
+#include "../structure/DefVariable.h"
 
-antlrcpp::Any visitProgRule(cmmParser::ProgRuleContext *ctx){
 
+antlrcpp::Any cmmInterpreter::visitFile(cmmParser::FileContext *ctx) {
+	return (Program*) visit(ctx->programme());
 }
 
 
+antlrcpp::Any cmmInterpreter::visitProgRule(cmmParser::ProgRuleContext *ctx) {
+	if(!ctx->definition().empty()){
+
+		}
+	}
+	if(!ctx->fctDeclaration().empty()){
+
+	}
+	if(!ctx->fctDefinition().empty()){
+
+	}
+}
+
 antlrcpp::Any cmmInterpreter::visitDefRule(cmmParser::DefRuleContext *ctx) {
-	return cmmBaseVisitor::visitDefRule(ctx);
+	return (DefVariable*) visit(ctx->)
 }
 
 antlrcpp::Any cmmInterpreter::visitDefAttributes(cmmParser::DefAttributesContext *ctx) {
@@ -84,7 +102,7 @@ antlrcpp::Any cmmInterpreter::visitExprParen(cmmParser::ExprParenContext *ctx) {
 }
 
 antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
-	return cmmBaseVisitor::visitExprValue(ctx);
+	return (Expression*) new ExprValue();
 }
 
 antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
@@ -92,7 +110,7 @@ antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
 }
 
 antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *ctx) {
-	return cmmBaseVisitor::visitExprVariable(ctx);
+	return (Expression*) new ExprVariable(ctx->)
 }
 
 antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext *ctx) {
@@ -162,3 +180,7 @@ antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
 antlrcpp::Any cmmInterpreter::visitListOfExpressions(cmmParser::ListOfExpressionsContext *ctx) {
 	return cmmBaseVisitor::visitListOfExpressions(ctx);
 }
+
+
+
+
