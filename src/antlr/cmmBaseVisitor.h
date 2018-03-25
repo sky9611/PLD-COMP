@@ -15,7 +15,7 @@
 class  cmmBaseVisitor : public cmmVisitor {
 public:
 
-  virtual antlrcpp::Any visitFileRule(cmmParser::FileRuleContext *ctx) override {
+  virtual antlrcpp::Any visitFile(cmmParser::FileContext *ctx) override {
     return visitChildren(ctx);
   }
 

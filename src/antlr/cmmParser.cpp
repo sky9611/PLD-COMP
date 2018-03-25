@@ -37,29 +37,22 @@ cmmParser::FileContext::FileContext(ParserRuleContext *parent, size_t invokingSt
   : ParserRuleContext(parent, invokingState) {
 }
 
+cmmParser::ProgrammeContext* cmmParser::FileContext::programme() {
+  return getRuleContext<cmmParser::ProgrammeContext>(0);
+}
+
 
 size_t cmmParser::FileContext::getRuleIndex() const {
   return cmmParser::RuleFile;
 }
 
-void cmmParser::FileContext::copyFrom(FileContext *ctx) {
-  ParserRuleContext::copyFrom(ctx);
-}
-
-//----------------- FileRuleContext ------------------------------------------------------------------
-
-cmmParser::ProgrammeContext* cmmParser::FileRuleContext::programme() {
-  return getRuleContext<cmmParser::ProgrammeContext>(0);
-}
-
-cmmParser::FileRuleContext::FileRuleContext(FileContext *ctx) { copyFrom(ctx); }
-
-antlrcpp::Any cmmParser::FileRuleContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any cmmParser::FileContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<cmmVisitor*>(visitor))
-    return parserVisitor->visitFileRule(this);
+    return parserVisitor->visitFile(this);
   else
     return visitor->visitChildren(this);
 }
+
 cmmParser::FileContext* cmmParser::file() {
   FileContext *_localctx = _tracker.createInstance<FileContext>(_ctx, getState());
   enterRule(_localctx, 0, cmmParser::RuleFile);
@@ -68,7 +61,6 @@ cmmParser::FileContext* cmmParser::file() {
     exitRule();
   });
   try {
-    _localctx = dynamic_cast<FileContext *>(_tracker.createInstance<cmmParser::FileRuleContext>(_localctx));
     enterOuterAlt(_localctx, 1);
     setState(34);
     programme();

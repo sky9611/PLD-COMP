@@ -63,22 +63,11 @@ public:
   class  FileContext : public antlr4::ParserRuleContext {
   public:
     FileContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    FileContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(FileContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  FileRuleContext : public FileContext {
-  public:
-    FileRuleContext(FileContext *ctx);
-
     ProgrammeContext *programme();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   FileContext* file();

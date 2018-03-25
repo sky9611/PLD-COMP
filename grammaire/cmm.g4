@@ -3,7 +3,7 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file: programme #fileRule;
+file: programme ;
 programme:   (fctDefinition | fctDeclaration | definition)*      #progRule;
 //parser
 definition: type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi  #defRule;
