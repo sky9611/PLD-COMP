@@ -20,7 +20,7 @@ arrayDecl:
 block: LeftBrace statement* RightBrace      #blockZone;
 brace: LeftParen exprList RightParen        #braceZone;
 fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace     #functionBlock;
-fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*|Void)? RightParen     #functionBrace;
+fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen     #functionBrace;
 
 fctDeclaration :
     (Void|type) VarName fctBrace Semi       #functionDeclaration;
