@@ -26,10 +26,10 @@ public:
   };
 
   enum {
-    RuleFile = 0, RuleDefinition = 1, RuleDefinitionAttributs = 2, RuleType = 3, 
-    RuleArrayDef = 4, RuleArrayDecl = 5, RuleBlock = 6, RuleBrace = 7, RuleFctBlock = 8, 
-    RuleFctBrace = 9, RuleFctDeclaration = 10, RuleFctDefinition = 11, RuleStatement = 12, 
-    RuleExpr = 13, RuleOperatorBinaire = 14, RuleExprList = 15
+    RuleFile = 0, RuleProgramme = 1, RuleDefinition = 2, RuleDefinitionAttributs = 3, 
+    RuleType = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, RuleBrace = 8, 
+    RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDeclaration = 11, RuleFctDefinition = 12, 
+    RuleStatement = 13, RuleExpr = 14, RuleOperatorBinaire = 15, RuleExprList = 16
   };
 
   cmmParser(antlr4::TokenStream *input);
@@ -39,10 +39,11 @@ public:
   virtual const antlr4::atn::ATN& getATN() const override { return _atn; };
   virtual const std::vector<std::string>& getTokenNames() const override { return _tokenNames; }; // deprecated: use vocabulary instead.
   virtual const std::vector<std::string>& getRuleNames() const override;
-  virtual const antlr4::dfa::Vocabulary & getVocabulary() const override;
+  virtual antlr4::dfa::Vocabulary& getVocabulary() const override;
 
 
   class FileContext;
+  class ProgrammeContext;
   class DefinitionContext;
   class DefinitionAttributsContext;
   class TypeContext;
@@ -72,9 +73,32 @@ public:
    
   };
 
-  class  ProgRuleContext : public FileContext {
+  class  FileRuleContext : public FileContext {
   public:
-    ProgRuleContext(FileContext *ctx);
+    FileRuleContext(FileContext *ctx);
+
+    ProgrammeContext *programme();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  FileContext* file();
+
+  class  ProgrammeContext : public antlr4::ParserRuleContext {
+  public:
+    ProgrammeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    ProgrammeContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(ProgrammeContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  ProgRuleContext : public ProgrammeContext {
+  public:
+    ProgRuleContext(ProgrammeContext *ctx);
 
     std::vector<FctDefinitionContext *> fctDefinition();
     FctDefinitionContext* fctDefinition(size_t i);
@@ -85,7 +109,7 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  FileContext* file();
+  ProgrammeContext* programme();
 
   class  DefinitionContext : public antlr4::ParserRuleContext {
   public:

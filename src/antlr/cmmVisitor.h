@@ -19,6 +19,8 @@ public:
   /**
    * Visit parse trees produced by cmmParser.
    */
+    virtual antlrcpp::Any visitFileRule(cmmParser::FileRuleContext *context) = 0;
+
     virtual antlrcpp::Any visitProgRule(cmmParser::ProgRuleContext *context) = 0;
 
     virtual antlrcpp::Any visitDefRule(cmmParser::DefRuleContext *context) = 0;
