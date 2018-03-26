@@ -6,7 +6,7 @@ using namespace antlr4;
 int main(int argc, const char* argv[]) {
 
     ANTLRFileStream input("../Test/test1.txt");
-/*    cmmLexer lexer(&input);
+    cmmLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     tokens.fill();
     for (auto token : tokens.getTokens()) {
@@ -14,6 +14,6 @@ int main(int argc, const char* argv[]) {
     }
     cmmParser parser(&tokens);
     tree::ParseTree *tree = parser.file();
-    std::cout << tree->toStringTree(&parser) << std::endl;*/
+    std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;
 }

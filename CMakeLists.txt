@@ -18,6 +18,7 @@ include_directories(src)
 include_directories(antlr4-runtime)
 add_executable(cmm ${PROJECT_CPP})
 
+
 target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(cmm ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
 #target_link_libraries(cmm "D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/liblibantlr4-runtime.dll.a")
