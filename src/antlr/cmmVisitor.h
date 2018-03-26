@@ -23,15 +23,17 @@ public:
 
     virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *context) = 0;
 
-    virtual antlrcpp::Any visitFunctionDeclaration(cmmParser::FunctionDeclarationContext *context) = 0;
+    virtual antlrcpp::Any visitVarDeclaration(cmmParser::VarDeclarationContext *context) = 0;
 
-    virtual antlrcpp::Any visitVarDefninition(cmmParser::VarDefninitionContext *context) = 0;
+    virtual antlrcpp::Any visitEof(cmmParser::EofContext *context) = 0;
 
-    virtual antlrcpp::Any visitDefinition(cmmParser::DefinitionContext *context) = 0;
+    virtual antlrcpp::Any visitVarDeclarationList(cmmParser::VarDeclarationListContext *context) = 0;
+
+    virtual antlrcpp::Any visitDecVarSimple(cmmParser::DecVarSimpleContext *context) = 0;
+
+    virtual antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *context) = 0;
 
     virtual antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *context) = 0;
-
-    virtual antlrcpp::Any visitType(cmmParser::TypeContext *context) = 0;
 
     virtual antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *context) = 0;
 
@@ -44,8 +46,6 @@ public:
     virtual antlrcpp::Any visitFctBlock(cmmParser::FctBlockContext *context) = 0;
 
     virtual antlrcpp::Any visitFctBrace(cmmParser::FctBraceContext *context) = 0;
-
-    virtual antlrcpp::Any visitFctDeclaration(cmmParser::FctDeclarationContext *context) = 0;
 
     virtual antlrcpp::Any visitFctDefinition(cmmParser::FctDefinitionContext *context) = 0;
 

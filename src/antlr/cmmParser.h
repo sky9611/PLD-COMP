@@ -12,24 +12,24 @@
 class  cmmParser : public antlr4::Parser {
 public:
   enum {
-    WS = 1, LINECOMMENT = 2, BLOCKCOMMENT = 3, PreProcess = 4, Char = 5, 
-    Int32_t = 6, Int64_t = 7, Void = 8, While = 9, If = 10, Else = 11, Return = 12, 
-    LeftParen = 13, RightParen = 14, LeftBracket = 15, RightBracket = 16, 
-    LeftBrace = 17, RightBrace = 18, Less = 19, LessEqual = 20, Greater = 21, 
-    GreaterEqual = 22, LeftShift = 23, RightShift = 24, Plus = 25, PlusPlus = 26, 
-    Minus = 27, MinusMinus = 28, Star = 29, Div = 30, Mod = 31, And = 32, 
-    Or = 33, AndAnd = 34, OrOr = 35, Caret = 36, Not = 37, Tilde = 38, Question = 39, 
-    Quote = 40, Colon = 41, Semi = 42, Comma = 43, Assign = 44, StarAssign = 45, 
-    DivAssign = 46, ModAssign = 47, PlusAssign = 48, MinusAssign = 49, LeftShiftAssign = 50, 
-    RightShiftAssign = 51, AndAssign = 52, XorAssign = 53, OrAssign = 54, 
-    Equal = 55, NotEqual = 56, Character = 57, VarName = 58, Value = 59
+    Type = 1, WS = 2, LINECOMMENT = 3, BLOCKCOMMENT = 4, PreProcess = 5, 
+    Char = 6, Int32_t = 7, Int64_t = 8, Void = 9, While = 10, If = 11, Else = 12, 
+    Return = 13, LeftParen = 14, RightParen = 15, LeftBracket = 16, RightBracket = 17, 
+    LeftBrace = 18, RightBrace = 19, Less = 20, LessEqual = 21, Greater = 22, 
+    GreaterEqual = 23, LeftShift = 24, RightShift = 25, Plus = 26, PlusPlus = 27, 
+    Minus = 28, MinusMinus = 29, Star = 30, Div = 31, Mod = 32, And = 33, 
+    Or = 34, AndAnd = 35, OrOr = 36, Caret = 37, Not = 38, Tilde = 39, Question = 40, 
+    Quote = 41, Colon = 42, Semi = 43, Comma = 44, Assign = 45, StarAssign = 46, 
+    DivAssign = 47, ModAssign = 48, PlusAssign = 49, MinusAssign = 50, LeftShiftAssign = 51, 
+    RightShiftAssign = 52, AndAssign = 53, XorAssign = 54, OrAssign = 55, 
+    Equal = 56, NotEqual = 57, Character = 58, VarName = 59, Value = 60
   };
 
   enum {
-    RuleFile = 0, RuleProgramme = 1, RuleDefinition = 2, RuleDefinitionAttributs = 3, 
-    RuleType = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, RuleBrace = 8, 
-    RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDeclaration = 11, RuleFctDefinition = 12, 
-    RuleStatement = 13, RuleExpr = 14, RuleOperatorBinaire = 15, RuleExprList = 16
+    RuleFile = 0, RuleProgramme = 1, RuleVarDeclarationList = 2, RuleDeclarationVar = 3, 
+    RuleDefinitionAttributs = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, 
+    RuleBrace = 8, RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDefinition = 11, 
+    RuleStatement = 12, RuleExpr = 13, RuleOperatorBinaire = 14, RuleExprList = 15
   };
 
   cmmParser(antlr4::TokenStream *input);
@@ -44,16 +44,15 @@ public:
 
   class FileContext;
   class ProgrammeContext;
-  class DefinitionContext;
+  class VarDeclarationListContext;
+  class DeclarationVarContext;
   class DefinitionAttributsContext;
-  class TypeContext;
   class ArrayDefContext;
   class ArrayDeclContext;
   class BlockContext;
   class BraceContext;
   class FctBlockContext;
   class FctBraceContext;
-  class FctDeclarationContext;
   class FctDefinitionContext;
   class StatementContext;
   class ExprContext;
@@ -85,51 +84,41 @@ public:
    
   };
 
-  class  VarDefninitionContext : public ProgrammeContext {
-  public:
-    VarDefninitionContext(ProgrammeContext *ctx);
-
-    std::vector<DefinitionContext *> definition();
-    DefinitionContext* definition(size_t i);
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  FunctionDefinitionContext : public ProgrammeContext {
   public:
     FunctionDefinitionContext(ProgrammeContext *ctx);
 
-    std::vector<FctDefinitionContext *> fctDefinition();
-    FctDefinitionContext* fctDefinition(size_t i);
+    FctDefinitionContext *fctDefinition();
+    ProgrammeContext *programme();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  FunctionDeclarationContext : public ProgrammeContext {
+  class  EofContext : public ProgrammeContext {
   public:
-    FunctionDeclarationContext(ProgrammeContext *ctx);
+    EofContext(ProgrammeContext *ctx);
 
-    std::vector<FctDeclarationContext *> fctDeclaration();
-    FctDeclarationContext* fctDeclaration(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  VarDeclarationContext : public ProgrammeContext {
+  public:
+    VarDeclarationContext(ProgrammeContext *ctx);
+
+    VarDeclarationListContext *varDeclarationList();
+    ProgrammeContext *programme();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   ProgrammeContext* programme();
 
-  class  DefinitionContext : public antlr4::ParserRuleContext {
+  class  VarDeclarationListContext : public antlr4::ParserRuleContext {
   public:
-    DefinitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    VarDeclarationListContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    TypeContext *type();
-    std::vector<antlr4::tree::TerminalNode *> VarName();
-    antlr4::tree::TerminalNode* VarName(size_t i);
+    antlr4::tree::TerminalNode *Type();
+    std::vector<DeclarationVarContext *> declarationVar();
+    DeclarationVarContext* declarationVar(size_t i);
     antlr4::tree::TerminalNode *Semi();
-    std::vector<ArrayDefContext *> arrayDef();
-    ArrayDefContext* arrayDef(size_t i);
-    std::vector<ArrayDeclContext *> arrayDecl();
-    ArrayDeclContext* arrayDecl(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> Assign();
-    antlr4::tree::TerminalNode* Assign(size_t i);
-    std::vector<ExprContext *> expr();
-    ExprContext* expr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Comma();
     antlr4::tree::TerminalNode* Comma(size_t i);
 
@@ -137,13 +126,48 @@ public:
    
   };
 
-  DefinitionContext* definition();
+  VarDeclarationListContext* varDeclarationList();
+
+  class  DeclarationVarContext : public antlr4::ParserRuleContext {
+  public:
+    DeclarationVarContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    DeclarationVarContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(DeclarationVarContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  DecArrayContext : public DeclarationVarContext {
+  public:
+    DecArrayContext(DeclarationVarContext *ctx);
+
+    antlr4::tree::TerminalNode *VarName();
+    ArrayDefContext *arrayDef();
+    ArrayDeclContext *arrayDecl();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  DecVarSimpleContext : public DeclarationVarContext {
+  public:
+    DecVarSimpleContext(DeclarationVarContext *ctx);
+
+    antlr4::tree::TerminalNode *VarName();
+    antlr4::tree::TerminalNode *Assign();
+    ExprContext *expr();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  DeclarationVarContext* declarationVar();
 
   class  DefinitionAttributsContext : public antlr4::ParserRuleContext {
   public:
     DefinitionAttributsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    TypeContext *type();
+    antlr4::tree::TerminalNode *Type();
     antlr4::tree::TerminalNode *VarName();
     antlr4::tree::TerminalNode *LeftBracket();
     antlr4::tree::TerminalNode *RightBracket();
@@ -154,20 +178,6 @@ public:
   };
 
   DefinitionAttributsContext* definitionAttributs();
-
-  class  TypeContext : public antlr4::ParserRuleContext {
-  public:
-    TypeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *Char();
-    antlr4::tree::TerminalNode *Int32_t();
-    antlr4::tree::TerminalNode *Int64_t();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
-
-  TypeContext* type();
 
   class  ArrayDefContext : public antlr4::ParserRuleContext {
   public:
@@ -236,8 +246,8 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *LeftBrace();
     antlr4::tree::TerminalNode *RightBrace();
-    std::vector<DefinitionContext *> definition();
-    DefinitionContext* definition(size_t i);
+    std::vector<VarDeclarationListContext *> varDeclarationList();
+    VarDeclarationListContext* varDeclarationList(size_t i);
     std::vector<ArrayDeclContext *> arrayDecl();
     ArrayDeclContext* arrayDecl(size_t i);
     std::vector<ArrayDefContext *> arrayDef();
@@ -268,22 +278,6 @@ public:
 
   FctBraceContext* fctBrace();
 
-  class  FctDeclarationContext : public antlr4::ParserRuleContext {
-  public:
-    FctDeclarationContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *VarName();
-    FctBraceContext *fctBrace();
-    antlr4::tree::TerminalNode *Semi();
-    antlr4::tree::TerminalNode *Void();
-    TypeContext *type();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
-
-  FctDeclarationContext* fctDeclaration();
-
   class  FctDefinitionContext : public antlr4::ParserRuleContext {
   public:
     FctDefinitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
@@ -292,7 +286,7 @@ public:
     FctBraceContext *fctBrace();
     FctBlockContext *fctBlock();
     antlr4::tree::TerminalNode *Void();
-    TypeContext *type();
+    antlr4::tree::TerminalNode *Type();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
    

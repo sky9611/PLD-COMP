@@ -5,15 +5,25 @@ options{
 }
 file: programme;
 programme:
-    fctDefinition *         #functionDefinition
-    | fctDeclaration *      #functionDeclaration
-    | definition*           #varDefninition;
+    fctDefinition programme         #functionDefinition
+    | varDeclarationList programme  #varDeclaration
+    |                               #eof
+    ;
 //parser
-definition: type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi;
+//definition: Type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi;
+varDeclarationList:
+    Type declarationVar (Comma declarationVar)* Semi;
 
-definitionAttributs : type VarName (LeftBracket Value? RightBracket)?;
+declarationVar:
+    VarName (Assign expr)?              #decVarSimple
+    |VarName (arrayDef|arrayDecl)       #decArray
+    ;
 
-type: (Char|Int32_t|Int64_t);
+//declarationVarSimple: VarName (Assign expr)?;
+
+//declarationArray: VarName (arrayDef|arrayDecl);
+
+definitionAttributs : Type VarName (LeftBracket Value? RightBracket)?;
 
 arrayDef :
     LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?;
@@ -23,14 +33,11 @@ arrayDecl:
 //zones
 block: LeftBrace statement* RightBrace;
 brace: LeftParen expr RightParen;
-fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
+fctBlock : LeftBrace (varDeclarationList|arrayDecl|arrayDef)* statement* RightBrace;
 fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen;
 
-fctDeclaration :
-    (Void|type) VarName fctBrace Semi       ;
-
 fctDefinition :
-    (Void|type) VarName fctBrace fctBlock       ;
+    (Void|Type) VarName fctBrace fctBlock;
 
 //sentences
 statement :
@@ -71,6 +78,8 @@ operatorBinaire:
 exprList : expr (Comma expr)*;
 
 //lexer
+Type: (Char|Int32_t|Int64_t);
+
 WS:
     [ \t\n\r]+ -> skip ;
 LINECOMMENT: '//' ~('\r' | '\n')* -> skip ;
