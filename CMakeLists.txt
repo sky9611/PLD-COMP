@@ -15,7 +15,8 @@ file (GLOB PROJECT_EXCEPTION	${PROJECT_SRC}/Exception/*.cpp)
 SET (PROJECT_MAIN		${PROJECT_SRC}/main.cpp)
 SET (PROJECT_CPP 		${PROJECT_MAIN} ${PROJECT_MODELS} ${PROJECT_EXCEPTION} ${PROJECT_ANTLR4_FILES})
 
-include_directories(structures)
+include_directories(src)
+
 
 if(APPLE)
     # MAC ========================================================================================================= MAC
@@ -35,8 +36,6 @@ elseif(UNIX)
     # LINUX ===================================================================================================== LINUX
     message("Detect : LINUX")
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.a)
-
-
 
 endif()
 
