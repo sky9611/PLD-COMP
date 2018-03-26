@@ -7,7 +7,7 @@
 #include "../structure/Statements/Expressions/Expression.h"
 #include "../structure/Statements/Expressions/ExprVariable.h"
 #include "../structure/Statements/Expressions/ExprValue.h"
-#include "../structure/DefVariable.h"
+#include "../structure/DecVariable.h"
 
 
 antlrcpp::Any cmmInterpreter::visitFile(cmmParser::FileContext *ctx) {

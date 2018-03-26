@@ -6,9 +6,9 @@
 #define PLD_COMP_ARRAYDEFINITION_H
 
 
-#include "DefVariable.h"
+#include "DecVariable.h"
 
-class DefArray : public DefVariable{
+class DecArray : public DefVariable{
 
 };
 
