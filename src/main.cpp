@@ -1,7 +1,6 @@
 
-#include <antlr/cmmLexer.h>
-#include <antlr/cmmParser.h>
-#include <antlr4-runtime.h>
+#include "antlr/cmmLexer.h"
+#include "antlr/cmmParser.h"
 
 using namespace antlr4;
 int main(int argc, const char* argv[]) {
