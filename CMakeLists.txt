@@ -40,12 +40,12 @@ elseif(CYGWIN)
     # WINDOWS ================================================================================================= WINDOWS
     message("Detect : WINDOWS")
     include_directories(
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/misc
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/atn
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/dfa
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/tree
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/support
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/misc
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/atn
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/dfa
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/tree
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/support
     )
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/lib/libantlr4-runtime.dll.a)
     #target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
@@ -55,21 +55,21 @@ elseif(CYGWIN)
 elseif(UNIX)
     # LINUX ===================================================================================================== LINUX
     message("Detect : LINUX")
+    #[[
     include_directories(
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/misc
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/atn
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/dfa
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/tree
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/antlr4-runtime/support
-    )
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/misc
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/atn
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/dfa
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/tree
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/support
+    )]]
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/linux/libantlr4-runtime.a)
 
 endif()
 
-#[[SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)]]
 
-include_directories(libraries/windows/antlr4-runtime) # For compiler
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime) # For compiler
 
 #msvc flags
 if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
