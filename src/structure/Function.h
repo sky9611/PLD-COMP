@@ -9,12 +9,11 @@
 #include <bitset>
 #include "cmmOperator.h"
 #include "../Exception/cmmRuntimeException.h"
+#include "cmmDef.h"
 
-class Function
+class Function : public cmmDef
 {
 private:
-    std::string name;
-    Type type;
     cmmParser::FctDefinitionContext *context;
     antlrcpp::Any returnValue;
     std::vector<antlrcpp::Any> paramValues;
@@ -22,7 +21,8 @@ private:
     bool hasReturnValue;
 
 public:
-    Function ( std::string name, std::string type, cmmParser::FctDefinitionContext* ctx );
+    Function(string name, const std::string &type,
+             cmmParser::FctDefinitionContext *ctx);
     Function ( std::string name, Type type, cmmParser::FctDefinitionContext* ctx );
     Type getType();
     void setContext ( cmmParser::FctDefinitionContext *ctx );

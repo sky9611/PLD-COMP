@@ -12,18 +12,16 @@
 #include <bitset>
 #include "cmmOperator.h"
 #include "../Exception/cmmRuntimeException.h"
+#include "cmmDef.h"
 
-class cmmVar {
+class cmmVar : public cmmDef{
 private:
-    Type type;
-    std::string name;
     antlrcpp::Any value;
     std::map<int, antlrcpp::Any> stack;
     bool stackType;
 
-
 public:
-    cmmVar(std::string name, std::string type, bool isStack);
+    cmmVar(string name, std::string type, bool isStack);
     Type getType();
     void setValue(antlrcpp::Any value);
     void setValue(antlrcpp::Any value, int index);
