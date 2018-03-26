@@ -6,8 +6,18 @@
 #define PLD_COMP_PARAMSDEFINITION_H
 
 
-class ParamsDefinition {
+#include "cmmVar.h"
+#include "../antlr/cmmParser.h"
 
+class cmmDefinition;
+
+class ParamsDefinition {
+protected:
+    vector<cmmVar*> params;
+
+public:
+    ParamsDefinition(cmmParser::FctBraceContext* attrsFc, cmmContext& contextGlob, cmmContext& contextFct);
+    virtual ~ParamsDefinition();
 };
 
 

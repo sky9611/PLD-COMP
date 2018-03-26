@@ -5,53 +5,40 @@
 #ifndef CMM_FUNCTION_H
 #define CMM_FUNCTION_H
 
+class Function;
+
+#include <antlr4-runtime.h>
+#include <bitset>
 #include "../antlr/cmmParser.h"
-#include <vector>
-#include "cmmOperator.h"
 #include "../Exception/cmmRuntimeException.h"
-/*#include "cmmDef.h"*/
-#include "../../libraries/antlr4-runtime/antlr4-runtime.h"
-#include "cmmVar.h"
+#include "cmmOperator.h"
+#include "cmmDef.h"
+#include "ParamsDefinition.h"
 
+using namespace std;
+using namespace antlrcpp;
 
-class Function
+class Function : public cmmDef
 {
 private:
-    string name;
-    Type type;
-    cmmParser::FctDefinitionContext *context;
-    antlrcpp::Any returnValue;
-    std::vector<antlrcpp::Any> paramValues;
-    std::vector<std::string> paramIDs;
+
+    Any returnValue;
+    ParamsDefinition* params;
     bool hasReturnValue;
-    map<string, cmmVar*> varReferences;
+    cmmContext localContext;
 
 public:
+
+    Function(Type type, string name, cmmParser::FctDefinitionContext *ctx, cmmContext& globalContext);
     virtual ~Function();
 
-    void addVariable(cmmVar *var);
-
-    map<string, cmmVar*> getVarReferenceTable();
-
-    bool isVarDeclared(string ref);
-
-    Function(string name, const std::string &type,
-             cmmParser::FctDefinitionContext *ctx);
-    Function ( std::string name, Type type, cmmParser::FctDefinitionContext* ctx );
-    Type getType();
-    void setContext ( cmmParser::FctDefinitionContext *ctx );
-    std::string getName();
-    antlrcpp::Any getReturnValue();
-    void setReturnValue ( antlrcpp::Any returnValue );
-    cmmParser::FctDefinitionContext *getContext();
-    Function* clone();
-    std::string toString();
+    Any getReturnValue();
+    void setReturnValue ( Any returnValue );
     bool getHasReturnValue();
     void setHasReturnValue ( bool hasReturnValue );
-    std::vector<antlrcpp::Any> getParamValues();
-    void addParamValue(antlrcpp::Any v);
-    void addParamID(std::string s);
-    std::vector<std::string> getParamIDs();
+    ParamsDefinition* getParams();
+
+    std::string toString();
 };
 
 
