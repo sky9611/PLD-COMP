@@ -4,8 +4,10 @@
 
 #ifndef PLD_COMP_PROGRAM_H
 #define PLD_COMP_PROGRAM_H
+class Program;
 
 #include "Function.h"
+#include "cmmVar.h"
 
 class Program
 {
