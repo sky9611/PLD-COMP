@@ -5,6 +5,7 @@
 #ifndef CMM_CMMVAR_H
 #define CMM_CMMVAR_H
 
+class cmmVar;
 
 #include "../../libraries/antlr4-runtime/antlr4-runtime.h"
 #include <string>
@@ -12,35 +13,24 @@
 #include <bitset>
 #include "cmmOperator.h"
 #include "../Exception/cmmRuntimeException.h"
-/*#include "cmmDef.h"*/
+#include "cmmDef.h"
 
-class cmmVar
-{
+using namespace antlrcpp;
+using namespace std;
+
+class cmmVar : public cmmDef{
 private:
-    string name;
-    Type type;
-    antlrcpp::Any value;
     std::map<int, antlrcpp::Any> stack;
-    bool stackType;
 
 public:
-    cmmVar(string name, std::string type, bool isStack);
-
-    Type getType();
-
-    void setValue(antlrcpp::Any value);
-
-    void setValue(antlrcpp::Any value, int index);
-
-    std::string getName();
-
-    antlrcpp::Any getValue();
-
-    antlrcpp::Any getValue(int index);
-
-    std::string toString();
-
-    bool isStack();
+    cmmVar(Type type, string name);
+    /*
+    void setValue(Any value);
+    void setValue(Any value, int index);
+    Any getValue();
+    Any getValue(int index);
+     */
+    virtual std::string toString();
 
 };
 

@@ -4,35 +4,12 @@
 
 #include "cmmVar.h"
 
-cmmVar::cmmVar(std::string name, std::string type, bool isStack)
+cmmVar::cmmVar(Type type, string name ):cmmDef(type, name)
 {
-    this->name = std::move(name);
-    this->stackType = isStack;
 
-    if ( type == "int32_t " ) {
-        this->type = INT32_T;
-        this->setValue ( 0 );
-    } else if ( type == "int64_t " ) {
-        this->type = INT64_T;
-        this->setValue ( 0L );
-    } else if ( type == "char " ) {
-        this->type = CHAR;
-        this->setValue('\0');
-    }
 }
 
-Type cmmVar::getType() {
-    return this->type;
-}
-
-std::string cmmVar::getName() {
-    return this->name;
-}
-
-antlrcpp::Any cmmVar::getValue() {
-    return this->value;
-}
-
+/*
 void cmmVar::setValue ( antlrcpp::Any value, int index ) {
     if ( this->type != cmmOperator::getType ( value ) ) {
         throw cmmRuntimeException ( "Invalid value conversion for '" + this->name + "'." );
@@ -69,10 +46,6 @@ void cmmVar::setValue ( antlrcpp::Any value ) {
     }
 }
 
-bool cmmVar::isStack() {
-    return this->stackType;
-}
-
 antlrcpp::Any cmmVar::getValue ( int index ) {
 
     try {
@@ -85,19 +58,20 @@ antlrcpp::Any cmmVar::getValue ( int index ) {
         return this->value;
     }
 }
+*/
 
 std::string cmmVar::toString() {
     std::string stringOfVal, stringOfType;
     if ( this->type == INT32_T ) {
         stringOfType = "int";
-        stringOfVal = std::to_string ( this->value.as<int>() );
+        //stringOfVal = std::to_string ( this->value.as<int>() );
     } else if ( this->type == INT64_T ) {
         stringOfType = "long";
-        stringOfVal = this->value.as<long>();
+        //stringOfVal = this->value.as<long>();
     } else if ( this->type == CHAR ) {
         stringOfType = "char";
-        stringOfVal = std::to_string(this->value.as<char>());
+        //stringOfVal = std::to_string(this->value.as<char>());
 
-        return "cmmVar[ name=" + this->name + ", type=" + stringOfType + ", value=" + stringOfVal + "]";
     }
+    return "cmmVar[ name=" + this->name + ", type=" + stringOfType + ", value=" + stringOfVal + "]";
 }

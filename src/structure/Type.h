@@ -10,4 +10,15 @@ enum Type
     VOID, INT32_T, INT64_T, CHAR
 };
 
+#include <antlr4-runtime.h>
+#include "../Exception/cmmRuntimeException.h"
+
+using namespace antlr4::tree;
+using namespace std;
+
+namespace type{
+    Type getType(TerminalNode* node);
+}
+
+
 #endif //CMM_TYPE_H

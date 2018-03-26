@@ -7,8 +7,7 @@
 #include <utility>
 #include "Type.h"
 
-cmmDef::cmmDef()
-= default;
+cmmDef::cmmDef(Type type, string name):type(type), name(name) {};
+cmmDef::cmmDef() {};
 
-cmmDef::~cmmDef()
-= default;
+cmmDef::~cmmDef(){};
