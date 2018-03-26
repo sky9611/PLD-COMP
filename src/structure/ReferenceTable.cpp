@@ -45,9 +45,9 @@ Function *ReferenceTable::getFunction(string ref)
     return functionReferences.at(ref);
 }
 
-void ReferenceTable::addcmmVar(string blkRef, string ref, cmmVar *cmmVar)
+void ReferenceTable::addcmmVar(string blkRef, string ref, cmmVar *var)
 {
-    cmmVarReferences.at(blkRef).insert(pair<string, cmmVar *>(ref, cmmVar));
+    cmmVarReferences.at(blkRef).insert(pair<string, cmmVar *>(ref, var));
 }
 
 void ReferenceTable::addFunction(string ref, Function *func)

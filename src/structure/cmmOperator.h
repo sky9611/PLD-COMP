@@ -7,7 +7,7 @@
 
 #include <antlr4-runtime.h>
 #include "Type.h"
-#include "cmmRuntimeException.h"
+#include "../Exception/cmmRuntimeException.h"
 #include <math.h>
 
 using namespace std;

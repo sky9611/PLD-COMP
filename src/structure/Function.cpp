@@ -79,12 +79,12 @@ void Function::addParamValue(antlrcpp::Any v)
     this->paramValues.push_back(v);
 }
 
-void Function::addParamID(std::__cxx11::string s)
+void Function::addParamID(std::string s)
 {
     this->paramIDs.push_back(s);
 }
 
-std::vector<std::__cxx11::string> Function::getParamIDs()
+std::vector<std::string> Function::getParamIDs()
 {
     return this->paramIDs;
 }
@@ -116,7 +116,7 @@ cmmParser::FctDefinitionContext *Function::getContext()
 }
 
 
-std::__cxx11::string Function::toString()
+std::string Function::toString()
 {
     return "Function[ name=" + this->getName() + "]";
 }

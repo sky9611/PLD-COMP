@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(PLD-COMP)
 
 set(CMAKE_CXX_STANDARD 11)
+
 SET (PROJECT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 file (GLOB PROJECT_MODELS
         ${PROJECT_SRC}/structure/*.cpp
@@ -23,11 +24,15 @@ if(APPLE)
     link_directories(/Library/antlr4-cpp-runtime-4/lib/libantlr4-runtime)
 elseif(WIN32)
     # WINDOWS ================================================================================================= WINDOWS
-    SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.a)
+    SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
+
+    #target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
+    #target_link_libraries(cmm ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
+    #target_link_libraries(cmm "D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/liblibantlr4-runtime.dll.a")
 
 elseif(UNIX)
     # LINUX ===================================================================================================== LINUX
-
+    SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.a)
 
 endif()
 

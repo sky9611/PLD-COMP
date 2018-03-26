@@ -33,7 +33,7 @@ public:
 
     Function *getFunction(string ref);
 
-    void addcmmVar(string blkRef, string ref, cmmVar *cmmVar);
+    void addcmmVar(string blkRef, string ref, cmmVar *var);
 
     void addFunction(string ref, Function *func);
 

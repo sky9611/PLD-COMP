@@ -1,14 +1,12 @@
-#include <iostream>
-#include <vector>
-#include "antlr4-runtime.h"
-#include "antlr/cmmLexer.h"
-#include "antlr/cmmInterpreter.h"
+
+#include <antlr/cmmLexer.h>
+#include <antlr/cmmParser.h>
 
 using namespace antlr4;
 int main(int argc, const char* argv[]) {
 
-    ANTLRFileStream input("test.txt");
-    cmmLexer lexer(&input);
+    ANTLRFileStream input("../Test/test1.txt");
+/*    cmmLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     tokens.fill();
     for (auto token : tokens.getTokens()) {
@@ -16,6 +14,6 @@ int main(int argc, const char* argv[]) {
     }
     cmmParser parser(&tokens);
     tree::ParseTree *tree = parser.file();
-    std::cout << tree->toStringTree(&parser) << std::endl;
+    std::cout << tree->toStringTree(&parser) << std::endl;*/
     return 0;
 }
