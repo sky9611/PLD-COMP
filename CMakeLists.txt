@@ -15,16 +15,13 @@ file (GLOB PROJECT_EXCEPTION	${PROJECT_SRC}/Exception/*.cpp)
 SET (PROJECT_MAIN		${PROJECT_SRC}/main.cpp)
 SET (PROJECT_CPP 		${PROJECT_MAIN} ${PROJECT_MODELS} ${PROJECT_EXCEPTION} ${PROJECT_ANTLR4_FILES})
 
-include_directories(src)
-
-
 if(APPLE)
     # MAC ========================================================================================================= MAC
     message("Detect : MAC")
     include_directories(/Library/antlr4-cpp-runtime-4/antlr4-runtime)
     link_directories(/Library/antlr4-cpp-runtime-4/lib)
     link_directories(/Library/antlr4-cpp-runtime-4/lib/libantlr4-runtime)
-elseif(WIN32)
+elseif(CYGWIN)
     # WINDOWS ================================================================================================= WINDOWS
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
     message("Detect : WINDOWS")
@@ -38,6 +35,8 @@ elseif(UNIX)
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.a)
 
 endif()
+
+#[[SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)]]
 
 include_directories(antlr4-runtime) # For compiler
 
