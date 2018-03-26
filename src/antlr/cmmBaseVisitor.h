@@ -19,43 +19,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitProgRule(cmmParser::ProgRuleContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitDefRule(cmmParser::DefRuleContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitDefAttributes(cmmParser::DefAttributesContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitTypeRule(cmmParser::TypeRuleContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitArrayDefinition(cmmParser::ArrayDefinitionContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitArrayDeclaration(cmmParser::ArrayDeclarationContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBlockZone(cmmParser::BlockZoneContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBraceZone(cmmParser::BraceZoneContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitFunctionBlock(cmmParser::FunctionBlockContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitFunctionBrace(cmmParser::FunctionBraceContext *ctx) override {
+  virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -63,7 +27,51 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx) override {
+  virtual antlrcpp::Any visitVarDefninition(cmmParser::VarDefninitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitDefinition(cmmParser::DefinitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitType(cmmParser::TypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitArrayDecl(cmmParser::ArrayDeclContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBlock(cmmParser::BlockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBrace(cmmParser::BraceContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFctBlock(cmmParser::FctBlockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFctBrace(cmmParser::FctBraceContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFctDeclaration(cmmParser::FctDeclarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFctDefinition(cmmParser::FctDefinitionContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -171,7 +179,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitListOfExpressions(cmmParser::ListOfExpressionsContext *ctx) override {
+  virtual antlrcpp::Any visitExprList(cmmParser::ExprListContext *ctx) override {
     return visitChildren(ctx);
   }
 

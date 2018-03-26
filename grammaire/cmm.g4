@@ -3,31 +3,34 @@ grammar cmm;
 options{
     //language = cpp;
 }
-file: programme ;
-programme:   (fctDefinition | fctDeclaration | definition)*      #progRule;
+file: programme;
+programme:
+    fctDefinition *         #functionDefinition
+    | fctDeclaration *      #functionDeclaration
+    | definition*           #varDefninition;
 //parser
-definition: type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi  #defRule;
+definition: type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi;
 
-definitionAttributs : type VarName (LeftBracket Value? RightBracket)?   #defAttributes;
+definitionAttributs : type VarName (LeftBracket Value? RightBracket)?;
 
-type: (Char|Int32_t|Int64_t)    #typeRule;
+type: (Char|Int32_t|Int64_t);
 
 arrayDef :
-    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?     #arrayDefinition;
+    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?;
 arrayDecl:
-    LeftBracket Value RightBracket      #arrayDeclaration;
+    LeftBracket Value RightBracket;
 
 //zones
-block: LeftBrace statement* RightBrace      #blockZone;
-brace: LeftParen expr RightParen        #braceZone;
-fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace     #functionBlock;
-fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen     #functionBrace;
+block: LeftBrace statement* RightBrace;
+brace: LeftParen expr RightParen;
+fctBlock : LeftBrace (definition|arrayDecl|arrayDef)* statement* RightBrace;
+fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen;
 
 fctDeclaration :
-    (Void|type) VarName fctBrace Semi       #functionDeclaration;
+    (Void|type) VarName fctBrace Semi       ;
 
 fctDefinition :
-    (Void|type) VarName fctBrace fctBlock       #functionDefinition;
+    (Void|type) VarName fctBrace fctBlock       ;
 
 //sentences
 statement :
@@ -65,7 +68,7 @@ operatorBinaire:
     |OrOr                                                     #exprOrOr
     ;
 
-exprList : expr (Comma expr)*       #listOfExpressions;
+exprList : expr (Comma expr)*;
 
 //lexer
 WS:

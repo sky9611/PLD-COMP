@@ -21,29 +21,33 @@ public:
    */
     virtual antlrcpp::Any visitFile(cmmParser::FileContext *context) = 0;
 
-    virtual antlrcpp::Any visitProgRule(cmmParser::ProgRuleContext *context) = 0;
-
-    virtual antlrcpp::Any visitDefRule(cmmParser::DefRuleContext *context) = 0;
-
-    virtual antlrcpp::Any visitDefAttributes(cmmParser::DefAttributesContext *context) = 0;
-
-    virtual antlrcpp::Any visitTypeRule(cmmParser::TypeRuleContext *context) = 0;
-
-    virtual antlrcpp::Any visitArrayDefinition(cmmParser::ArrayDefinitionContext *context) = 0;
-
-    virtual antlrcpp::Any visitArrayDeclaration(cmmParser::ArrayDeclarationContext *context) = 0;
-
-    virtual antlrcpp::Any visitBlockZone(cmmParser::BlockZoneContext *context) = 0;
-
-    virtual antlrcpp::Any visitBraceZone(cmmParser::BraceZoneContext *context) = 0;
-
-    virtual antlrcpp::Any visitFunctionBlock(cmmParser::FunctionBlockContext *context) = 0;
-
-    virtual antlrcpp::Any visitFunctionBrace(cmmParser::FunctionBraceContext *context) = 0;
+    virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *context) = 0;
 
     virtual antlrcpp::Any visitFunctionDeclaration(cmmParser::FunctionDeclarationContext *context) = 0;
 
-    virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *context) = 0;
+    virtual antlrcpp::Any visitVarDefninition(cmmParser::VarDefninitionContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefinition(cmmParser::DefinitionContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *context) = 0;
+
+    virtual antlrcpp::Any visitType(cmmParser::TypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *context) = 0;
+
+    virtual antlrcpp::Any visitArrayDecl(cmmParser::ArrayDeclContext *context) = 0;
+
+    virtual antlrcpp::Any visitBlock(cmmParser::BlockContext *context) = 0;
+
+    virtual antlrcpp::Any visitBrace(cmmParser::BraceContext *context) = 0;
+
+    virtual antlrcpp::Any visitFctBlock(cmmParser::FctBlockContext *context) = 0;
+
+    virtual antlrcpp::Any visitFctBrace(cmmParser::FctBraceContext *context) = 0;
+
+    virtual antlrcpp::Any visitFctDeclaration(cmmParser::FctDeclarationContext *context) = 0;
+
+    virtual antlrcpp::Any visitFctDefinition(cmmParser::FctDefinitionContext *context) = 0;
 
     virtual antlrcpp::Any visitStatementBlock(cmmParser::StatementBlockContext *context) = 0;
 
@@ -97,7 +101,7 @@ public:
 
     virtual antlrcpp::Any visitExprOrOr(cmmParser::ExprOrOrContext *context) = 0;
 
-    virtual antlrcpp::Any visitListOfExpressions(cmmParser::ListOfExpressionsContext *context) = 0;
+    virtual antlrcpp::Any visitExprList(cmmParser::ExprListContext *context) = 0;
 
 
 };

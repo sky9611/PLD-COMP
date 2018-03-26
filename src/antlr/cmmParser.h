@@ -85,16 +85,30 @@ public:
    
   };
 
-  class  ProgRuleContext : public ProgrammeContext {
+  class  VarDefninitionContext : public ProgrammeContext {
   public:
-    ProgRuleContext(ProgrammeContext *ctx);
+    VarDefninitionContext(ProgrammeContext *ctx);
+
+    std::vector<DefinitionContext *> definition();
+    DefinitionContext* definition(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  FunctionDefinitionContext : public ProgrammeContext {
+  public:
+    FunctionDefinitionContext(ProgrammeContext *ctx);
 
     std::vector<FctDefinitionContext *> fctDefinition();
     FctDefinitionContext* fctDefinition(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  FunctionDeclarationContext : public ProgrammeContext {
+  public:
+    FunctionDeclarationContext(ProgrammeContext *ctx);
+
     std::vector<FctDeclarationContext *> fctDeclaration();
     FctDeclarationContext* fctDeclaration(size_t i);
-    std::vector<DefinitionContext *> definition();
-    DefinitionContext* definition(size_t i);
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -103,20 +117,7 @@ public:
   class  DefinitionContext : public antlr4::ParserRuleContext {
   public:
     DefinitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    DefinitionContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(DefinitionContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  DefRuleContext : public DefinitionContext {
-  public:
-    DefRuleContext(DefinitionContext *ctx);
-
     TypeContext *type();
     std::vector<antlr4::tree::TerminalNode *> VarName();
     antlr4::tree::TerminalNode* VarName(size_t i);
@@ -131,7 +132,9 @@ public:
     ExprContext* expr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Comma();
     antlr4::tree::TerminalNode* Comma(size_t i);
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   DefinitionContext* definition();
@@ -139,26 +142,15 @@ public:
   class  DefinitionAttributsContext : public antlr4::ParserRuleContext {
   public:
     DefinitionAttributsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    DefinitionAttributsContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(DefinitionAttributsContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  DefAttributesContext : public DefinitionAttributsContext {
-  public:
-    DefAttributesContext(DefinitionAttributsContext *ctx);
-
     TypeContext *type();
     antlr4::tree::TerminalNode *VarName();
     antlr4::tree::TerminalNode *LeftBracket();
     antlr4::tree::TerminalNode *RightBracket();
     antlr4::tree::TerminalNode *Value();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   DefinitionAttributsContext* definitionAttributs();
@@ -166,24 +158,13 @@ public:
   class  TypeContext : public antlr4::ParserRuleContext {
   public:
     TypeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    TypeContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(TypeContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  TypeRuleContext : public TypeContext {
-  public:
-    TypeRuleContext(TypeContext *ctx);
-
     antlr4::tree::TerminalNode *Char();
     antlr4::tree::TerminalNode *Int32_t();
     antlr4::tree::TerminalNode *Int64_t();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   TypeContext* type();
@@ -191,20 +172,7 @@ public:
   class  ArrayDefContext : public antlr4::ParserRuleContext {
   public:
     ArrayDefContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    ArrayDefContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(ArrayDefContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  ArrayDefinitionContext : public ArrayDefContext {
-  public:
-    ArrayDefinitionContext(ArrayDefContext *ctx);
-
     antlr4::tree::TerminalNode *LeftBracket();
     antlr4::tree::TerminalNode *RightBracket();
     antlr4::tree::TerminalNode *Value();
@@ -212,7 +180,9 @@ public:
     antlr4::tree::TerminalNode *LeftBrace();
     antlr4::tree::TerminalNode *RightBrace();
     ExprListContext *exprList();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   ArrayDefContext* arrayDef();
@@ -220,24 +190,13 @@ public:
   class  ArrayDeclContext : public antlr4::ParserRuleContext {
   public:
     ArrayDeclContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    ArrayDeclContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(ArrayDeclContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  ArrayDeclarationContext : public ArrayDeclContext {
-  public:
-    ArrayDeclarationContext(ArrayDeclContext *ctx);
-
     antlr4::tree::TerminalNode *LeftBracket();
     antlr4::tree::TerminalNode *Value();
     antlr4::tree::TerminalNode *RightBracket();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   ArrayDeclContext* arrayDecl();
@@ -245,25 +204,14 @@ public:
   class  BlockContext : public antlr4::ParserRuleContext {
   public:
     BlockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    BlockContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(BlockContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  BlockZoneContext : public BlockContext {
-  public:
-    BlockZoneContext(BlockContext *ctx);
-
     antlr4::tree::TerminalNode *LeftBrace();
     antlr4::tree::TerminalNode *RightBrace();
     std::vector<StatementContext *> statement();
     StatementContext* statement(size_t i);
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   BlockContext* block();
@@ -271,24 +219,13 @@ public:
   class  BraceContext : public antlr4::ParserRuleContext {
   public:
     BraceContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    BraceContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(BraceContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  BraceZoneContext : public BraceContext {
-  public:
-    BraceZoneContext(BraceContext *ctx);
-
     antlr4::tree::TerminalNode *LeftParen();
     ExprContext *expr();
     antlr4::tree::TerminalNode *RightParen();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   BraceContext* brace();
@@ -296,20 +233,7 @@ public:
   class  FctBlockContext : public antlr4::ParserRuleContext {
   public:
     FctBlockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    FctBlockContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(FctBlockContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  FunctionBlockContext : public FctBlockContext {
-  public:
-    FunctionBlockContext(FctBlockContext *ctx);
-
     antlr4::tree::TerminalNode *LeftBrace();
     antlr4::tree::TerminalNode *RightBrace();
     std::vector<DefinitionContext *> definition();
@@ -320,7 +244,9 @@ public:
     ArrayDefContext* arrayDef(size_t i);
     std::vector<StatementContext *> statement();
     StatementContext* statement(size_t i);
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   FctBlockContext* fctBlock();
@@ -328,27 +254,16 @@ public:
   class  FctBraceContext : public antlr4::ParserRuleContext {
   public:
     FctBraceContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    FctBraceContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(FctBraceContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  FunctionBraceContext : public FctBraceContext {
-  public:
-    FunctionBraceContext(FctBraceContext *ctx);
-
     antlr4::tree::TerminalNode *LeftParen();
     antlr4::tree::TerminalNode *RightParen();
     std::vector<DefinitionAttributsContext *> definitionAttributs();
     DefinitionAttributsContext* definitionAttributs(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Comma();
     antlr4::tree::TerminalNode* Comma(size_t i);
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   FctBraceContext* fctBrace();
@@ -356,26 +271,15 @@ public:
   class  FctDeclarationContext : public antlr4::ParserRuleContext {
   public:
     FctDeclarationContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    FctDeclarationContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(FctDeclarationContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  FunctionDeclarationContext : public FctDeclarationContext {
-  public:
-    FunctionDeclarationContext(FctDeclarationContext *ctx);
-
     antlr4::tree::TerminalNode *VarName();
     FctBraceContext *fctBrace();
     antlr4::tree::TerminalNode *Semi();
     antlr4::tree::TerminalNode *Void();
     TypeContext *type();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   FctDeclarationContext* fctDeclaration();
@@ -383,26 +287,15 @@ public:
   class  FctDefinitionContext : public antlr4::ParserRuleContext {
   public:
     FctDefinitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    FctDefinitionContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(FctDefinitionContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  FunctionDefinitionContext : public FctDefinitionContext {
-  public:
-    FunctionDefinitionContext(FctDefinitionContext *ctx);
-
     antlr4::tree::TerminalNode *VarName();
     FctBraceContext *fctBrace();
     FctBlockContext *fctBlock();
     antlr4::tree::TerminalNode *Void();
     TypeContext *type();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   FctDefinitionContext* fctDefinition();
@@ -717,25 +610,14 @@ public:
   class  ExprListContext : public antlr4::ParserRuleContext {
   public:
     ExprListContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    ExprListContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(ExprListContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  ListOfExpressionsContext : public ExprListContext {
-  public:
-    ListOfExpressionsContext(ExprListContext *ctx);
-
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Comma();
     antlr4::tree::TerminalNode* Comma(size_t i);
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   ExprListContext* exprList();
