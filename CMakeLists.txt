@@ -47,7 +47,7 @@ elseif(CYGWIN)
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/tree
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/support
     )
-    SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/lib/libantlr4-runtime.dll.a)
+    SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/libantlr4-runtime.dll.a)
     #target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
     #target_link_libraries(cmm ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
     #target_link_libraries(cmm "D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/liblibantlr4-runtime.dll.a")

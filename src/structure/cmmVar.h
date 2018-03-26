@@ -6,7 +6,7 @@
 #define CMM_CMMVAR_H
 
 
-#include "../../libraries/windows/antlr4-runtime/antlr4-runtime.h"
+#include "../../libraries/antlr4-runtime/antlr4-runtime.h"
 #include <string>
 #include "Type.h"
 #include <bitset>

@@ -10,7 +10,7 @@
 #include "cmmOperator.h"
 #include "../Exception/cmmRuntimeException.h"
 /*#include "cmmDef.h"*/
-#include "../../libraries/windows/antlr4-runtime/antlr4-runtime.h"
+#include "../../libraries/antlr4-runtime/antlr4-runtime.h"
 #include "cmmVar.h"
 
 
