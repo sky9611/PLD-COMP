@@ -3,8 +3,6 @@
 #include "antlr4-runtime.h"
 #include "antlr/cmmLexer.h"
 #include "antlr/cmmInterpreter.h"
-#include "antlr/cmmLexer.h"
-#include "antlr/cmmBaseVisitor.h"
 
 using namespace antlr4;
 int main(int argc, const char* argv[]) {
