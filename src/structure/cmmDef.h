@@ -7,6 +7,7 @@
 
 #include <string>
 #include "Type.h"
+#include "Program.h"
 
 using namespace std;
 class cmmDef
@@ -14,7 +15,7 @@ class cmmDef
 public:
     cmmDef();
 
-    virtual ~cmmDef();
+    ~cmmDef();
 
 protected:
     string name;

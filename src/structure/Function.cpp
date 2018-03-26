@@ -126,3 +126,23 @@ Function *Function::clone()
 {
     return new Function(this->name, this->type, this->context);
 }
+
+Function::~Function()
+{
+
+}
+
+void Function::addVariable(cmmVar *var)
+{
+    this->varReferences.insert(pair<string, cmmVar *>(var->getName(), var));
+}
+
+bool Function::isVarDeclared(string ref)
+{
+    return !(varReferences.find(ref) == varReferences.end());
+}
+
+map<string, cmmVar*> Function::getVarReferenceTable()
+{
+    return varReferences;
+}

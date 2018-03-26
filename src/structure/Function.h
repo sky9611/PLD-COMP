@@ -6,21 +6,35 @@
 #define CMM_FUNCTION_H
 
 #include "../antlr/cmmParser.h"
-#include <bitset>
+#include <vector>
 #include "cmmOperator.h"
 #include "../Exception/cmmRuntimeException.h"
-#include "cmmDef.h"
+/*#include "cmmDef.h"*/
+#include "../../libraries/windows/antlr4-runtime/antlr4-runtime.h"
+#include "cmmVar.h"
 
-class Function : public cmmDef
+
+class Function
 {
 private:
+    string name;
+    Type type;
     cmmParser::FctDefinitionContext *context;
     antlrcpp::Any returnValue;
     std::vector<antlrcpp::Any> paramValues;
     std::vector<std::string> paramIDs;
     bool hasReturnValue;
+    map<string, cmmVar*> varReferences;
 
 public:
+    virtual ~Function();
+
+    void addVariable(cmmVar *var);
+
+    map<string, cmmVar*> getVarReferenceTable();
+
+    bool isVarDeclared(string ref);
+
     Function(string name, const std::string &type,
              cmmParser::FctDefinitionContext *ctx);
     Function ( std::string name, Type type, cmmParser::FctDefinitionContext* ctx );

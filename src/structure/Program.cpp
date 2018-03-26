@@ -9,14 +9,23 @@ Program::Program()
 
 Program::~Program()
 {
-    auto it = defsReferences.begin();
+    auto it = funcReferences.begin();
 
-    while (it != defsReferences.end()) {
+    while (it != funcReferences.end()) {
         delete (it->second);
         it++;
     }
 
-    defsReferences.clear();
+    funcReferences.clear();
+
+    auto iter = globalVarReferences.begin();
+
+    while (iter != globalVarReferences.end()) {
+        delete (iter->second);
+        iter++;
+    }
+
+    globalVarReferences.clear();
 
     if (!mainFunction)
         return;
@@ -26,17 +35,12 @@ Program::~Program()
 
 void Program::addGlobalVariable(cmmVar *var)
 {
-    this->defsReferences.insert(pair<string, cmmVar *>(var->getName(), var));
-}
-
-map<string, cmmDef *> Program::getReferenceTable()
-{
-    return this->defsReferences;
+    this->globalVarReferences.insert(pair<string, cmmVar *>(var->getName(), var));
 }
 
 void Program::addFunction(Function *function)
 {
-    this->defsReferences.insert(pair<string, Function *>(function->getName(), function));
+    this->funcReferences.insert(pair<string, Function *>(function->getName(), function));
 }
 
 void Program::setMainFunction(Function *mainF)
@@ -49,7 +53,22 @@ Function *Program::getMainFunction()
     return this->mainFunction;
 }
 
-bool Program::isVarOrFuncDeclared(string ref)
+bool Program::isVarDeclared(string ref)
 {
-    return !(defsReferences.find(ref) == defsReferences.end());
+    return !(globalVarReferences.find(ref) == globalVarReferences.end());
+}
+
+map<string, Function *> Program::getFuncReferenceTable()
+{
+    return this->funcReferences;
+}
+
+map<string, cmmVar *> Program::getGlobalVarReferenceTable()
+{
+    return this->globalVarReferences;
+}
+
+bool Program::isFuncDeclared(string ref)
+{
+    return !(funcReferences.find(ref) == funcReferences.end());
 }

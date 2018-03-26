@@ -5,7 +5,6 @@
 #ifndef PLD_COMP_PROGRAM_H
 #define PLD_COMP_PROGRAM_H
 
-#include "cmmVar.h"
 #include "Function.h"
 
 class Program
@@ -21,15 +20,21 @@ public:
 
     void addGlobalVariable(cmmVar *var);
 
-    map<string, cmmDef *> getReferenceTable();
+    map<string, cmmVar *> getGlobalVarReferenceTable();
+
+    bool isVarDeclared(string ref);
 
     void addFunction(Function *function);
 
-    bool isVarOrFuncDeclared(string ref);
+    map<string, Function *> getFuncReferenceTable();
+
+    bool isFuncDeclared(string ref);
 
 protected:
-    map<string, cmmDef *> defsReferences;
+    map<string, cmmVar *> globalVarReferences;
+    map<string, Function *> funcReferences;
     Function * mainFunction;
+
 };
 
 
