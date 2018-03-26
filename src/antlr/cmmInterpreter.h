@@ -1,101 +1,101 @@
 //
-// Created by wth on 2018/3/24.
+// Created by Zifan YAO on 26/03/2018.
 //
 
-#ifndef CMM_CMMINTERPRETER_H
-#define CMM_CMMINTERPRETER_H
+#ifndef PLD_COMP_CMMINTERPRETER2_H
+#define PLD_COMP_CMMINTERPRETER2_H
 
-#include <antlr4-runtime.h>
+
 #include "cmmBaseVisitor.h"
 
+class cmmInterpreter : public cmmBaseVisitor{
 
-class cmmInterpreter : public cmmBaseVisitor
-{
 public:
-    cmmInterpreter();
 
-    ~cmmInterpreter();
+    antlrcpp::Any visitFile(cmmParser::FileContext *ctx) override;
 
-	antlrcpp::Any visitFile(cmmParser::FileContext *ctx);
+    antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx) override;
 
-    antlrcpp::Any visitProgRule(cmmParser::ProgRuleContext *ctx);
+    antlrcpp::Any visitVarDeclaration(cmmParser::VarDeclarationContext *ctx) override;
 
-    antlrcpp::Any visitDefRule(cmmParser::DefRuleContext *ctx);
+    antlrcpp::Any visitEof(cmmParser::EofContext *ctx) override;
 
-    antlrcpp::Any visitDefAttributes(cmmParser::DefAttributesContext *ctx);
+    antlrcpp::Any visitVarDeclarationList(cmmParser::VarDeclarationListContext *ctx) override;
 
-    antlrcpp::Any visitTypeRule(cmmParser::TypeRuleContext *ctx);
+    antlrcpp::Any visitDecVarSimple(cmmParser::DecVarSimpleContext *ctx) override;
 
-    antlrcpp::Any visitArrayDefinition(cmmParser::ArrayDefinitionContext *ctx);
+    antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *ctx) override;
 
-    antlrcpp::Any visitArrayDeclaration(cmmParser::ArrayDeclarationContext *ctx);
+    antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *ctx) override;
 
-    antlrcpp::Any visitBlockZone(cmmParser::BlockZoneContext *ctx);
+    antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *ctx) override;
 
-    antlrcpp::Any visitBraceZone(cmmParser::BraceZoneContext *ctx);
+    antlrcpp::Any visitArrayDecl(cmmParser::ArrayDeclContext *ctx) override;
 
-    antlrcpp::Any visitFunctionBlock(cmmParser::FunctionBlockContext *ctx);
+    antlrcpp::Any visitBlock(cmmParser::BlockContext *ctx) override;
 
-    antlrcpp::Any visitFunctionBrace(cmmParser::FunctionBraceContext *ctx);
+    antlrcpp::Any visitBrace(cmmParser::BraceContext *ctx) override;
 
-    antlrcpp::Any visitFunctionDeclaration(cmmParser::FunctionDeclarationContext *ctx);
+    antlrcpp::Any visitFctBlock(cmmParser::FctBlockContext *ctx) override;
 
-    antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx);
+    antlrcpp::Any visitFctBrace(cmmParser::FctBraceContext *ctx) override;
 
-    antlrcpp::Any visitStatementBlock(cmmParser::StatementBlockContext *ctx);
+    antlrcpp::Any visitFctDefinition(cmmParser::FctDefinitionContext *ctx) override;
 
-    antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx);
+    antlrcpp::Any visitStatementBlock(cmmParser::StatementBlockContext *ctx) override;
 
-    antlrcpp::Any visitStatementIf(cmmParser::StatementIfContext *ctx);
+    antlrcpp::Any visitStatementIf(cmmParser::StatementIfContext *ctx) override;
 
-    antlrcpp::Any visitStatementWhile(cmmParser::StatementWhileContext *ctx);
+    antlrcpp::Any visitStatementWhile(cmmParser::StatementWhileContext *ctx) override;
 
-    antlrcpp::Any visitStatementReturn(cmmParser::StatementReturnContext *ctx);
+    antlrcpp::Any visitStatementReturn(cmmParser::StatementReturnContext *ctx) override;
 
-    antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx);
+    antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx) override;
 
-    antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *ctx);
+    antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *ctx) override;
 
-    antlrcpp::Any visitExprValue(cmmParser::ExprValueContext *ctx);
+    antlrcpp::Any visitExprValue(cmmParser::ExprValueContext *ctx) override;
 
-    antlrcpp::Any visitExprNot(cmmParser::ExprNotContext *ctx);
+    antlrcpp::Any visitExprNot(cmmParser::ExprNotContext *ctx) override;
 
-    antlrcpp::Any visitExprVariable(cmmParser::ExprVariableContext *ctx);
+    antlrcpp::Any visitExprVariable(cmmParser::ExprVariableContext *ctx) override;
 
-    antlrcpp::Any visitExprAppelFonc(cmmParser::ExprAppelFoncContext *ctx);
+    antlrcpp::Any visitExprAppelFonc(cmmParser::ExprAppelFoncContext *ctx) override;
 
-    antlrcpp::Any visitExprMinus(cmmParser::ExprMinusContext *ctx);
+    antlrcpp::Any visitExprMinus(cmmParser::ExprMinusContext *ctx) override;
 
-    antlrcpp::Any visitExprIncPost(cmmParser::ExprIncPostContext *ctx);
+    antlrcpp::Any visitExprIncPost(cmmParser::ExprIncPostContext *ctx) override;
 
-    antlrcpp::Any visitExprChar(cmmParser::ExprCharContext *ctx);
+    antlrcpp::Any visitExprChar(cmmParser::ExprCharContext *ctx) override;
 
-    antlrcpp::Any visitExprIncPre(cmmParser::ExprIncPreContext *ctx);
+    antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) override;
 
-    antlrcpp::Any visitExprBinaire(cmmParser::ExprBinaireContext *ctx);
+    antlrcpp::Any visitExprIncPre(cmmParser::ExprIncPreContext *ctx) override;
 
-    antlrcpp::Any visitExprMultiDivMod(cmmParser::ExprMultiDivModContext *ctx);
+    antlrcpp::Any visitExprBinaire(cmmParser::ExprBinaireContext *ctx) override;
 
-    antlrcpp::Any visitExprPlusMinus(cmmParser::ExprPlusMinusContext *ctx);
+    antlrcpp::Any visitExprMultiDivMod(cmmParser::ExprMultiDivModContext *ctx) override;
 
-    antlrcpp::Any visitExprShift(cmmParser::ExprShiftContext *ctx);
+    antlrcpp::Any visitExprPlusMinus(cmmParser::ExprPlusMinusContext *ctx) override;
 
-    antlrcpp::Any visitExprComparative(cmmParser::ExprComparativeContext *ctx);
+    antlrcpp::Any visitExprShift(cmmParser::ExprShiftContext *ctx) override;
 
-    antlrcpp::Any visitExprEqualNotEqual(cmmParser::ExprEqualNotEqualContext *ctx);
+    antlrcpp::Any visitExprComparative(cmmParser::ExprComparativeContext *ctx) override;
 
-    antlrcpp::Any visitExprAnd(cmmParser::ExprAndContext *ctx);
+    antlrcpp::Any visitExprEqualNotEqual(cmmParser::ExprEqualNotEqualContext *ctx) override;
 
-    antlrcpp::Any visitExprCaret(cmmParser::ExprCaretContext *ctx);
+    antlrcpp::Any visitExprAnd(cmmParser::ExprAndContext *ctx) override;
 
-    antlrcpp::Any visitExprOr(cmmParser::ExprOrContext *ctx);
+    antlrcpp::Any visitExprCaret(cmmParser::ExprCaretContext *ctx) override;
 
-    antlrcpp::Any visitExprAndAnd(cmmParser::ExprAndAndContext *ctx);
+    antlrcpp::Any visitExprOr(cmmParser::ExprOrContext *ctx) override;
 
-    antlrcpp::Any visitExprOrOr(cmmParser::ExprOrOrContext *ctx);
+    antlrcpp::Any visitExprAndAnd(cmmParser::ExprAndAndContext *ctx) override;
 
-    antlrcpp::Any visitListOfExpressions(cmmParser::ListOfExpressionsContext *ctx);
+    antlrcpp::Any visitExprOrOr(cmmParser::ExprOrOrContext *ctx) override;
+
+    antlrcpp::Any visitExprList(cmmParser::ExprListContext *ctx) override;
 };
 
 
-#endif //CMM_CMMINTERPRETER_H
+#endif //PLD_COMP_CMMINTERPRETER2_H
