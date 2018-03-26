@@ -16,7 +16,7 @@ cmmVar::cmmVar ( std::string name, std::string type, bool isStack ) {
         this->setValue ( 0L );
     } else if ( type == "char " ) {
         this->type = CHAR;
-        this->setValue('');
+        this->setValue('\0');
     }
 }
 
@@ -95,7 +95,8 @@ std::string cmmVar::toString() {
         stringOfVal = this->value.as<long>();
     } else if ( this->type == CHAR ) {
         stringOfType = "char";
-        stringOfVal = std::to_string ( this->value.as<char>() );
+        stringOfVal = std::to_string(this->value.as<char>());
 
-    return "cmmVar[ name=" + this->name + ", type=" + stringOfType + ", value=" + stringOfVal + "]";
+        return "cmmVar[ name=" + this->name + ", type=" + stringOfType + ", value=" + stringOfVal + "]";
+    }
 }

@@ -180,7 +180,7 @@ bool cmmOperator::getBool(antlrcpp::Any v)
     if (t == CHAR) {
         char c = v.as<char>();
 
-        if (c == '') {
+        if (c == '\0') {
             return false;
         } else {
             return true;
