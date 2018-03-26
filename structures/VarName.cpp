@@ -3,3 +3,9 @@
 //
 
 #include "VarName.h"
+
+VarName::VarName() {}
+
+VarName::~VarName() {
+
+}

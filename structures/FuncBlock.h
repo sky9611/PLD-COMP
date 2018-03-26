@@ -7,7 +7,10 @@
 
 
 class FuncBlock {
+public:
+    FuncBlock();
 
+    virtual ~FuncBlock();
 };
 
 

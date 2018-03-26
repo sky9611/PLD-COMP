@@ -6,8 +6,13 @@
 #define ANTLR4CMM_IFSTATEMENT_H
 
 
-class IfStatement {
+#include "Statement.h"
 
+class IfStatement : Statement{
+public:
+    IfStatement();
+
+    virtual ~IfStatement();
 };
 
 

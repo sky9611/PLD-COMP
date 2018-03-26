@@ -3,3 +3,9 @@
 //
 
 #include "IfStatement.h"
+
+IfStatement::IfStatement() {}
+
+IfStatement::~IfStatement() {
+
+}

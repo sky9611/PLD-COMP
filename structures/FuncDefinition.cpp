@@ -3,3 +3,9 @@
 //
 
 #include "FuncDefinition.h"
+
+FuncDefinition::FuncDefinition() {}
+
+FuncDefinition::~FuncDefinition() {
+
+}

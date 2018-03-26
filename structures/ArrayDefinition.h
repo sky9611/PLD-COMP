@@ -6,7 +6,9 @@
 #define ANTLR4CMM_ARRAYDEFINITION_H
 
 
-class ArrayDefinition {
+#include "VarDefinition.h"
+
+class ArrayDefinition : VarDefinition{
 
 };
 

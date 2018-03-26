@@ -7,7 +7,10 @@
 
 
 class Expression {
+public:
+    virtual ~Expression();
 
+    Expression();
 };
 
 

@@ -3,3 +3,9 @@
 //
 
 #include "ParamsDefinition.h"
+
+ParamsDefinition::ParamsDefinition() {}
+
+ParamsDefinition::~ParamsDefinition() {
+
+}

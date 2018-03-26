@@ -3,3 +3,9 @@
 //
 
 #include "ReturnStatement.h"
+
+ReturnStatement::ReturnStatement() {}
+
+ReturnStatement::~ReturnStatement() {
+
+}

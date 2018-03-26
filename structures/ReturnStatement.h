@@ -6,8 +6,13 @@
 #define ANTLR4CMM_RETURNSTATEMENT_H
 
 
-class ReturnStatement {
+#include "Statement.h"
 
+class ReturnStatement : Statement{
+public:
+    ReturnStatement();
+
+    virtual ~ReturnStatement();
 };
 
 

@@ -6,8 +6,13 @@
 #define ANTLR4CMM_VARNAME_H
 
 
-class VarName {
+#include "Expression.h"
 
+class VarName : Expression{
+public:
+    VarName();
+
+    virtual ~VarName();
 };
 
 

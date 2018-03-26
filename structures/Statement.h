@@ -6,8 +6,11 @@
 #define ANTLR4CMM_STATEMENTS_H
 
 
-class Statements {
+class Statement {
+public:
+    Statement();
 
+    virtual ~Statement();
 };
 
 

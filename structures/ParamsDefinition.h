@@ -7,7 +7,10 @@
 
 
 class ParamsDefinition {
+public:
+    ParamsDefinition();
 
+    virtual ~ParamsDefinition();
 };
 
 

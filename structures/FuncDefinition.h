@@ -7,7 +7,10 @@
 
 
 class FuncDefinition {
+public:
+    FuncDefinition();
 
+    virtual ~FuncDefinition();
 };
 
 

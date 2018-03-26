@@ -31,7 +31,6 @@ fctDefinition :
 //sentences
 statement :
     block                                           #statementBlock
-    |VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) exprList Semi                         #statementAssiggnment
     |If expr statement (Else statement)?            #statementIf
     |While brace statement                          #statementWhile
     |Return (expr)? Semi                            #statementReturn
@@ -46,6 +45,7 @@ expr:
     |Not expr                                                           #exprNot
     |Minus expr                                                         #exprMinus
     |expr operatorBinaire expr                                          #exprBinaire
+    |VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr    #exprAssiggnment
     |LeftParen expr RightParen                                          #exprParen
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar

@@ -7,7 +7,10 @@
 
 
 class File {
+public:
+    File();
 
+    virtual ~File();
 };
 
 

@@ -3,3 +3,9 @@
 //
 
 #include "FuncBlock.h"
+
+FuncBlock::FuncBlock() {}
+
+FuncBlock::~FuncBlock() {
+
+}
