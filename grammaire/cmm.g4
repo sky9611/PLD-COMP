@@ -33,13 +33,18 @@ arrayDecl:
 //zones
 block: LeftBrace statement* RightBrace;
 brace: LeftParen expr RightParen;
-fctBlock : LeftBrace (varDeclarationList|arrayDecl|arrayDef)* statement* RightBrace;
+fctBlock : LeftBrace instruction* RightBrace;
 fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen;
 
 fctDefinition :
     (Void|Type) VarName fctBrace fctBlock;
 
 //sentences
+instruction:
+    varDeclarationList      #insDecVarList
+    |statement              #insStmt
+    ;
+
 statement :
     block                                           #statementBlock
     |If brace statement (Else statement)?           #statementIf
