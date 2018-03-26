@@ -4,8 +4,9 @@
 
 #include "cmmVar.h"
 
-cmmVar::cmmVar ( std::string name, std::string type, bool isStack ) {
-    this->name = name;
+cmmVar::cmmVar(std::string name, std::string type, bool isStack)
+{
+    this->name = std::move(name);
     this->stackType = isStack;
 
     if ( type == "int32_t " ) {

@@ -4,10 +4,11 @@
 
 #include "Function.h"
 
-Function::Function(std::string name, std::string type, cmmParser::FctDefinitionContext *ctx)
+Function::Function(string name, const std::string &type,
+                   cmmParser::FctDefinitionContext *ctx)
 {
 
-    this->name = name;
+    this->name = std::move(name);
 
     if (type == "int32_t ") {
         this->type = INT32_T;
