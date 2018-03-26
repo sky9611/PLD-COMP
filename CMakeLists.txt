@@ -19,28 +19,36 @@ include_directories(structures)
 
 if(APPLE)
     # MAC ========================================================================================================= MAC
+    message("Detect : MAC")
     include_directories(/Library/antlr4-cpp-runtime-4/antlr4-runtime)
     link_directories(/Library/antlr4-cpp-runtime-4/lib)
     link_directories(/Library/antlr4-cpp-runtime-4/lib/libantlr4-runtime)
 elseif(WIN32)
     # WINDOWS ================================================================================================= WINDOWS
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
-
+    message("Detect : WINDOWS")
     #target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
     #target_link_libraries(cmm ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.dll.a)
     #target_link_libraries(cmm "D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/liblibantlr4-runtime.dll.a")
 
 elseif(UNIX)
     # LINUX ===================================================================================================== LINUX
+    message("Detect : LINUX")
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/lib/libantlr4-runtime.a)
+
+
 
 endif()
 
 include_directories(antlr4-runtime) # For compiler
 
 add_executable(cmm ${PROJECT_CPP})
+
+
 target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
 
+
 if(DEFINED LIBANTLR4)
+    message("Detect : Lib Antlr4 Runtime : ${LIBANTLR4}")
     target_link_libraries (cmm ${LIBANTLR4}) # For linkEditor
 endif()
