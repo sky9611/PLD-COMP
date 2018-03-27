@@ -108,6 +108,8 @@ public:
     antlrcpp::Any visitExprOrOr(cmmParser::ExprOrOrContext *ctx) override;
 
     antlrcpp::Any visitExprList(cmmParser::ExprListContext *ctx) override;
+
+    antlrcpp::Any visitType(cmmParser::TypeContext *ctx) override;
 };
 
 

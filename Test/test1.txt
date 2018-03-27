@@ -1,1 +1,4 @@
-char a = 'a';
+char a;
+void fonct1(int32_t var10, int32_t var02, char var3, int32_t var02){
+    var3 = a;
+}

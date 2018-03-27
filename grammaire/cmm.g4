@@ -12,7 +12,7 @@ programme:
 //parser
 //definition: Type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi;
 varDeclarationList:
-    Type declarationVar (Comma declarationVar)* Semi;
+    type declarationVar (Comma declarationVar)* Semi;
 
 declarationVar:
     VarName (Assign expr)?              #decVarSimple
@@ -23,7 +23,7 @@ declarationVar:
 
 //declarationArray: VarName (arrayDef|arrayDecl);
 
-definitionAttributs : Type VarName (LeftBracket Value? RightBracket)?;
+definitionAttributs : type VarName (LeftBracket Value? RightBracket)?;
 
 arrayDef :
     LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?;
@@ -37,7 +37,7 @@ fctBlock : LeftBrace instruction* RightBrace;
 fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen;
 
 fctDefinition :
-    (Void|Type) VarName fctBrace fctBlock;
+    (Void|type) VarName fctBrace fctBlock;
 
 //sentences
 instruction:
@@ -82,8 +82,9 @@ operatorBinaire:
 
 exprList : expr (Comma expr)*;
 
+type: (Char|Int32_t|Int64_t);
+
 //lexer
-Type: (Char|Int32_t|Int64_t);
 
 WS:
     [ \t\n\r]+ -> skip ;

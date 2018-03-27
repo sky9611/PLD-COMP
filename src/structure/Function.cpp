@@ -5,15 +5,19 @@
 #include "Function.h"
 
 
-Function::Function(Program* program, Type type, string name, cmmParser::FctDefinitionContext *ctx, cmmContext& globalContext):cmmScope("Function"), cmmDef(type,name), program(program)
+Function::Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params, cmmParser::FctDefinitionContext *ctx):cmmScope("Function"), cmmDef(type,name), program(program), params(params)
 {
-    params = new ParamsDefinition(ctx->fctBrace(), globalContext, localContext);
     hasReturnValue = false;
 
+    for(auto param : params) {
+        if (localContext.find(param->getName()) != localContext.end()) { // varName alredy use
+            throw cmmRuntimeException("[Function:Function()] Multiple definition du paramétre " + param->getName() +
+                                      " pour la fonction " + name);
+        }
+        localContext[param->getName()] = param;
+    }
 }
-Function::~Function(){
-    delete params;
-}
+Function::~Function(){}
 
 bool Function::getHasReturnValue()
 {

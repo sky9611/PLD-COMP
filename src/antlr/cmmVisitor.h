@@ -1,5 +1,5 @@
 
-// Generated from D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/grammaire\cmm.g4 by ANTLR 4.7
+// Generated from cmm.g4 by ANTLR 4.7.1
 
 #pragma once
 
@@ -106,6 +106,8 @@ public:
     virtual antlrcpp::Any visitExprOrOr(cmmParser::ExprOrOrContext *context) = 0;
 
     virtual antlrcpp::Any visitExprList(cmmParser::ExprListContext *context) = 0;
+
+    virtual antlrcpp::Any visitType(cmmParser::TypeContext *context) = 0;
 
 
 };

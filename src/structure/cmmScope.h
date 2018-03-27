@@ -5,6 +5,8 @@
 #ifndef PLD_COMP_CMMSCOPE_H
 #define PLD_COMP_CMMSCOPE_H
 
+#include <string>
+
 using namespace std;
 
 class cmmScope;
