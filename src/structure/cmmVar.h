@@ -32,6 +32,7 @@ public:
      */
     virtual std::string toString();
 
+    virtual void setType(Type type);
 };
 
 

@@ -72,3 +72,10 @@ Program *Function::getParent() {
 const cmmContext &Function::getLocalContext() const {
     return localContext;
 }
+
+void Function::addVar(cmmVar *var) {
+    if(localContext.find(var->getName()) != localContext.end()){
+        throw cmmRuntimeException(string("[Function::addVar] varName alredy use : ") + var->getName() );
+    }
+    localContext[var->getName()] = var;
+}

@@ -75,3 +75,7 @@ std::string cmmVar::toString() {
     }
     return "cmmVar[ name=" + this->name + ", type=" + stringOfType + ", value=" + stringOfVal + "]";
 }
+
+void cmmVar::setType(Type type) {
+    this->type = type;
+}

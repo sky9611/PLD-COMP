@@ -17,33 +17,18 @@ public:
 
     virtual ~Program();
 
-    void setMainFunction(Function *mainF);
+    virtual void addVar(cmmVar *var);
 
-    Function* getMainFunction();
+    virtual void addFunction(Function *function);
 
-    void addGlobalVariable(cmmVar *var);
-
-    map<string, cmmVar *> getGlobalVarReferenceTable();
-
-    bool isVarDeclared(string ref);
-
-    void addFunction(Function *function);
-
-    map<string, Function *> getFuncReferenceTable();
-
-    bool isFuncDeclared(string ref);
+    virtual cmmDef* getDef(string name);
 
     virtual Program* getProgramScope();
-    virtual Function* getFunctionScope();
 
 protected:
-    map<string, cmmVar *> globalVarReferences;
-    map<string, Function *> funcReferences;
-    Function * mainFunction;
 
     cmmContext globalContext;
-public:
-    const cmmContext &getGlobalContext() const;
+
 
 };
 

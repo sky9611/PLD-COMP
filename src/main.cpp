@@ -21,7 +21,8 @@ int main(int argc, const char* argv[]) {
 
     cmmInterpreter* interpreter = new cmmInterpreter();
 
-    auto b = tree->accept(interpreter);
+    Program* b = tree->accept(interpreter);
+
 
 
     std::cout << tree->toStringTree(&parser) << std::endl;

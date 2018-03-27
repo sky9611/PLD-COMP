@@ -9,78 +9,29 @@ Program::Program(): cmmBasicScope("Program"){}
 
 Program::~Program()
 {
-    auto it = funcReferences.begin();
-
-    while (it != funcReferences.end()) {
-        delete (it->second);
-        it++;
-    }
-
-    funcReferences.clear();
-
-    auto iter = globalVarReferences.begin();
-
-    while (iter != globalVarReferences.end()) {
-        delete (iter->second);
-        iter++;
-    }
-
-    globalVarReferences.clear();
-
-    if (!mainFunction)
-        return;
-
-    delete mainFunction;
+    for(auto defPair : globalContext) delete defPair.second;
 }
 
-void Program::addGlobalVariable(cmmVar *var)
+void Program::addVar(cmmVar *var)
 {
-    this->globalVarReferences.insert(pair<string, cmmVar *>(var->getName(), var));
+    if(globalContext.find(var->getName()) != globalContext.end()){
+        throw cmmRuntimeException(string("[Program::addVar] varName alredy use : ") + var->getName() );
+    }
+    globalContext[var->getName()] = var;
 }
 
 void Program::addFunction(Function *function)
 {
-    this->funcReferences.insert(pair<string, Function *>(function->getName(), function));
-}
-
-void Program::setMainFunction(Function *mainF)
-{
-    this->mainFunction = mainF;
-}
-
-Function *Program::getMainFunction()
-{
-    return this->mainFunction;
-}
-
-bool Program::isVarDeclared(string ref)
-{
-    return !(globalVarReferences.find(ref) == globalVarReferences.end());
-}
-
-map<string, Function *> Program::getFuncReferenceTable()
-{
-    return this->funcReferences;
-}
-
-map<string, cmmVar *> Program::getGlobalVarReferenceTable()
-{
-    return this->globalVarReferences;
-}
-
-bool Program::isFuncDeclared(string ref)
-{
-    return !(funcReferences.find(ref) == funcReferences.end());
+    if(globalContext.find(function->getName()) != globalContext.end()){
+        throw cmmRuntimeException(string("[Program::addFunction] functionName alredy use : ") + function->getName() );
+    }
+    globalContext[function->getName()] = function;
 }
 
 Program *Program::getProgramScope() {
     return this;
 }
 
-Function *Program::getFunctionScope() {
-    return nullptr;
-}
-
-const cmmContext &Program::getGlobalContext() const {
-    return globalContext;
+cmmDef *Program::getDef(string name) {
+    return globalContext[name];
 }

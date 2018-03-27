@@ -43,6 +43,8 @@ public:
     void setHasReturnValue ( bool hasReturnValue );
     vector<cmmVar*> getParams();
 
+    virtual void addVar(cmmVar* var);
+
     virtual Program* getParent();
     virtual Function* getFunctionScope();
 

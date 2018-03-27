@@ -6,6 +6,7 @@
 #define PLD_COMP_CMMSCOPE_H
 
 #include <string>
+#include "cmmVar.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ public:
     virtual cmmScope* getParent() = 0;
     virtual Function* getFunctionScope(){ return  getParent()->getFunctionScope(); }
     virtual Program* getProgramScope(){ return  getParent()->getProgramScope(); };
+
+    virtual void addVar(cmmVar *pVar){throw cmmRuntimeException("[cmmScope::addVar] This scope don't accept var");} // Overwite this methode if you want to do that
 };
 
 class cmmBasicScope : public cmmScope{

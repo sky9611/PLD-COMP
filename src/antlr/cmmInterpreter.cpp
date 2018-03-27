@@ -54,12 +54,19 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitVarDeclarationList(ctx);
+    Type t = visit(ctx->type());
+
+    for(cmmParser::DeclarationVarContext* varCtx :  ctx->declarationVar()){
+        cmmVar* var = visit(varCtx);
+        var->setType(t);
+        currentScope->addVar(var);
+    }
+
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitVarDeclarationList" << endl;
     #endif
-    return res;
+    return nullptr;
 }
 
 antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *ctx) {
@@ -69,7 +76,10 @@ antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitDecVarSimple(ctx);
+    Type type = VOID;
+    string name = ctx->VarName()->getText();
+
+    cmmVar* res = new cmmVar(type, name);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitDecVarSimple" << endl;
@@ -128,6 +138,8 @@ antlrcpp::Any cmmInterpreter::visitArrayDef(cmmParser::ArrayDefContext *ctx) {
         cout << ")" << endl;
     #endif
 
+    throw cmmRuntimeException("[cmmInterpreter::visitArrayDef] not implemented"); // TODO cmmInterpreter::visitArrayDef
+
     auto res = cmmBaseVisitor::visitArrayDef(ctx);
 
     #ifdef  VIEW_VISITOR_COUT
@@ -143,7 +155,11 @@ antlrcpp::Any cmmInterpreter::visitArrayDecl(cmmParser::ArrayDeclContext *ctx) {
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitArrayDecl(ctx);
+    Type type = VOID;
+    string name;
+    int size;
+
+    cmmArray* res = new cmmArray(type, name, size);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitArrayDecl" << endl;
