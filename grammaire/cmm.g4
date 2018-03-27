@@ -5,10 +5,7 @@ options{
 }
 file: programme;
 programme:
-    fctDefinition programme         #functionDefinition
-    | varDeclarationList programme  #varDeclaration
-    |                               #eof
-    ;
+    (varDeclarationList | fctDefinition)*;
 //parser
 //definition: Type VarName(arrayDef|arrayDecl|Assign expr)?( Comma VarName(arrayDef|arrayDecl|Assign expr)?)* Semi;
 varDeclarationList:

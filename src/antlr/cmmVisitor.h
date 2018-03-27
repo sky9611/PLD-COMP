@@ -21,11 +21,7 @@ public:
    */
     virtual antlrcpp::Any visitFile(cmmParser::FileContext *context) = 0;
 
-    virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *context) = 0;
-
-    virtual antlrcpp::Any visitVarDeclaration(cmmParser::VarDeclarationContext *context) = 0;
-
-    virtual antlrcpp::Any visitEof(cmmParser::EofContext *context) = 0;
+    virtual antlrcpp::Any visitProgramme(cmmParser::ProgrammeContext *context) = 0;
 
     virtual antlrcpp::Any visitVarDeclarationList(cmmParser::VarDeclarationListContext *context) = 0;
 

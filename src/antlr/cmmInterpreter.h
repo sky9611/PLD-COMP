@@ -27,11 +27,7 @@ public:
 
     antlrcpp::Any visitFile(cmmParser::FileContext *ctx) override;
 
-    antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx) override;
-
-    antlrcpp::Any visitVarDeclaration(cmmParser::VarDeclarationContext *ctx) override;
-
-    antlrcpp::Any visitEof(cmmParser::EofContext *ctx) override;
+    antlrcpp::Any visitProgramme(cmmParser::ProgrammeContext *ctx) override;
 
     antlrcpp::Any visitVarDeclarationList(cmmParser::VarDeclarationListContext *ctx) override;
 

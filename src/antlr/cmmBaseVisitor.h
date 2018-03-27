@@ -19,15 +19,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitVarDeclaration(cmmParser::VarDeclarationContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitEof(cmmParser::EofContext *ctx) override {
+  virtual antlrcpp::Any visitProgramme(cmmParser::ProgrammeContext *ctx) override {
     return visitChildren(ctx);
   }
 

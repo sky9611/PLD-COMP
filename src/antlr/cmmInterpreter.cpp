@@ -20,81 +20,31 @@ antlrcpp::Any cmmInterpreter::visitFile(cmmParser::FileContext *ctx) {
         cout << ")" << endl;
     #endif
 
+    auto res = cmmBaseVisitor::visitFile(ctx);
+
+    #ifdef  VIEW_VISITOR_COUT
+        cout << "[cmmInterpreter] - visitFile" << endl;
+    #endif
+    return res;
+}
+
+antlrcpp::Any cmmInterpreter::visitProgramme(cmmParser::ProgrammeContext *ctx) {
+#ifdef  VIEW_VISITOR_COUT
+    cout << "[cmmInterpreter] + visitProgramme : scope(";
+    printScopeList();
+    cout << ")" << endl;
+#endif
+
     this->program = new Program();
 
     setScope(program);
-    cout << "[cmmInterpreter] + visite programe start ..." << endl;
-    auto res = visit(ctx->programme());
-    cout << "[cmmInterpreter] - visite programe finish ..." << endl;
-
-
-    return res;
-}
-
-antlrcpp::Any cmmInterpreter::visitFunctionDefinition(cmmParser::FunctionDefinitionContext *ctx) {
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitFunctionDefinition : scope(";
-        printScopeList();
-        cout << ")" << endl;
-    #endif
-
-    Type type;
-    string name;
-
-    if(ctx->fctDefinition()->type() != nullptr){
-        type = visit(ctx->fctDefinition()->type());
-    } else {
-        type = VOID;
-    }
-
-    name = ctx->fctDefinition()->VarName()->getText();
-
-    vector<cmmVar*> params = visit(ctx->fctDefinition()->fctBrace());
-
-    Function* function = new Function(program, type, name,params, ctx->fctDefinition());
-    program->addFunction(function);
-
-    setScope(dynamic_cast<cmmScope*>(function));
-    visit(ctx->fctDefinition()->fctBlock());
+    cmmBaseVisitor::visitProgramme(ctx);
     unScope();
 
-
-    auto res = visit(ctx->fctDefinition());
-
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] - visitVarDeclaration" << endl;
+        cout << "[cmmInterpreter] - visitProgramme" << endl;
     #endif
-    return function;
-}
-
-antlrcpp::Any cmmInterpreter::visitVarDeclaration(cmmParser::VarDeclarationContext *ctx) {
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitVarDeclaration : scope(";
-        printScopeList();
-        cout << ")" << endl;
-    #endif
-
-    auto res = cmmBaseVisitor::visitVarDeclaration(ctx);
-
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] - visitVarDeclaration" << endl;
-    #endif
-    return res;
-}
-
-antlrcpp::Any cmmInterpreter::visitEof(cmmParser::EofContext *ctx) {
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitEof : scope(";
-        printScopeList();
-        cout << ")" << endl;
-    #endif
-
-    auto res = cmmBaseVisitor::visitEof(ctx);
-
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] - visitEof" << endl;
-    #endif
-    return res;
+    return program;
 }
 
 antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationListContext *ctx) {
@@ -158,7 +108,7 @@ antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionPara
         if(ctx->Value() != nullptr){// fix size
             res = new cmmArray(type, name, stoi(ctx->Value()->getText()));
         }else{
-            res = new cmmArray(type, name, stoi(ctx->Value()->getText()));
+            res = new cmmArray(type, name);
         }
     }else{
         res = new cmmVar(type, name);
@@ -274,12 +224,33 @@ antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitFctDefinition(ctx);
+
+    Type type;
+    string name;
+
+    if(ctx->type() != nullptr){
+        type = visit(ctx->type());
+    } else {
+        type = VOID;
+    }
+
+    name = ctx->VarName()->getText();
+
+    vector<cmmVar*> params = visit(ctx->fctBrace());
+
+    Function* function = new Function(program, type, name,params, ctx);
+    program->addFunction(function);
+
+    setScope(dynamic_cast<cmmScope*>(function));
+    visit(ctx->fctBlock());
+    unScope();
+
+
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitFctDefinition" << endl;
     #endif
-    return res;
+    return function;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementBlock(cmmParser::StatementBlockContext *ctx) {

@@ -77,39 +77,14 @@ public:
   class  ProgrammeContext : public antlr4::ParserRuleContext {
   public:
     ProgrammeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    ProgrammeContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(ProgrammeContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
+    std::vector<VarDeclarationListContext *> varDeclarationList();
+    VarDeclarationListContext* varDeclarationList(size_t i);
+    std::vector<FctDefinitionContext *> fctDefinition();
+    FctDefinitionContext* fctDefinition(size_t i);
 
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
    
-  };
-
-  class  FunctionDefinitionContext : public ProgrammeContext {
-  public:
-    FunctionDefinitionContext(ProgrammeContext *ctx);
-
-    FctDefinitionContext *fctDefinition();
-    ProgrammeContext *programme();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  EofContext : public ProgrammeContext {
-  public:
-    EofContext(ProgrammeContext *ctx);
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  VarDeclarationContext : public ProgrammeContext {
-  public:
-    VarDeclarationContext(ProgrammeContext *ctx);
-
-    VarDeclarationListContext *varDeclarationList();
-    ProgrammeContext *programme();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   ProgrammeContext* programme();
