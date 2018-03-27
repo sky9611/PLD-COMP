@@ -23,7 +23,7 @@ declarationVar:
 definitionParameter : type VarName (LeftBracket Value? RightBracket)?;
 
 arrayDef :
-    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?;
+    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace);
 arrayDecl:
     LeftBracket Value RightBracket;
 
