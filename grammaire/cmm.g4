@@ -23,7 +23,7 @@ declarationVar:
 
 //declarationArray: VarName (arrayDef|arrayDecl);
 
-definitionAttributs : type VarName (LeftBracket Value? RightBracket)?;
+definitionParameter : type VarName (LeftBracket Value? RightBracket)?;
 
 arrayDef :
     LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)?;
@@ -34,7 +34,7 @@ arrayDecl:
 block: LeftBrace statement* RightBrace;
 brace: LeftParen expr RightParen;
 fctBlock : LeftBrace instruction* RightBrace;
-fctBrace: LeftParen (definitionAttributs (Comma definitionAttributs)*)? RightParen;
+fctBrace: LeftParen (definitionParameter (Comma definitionParameter)*)? RightParen;
 
 fctDefinition :
     (Void|type) VarName fctBrace fctBlock;

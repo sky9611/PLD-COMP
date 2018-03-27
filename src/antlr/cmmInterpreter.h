@@ -39,7 +39,7 @@ public:
 
     antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *ctx) override;
 
-    antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *ctx) override;
+    antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) override;
 
     antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *ctx) override;
 

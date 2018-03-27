@@ -392,47 +392,47 @@ cmmParser::DeclarationVarContext* cmmParser::declarationVar() {
   return _localctx;
 }
 
-//----------------- DefinitionAttributsContext ------------------------------------------------------------------
+//----------------- DefinitionParameterContext ------------------------------------------------------------------
 
-cmmParser::DefinitionAttributsContext::DefinitionAttributsContext(ParserRuleContext *parent, size_t invokingState)
+cmmParser::DefinitionParameterContext::DefinitionParameterContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-cmmParser::TypeContext* cmmParser::DefinitionAttributsContext::type() {
+cmmParser::TypeContext* cmmParser::DefinitionParameterContext::type() {
   return getRuleContext<cmmParser::TypeContext>(0);
 }
 
-tree::TerminalNode* cmmParser::DefinitionAttributsContext::VarName() {
+tree::TerminalNode* cmmParser::DefinitionParameterContext::VarName() {
   return getToken(cmmParser::VarName, 0);
 }
 
-tree::TerminalNode* cmmParser::DefinitionAttributsContext::LeftBracket() {
+tree::TerminalNode* cmmParser::DefinitionParameterContext::LeftBracket() {
   return getToken(cmmParser::LeftBracket, 0);
 }
 
-tree::TerminalNode* cmmParser::DefinitionAttributsContext::RightBracket() {
+tree::TerminalNode* cmmParser::DefinitionParameterContext::RightBracket() {
   return getToken(cmmParser::RightBracket, 0);
 }
 
-tree::TerminalNode* cmmParser::DefinitionAttributsContext::Value() {
+tree::TerminalNode* cmmParser::DefinitionParameterContext::Value() {
   return getToken(cmmParser::Value, 0);
 }
 
 
-size_t cmmParser::DefinitionAttributsContext::getRuleIndex() const {
-  return cmmParser::RuleDefinitionAttributs;
+size_t cmmParser::DefinitionParameterContext::getRuleIndex() const {
+  return cmmParser::RuleDefinitionParameter;
 }
 
-antlrcpp::Any cmmParser::DefinitionAttributsContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any cmmParser::DefinitionParameterContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<cmmVisitor*>(visitor))
-    return parserVisitor->visitDefinitionAttributs(this);
+    return parserVisitor->visitDefinitionParameter(this);
   else
     return visitor->visitChildren(this);
 }
 
-cmmParser::DefinitionAttributsContext* cmmParser::definitionAttributs() {
-  DefinitionAttributsContext *_localctx = _tracker.createInstance<DefinitionAttributsContext>(_ctx, getState());
-  enterRule(_localctx, 8, cmmParser::RuleDefinitionAttributs);
+cmmParser::DefinitionParameterContext* cmmParser::definitionParameter() {
+  DefinitionParameterContext *_localctx = _tracker.createInstance<DefinitionParameterContext>(_ctx, getState());
+  enterRule(_localctx, 8, cmmParser::RuleDefinitionParameter);
   size_t _la = 0;
 
   auto onExit = finally([=] {
@@ -871,12 +871,12 @@ tree::TerminalNode* cmmParser::FctBraceContext::RightParen() {
   return getToken(cmmParser::RightParen, 0);
 }
 
-std::vector<cmmParser::DefinitionAttributsContext *> cmmParser::FctBraceContext::definitionAttributs() {
-  return getRuleContexts<cmmParser::DefinitionAttributsContext>();
+std::vector<cmmParser::DefinitionParameterContext *> cmmParser::FctBraceContext::definitionParameter() {
+  return getRuleContexts<cmmParser::DefinitionParameterContext>();
 }
 
-cmmParser::DefinitionAttributsContext* cmmParser::FctBraceContext::definitionAttributs(size_t i) {
-  return getRuleContext<cmmParser::DefinitionAttributsContext>(i);
+cmmParser::DefinitionParameterContext* cmmParser::FctBraceContext::definitionParameter(size_t i) {
+  return getRuleContext<cmmParser::DefinitionParameterContext>(i);
 }
 
 std::vector<tree::TerminalNode *> cmmParser::FctBraceContext::Comma() {
@@ -920,7 +920,7 @@ cmmParser::FctBraceContext* cmmParser::fctBrace() {
       | (1ULL << cmmParser::Int32_t)
       | (1ULL << cmmParser::Int64_t))) != 0)) {
       setState(119);
-      definitionAttributs();
+      definitionParameter();
       setState(124);
       _errHandler->sync(this);
       _la = _input->LA(1);
@@ -928,7 +928,7 @@ cmmParser::FctBraceContext* cmmParser::fctBrace() {
         setState(120);
         match(cmmParser::Comma);
         setState(121);
-        definitionAttributs();
+        definitionParameter();
         setState(126);
         _errHandler->sync(this);
         _la = _input->LA(1);
@@ -2465,7 +2465,7 @@ atn::ATN cmmParser::_atn;
 std::vector<uint16_t> cmmParser::_serializedATN;
 
 std::vector<std::string> cmmParser::_ruleNames = {
-  "file", "programme", "varDeclarationList", "declarationVar", "definitionAttributs", 
+  "file", "programme", "varDeclarationList", "declarationVar", "definitionParameter", 
   "arrayDef", "arrayDecl", "block", "brace", "fctBlock", "fctBrace", "fctDefinition", 
   "instruction", "statement", "expr", "operatorBinaire", "exprList", "type"
 };

@@ -43,7 +43,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *ctx) override {
+  virtual antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) override {
     return visitChildren(ctx);
   }
 

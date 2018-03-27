@@ -33,7 +33,7 @@ public:
 
     virtual antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *context) = 0;
 
-    virtual antlrcpp::Any visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *context) = 0;
+    virtual antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *context) = 0;
 
     virtual antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *context) = 0;
 

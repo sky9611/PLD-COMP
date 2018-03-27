@@ -27,7 +27,7 @@ public:
 
   enum {
     RuleFile = 0, RuleProgramme = 1, RuleVarDeclarationList = 2, RuleDeclarationVar = 3, 
-    RuleDefinitionAttributs = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, 
+    RuleDefinitionParameter = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, 
     RuleBrace = 8, RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDefinition = 11, 
     RuleInstruction = 12, RuleStatement = 13, RuleExpr = 14, RuleOperatorBinaire = 15, 
     RuleExprList = 16, RuleType = 17
@@ -47,7 +47,7 @@ public:
   class ProgrammeContext;
   class VarDeclarationListContext;
   class DeclarationVarContext;
-  class DefinitionAttributsContext;
+  class DefinitionParameterContext;
   class ArrayDefContext;
   class ArrayDeclContext;
   class BlockContext;
@@ -166,9 +166,9 @@ public:
 
   DeclarationVarContext* declarationVar();
 
-  class  DefinitionAttributsContext : public antlr4::ParserRuleContext {
+  class  DefinitionParameterContext : public antlr4::ParserRuleContext {
   public:
-    DefinitionAttributsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    DefinitionParameterContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     TypeContext *type();
     antlr4::tree::TerminalNode *VarName();
@@ -180,7 +180,7 @@ public:
    
   };
 
-  DefinitionAttributsContext* definitionAttributs();
+  DefinitionParameterContext* definitionParameter();
 
   class  ArrayDefContext : public antlr4::ParserRuleContext {
   public:
@@ -264,8 +264,8 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *LeftParen();
     antlr4::tree::TerminalNode *RightParen();
-    std::vector<DefinitionAttributsContext *> definitionAttributs();
-    DefinitionAttributsContext* definitionAttributs(size_t i);
+    std::vector<DefinitionParameterContext *> definitionParameter();
+    DefinitionParameterContext* definitionParameter(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Comma();
     antlr4::tree::TerminalNode* Comma(size_t i);
 

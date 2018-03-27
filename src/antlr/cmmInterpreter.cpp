@@ -139,14 +139,14 @@ antlrcpp::Any cmmInterpreter::visitDecArray(cmmParser::DecArrayContext *ctx) {
     return res;
 }
 
-antlrcpp::Any cmmInterpreter::visitDefinitionAttributs(cmmParser::DefinitionAttributsContext *ctx) {
+antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitDefinitionAttributs : scope(";
         printScopeList();
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitDefinitionAttributs(ctx);
+    auto res = cmmBaseVisitor::visitDefinitionParameter(ctx);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitDefinitionAttributs" << endl;
