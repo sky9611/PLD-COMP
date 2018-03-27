@@ -11,8 +11,8 @@ Function::Function(Program* program, Type type, const string &name,const vector<
 
     for(auto param : params) {
         if (localContext.find(param->getName()) != localContext.end()) { // varName alredy use
-            throw cmmRuntimeException("[Function:Function()] Multiple definition du paramétre " + param->getName() +
-                                      " pour la fonction " + name);
+            throw cmmRuntimeException(string("[Function:Function()] Multiple definition du paramétre ") + param->getName() +
+                                              string(" pour la fonction ") + name);
         }
         localContext[param->getName()] = param;
     }

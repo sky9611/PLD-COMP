@@ -5,7 +5,11 @@
 #include "cmmInterpreter.h"
 #define VIEW_VISITOR_COUT
 
+#include "../structure/cmmDef.h"
+#include "../structure/cmmVar.h"
+#include "../structure/cmmArray.h"
 #include "../structure/Function.h"
+#include "../structure/Program.h"
 
 using namespace std;
 
@@ -45,8 +49,7 @@ antlrcpp::Any cmmInterpreter::visitFunctionDefinition(cmmParser::FunctionDefinit
 
     name = ctx->fctDefinition()->VarName()->getText();
 
-    //vector<cmmVar*> params = visit(ctx->fctDefinition()->fctBrace());
-    vector<cmmVar*> params ={};
+    vector<cmmVar*> params = visit(ctx->fctDefinition()->fctBrace());
 
     Function* function = new Function(program, type, name,params, ctx->fctDefinition());
     program->addFunction(function);
@@ -146,7 +149,21 @@ antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionPara
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitDefinitionParameter(ctx);
+    cmmVar* res;
+
+    Type type = visit(ctx->type());
+    string name = ctx->VarName()->getText();
+
+    if(ctx->LeftBracket() != nullptr){// is table
+        if(ctx->Value() != nullptr){// fix size
+            res = new cmmArray(type, name, stoi(ctx->Value()->getText()));
+        }else{
+            res = new cmmArray(type, name, stoi(ctx->Value()->getText()));
+        }
+    }else{
+        res = new cmmVar(type, name);
+    }
+
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitDefinitionAttributs" << endl;
@@ -236,12 +253,18 @@ antlrcpp::Any cmmInterpreter::visitFctBrace(cmmParser::FctBraceContext *ctx) {
         cout << ")" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitFctBrace(ctx);
+    vector<cmmVar*> params;
+
+    for(cmmParser::DefinitionParameterContext *paramCtx : ctx->definitionParameter()){
+        cmmVar* param = visit(paramCtx);
+        params.push_back(param);
+    }
+
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitFctBrace" << endl;
     #endif
-    return res;
+    return params;
 }
 
 antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext *ctx) {

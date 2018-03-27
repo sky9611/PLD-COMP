@@ -12,15 +12,17 @@ using namespace std;
 class cmmArray: public cmmVar {
 protected:
 
-    int size;
+    int size;// -1 if size is not defined
 
 public:
 
     cmmArray(Type type, const string &name, int size);
+    cmmArray(Type type, const string &name);
 
     virtual ~cmmArray();
 
     int getSize();
+    bool hasSize();
 
     virtual string toString();
 };
