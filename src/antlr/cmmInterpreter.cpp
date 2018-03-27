@@ -45,13 +45,13 @@ antlrcpp::Any cmmInterpreter::visitFunctionDefinition(cmmParser::FunctionDefinit
 
     name = ctx->fctDefinition()->VarName()->getText();
 
-    vector<cmmVar*> params = visit(ctx->fctDefinition()->fctBrace());
+    //vector<cmmVar*> params = visit(ctx->fctDefinition()->fctBrace());
+    vector<cmmVar*> params ={};
 
     Function* function = new Function(program, type, name,params, ctx->fctDefinition());
     program->addFunction(function);
 
-
-    setScope(function);
+    setScope(dynamic_cast<cmmScope*>(function));
     visit(ctx->fctDefinition()->fctBlock());
     unScope();
 

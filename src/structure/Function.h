@@ -19,7 +19,7 @@ class Function;
 using namespace std;
 using namespace antlrcpp;
 
-class Function : public cmmDef, cmmScope
+class Function : public cmmDef, public cmmScope
 {
 private:
 
