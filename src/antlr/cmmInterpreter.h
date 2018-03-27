@@ -7,8 +7,21 @@
 
 
 #include "cmmBaseVisitor.h"
+#include "../structure/Function.h"
+#include "../structure/Program.h"
 
 class cmmInterpreter : public cmmBaseVisitor{
+protected:
+    cmmScope* currentScope;
+
+    Program* program;
+    Function* currentFct;
+public:
+
+    void setScope(cmmScope* scope);
+    void unScope();
+
+    void printScopeList();
 
 public:
 

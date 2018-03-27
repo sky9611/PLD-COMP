@@ -6,10 +6,11 @@
 #define PLD_COMP_PROGRAM_H
 class Program;
 
-#include "Function.h"
+class Function; //#include "Function.h"
 #include "cmmVar.h"
+#include "cmmScope.h"
 
-class Program
+class Program: public cmmBasicScope
 {
 public:
     Program();
@@ -32,10 +33,17 @@ public:
 
     bool isFuncDeclared(string ref);
 
+    virtual Program* getProgramScope();
+    virtual Function* getFunctionScope();
+
 protected:
     map<string, cmmVar *> globalVarReferences;
     map<string, Function *> funcReferences;
     Function * mainFunction;
+
+    cmmContext globalContext;
+public:
+    const cmmContext &getGlobalContext() const;
 
 };
 

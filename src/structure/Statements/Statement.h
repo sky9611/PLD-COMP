@@ -6,7 +6,7 @@
 #define PLD_COMP_STATEMENT_H
 
 
-class Statement {
+class Statement : cmmBasicScop{
 
 };
 

@@ -14,22 +14,27 @@ class Function;
 #include "cmmOperator.h"
 #include "cmmDef.h"
 #include "ParamsDefinition.h"
+#include "Program.h"
+#include "cmmScope.h"
 
 using namespace std;
 using namespace antlrcpp;
 
-class Function : public cmmDef
+class Function : public cmmDef, cmmScope
 {
 private:
 
+    Program* program;
     Any returnValue;
     ParamsDefinition* params;
     bool hasReturnValue;
     cmmContext localContext;
+public:
+    const cmmContext &getLocalContext() const;
 
 public:
 
-    Function(Type type, string name, cmmParser::FctDefinitionContext *ctx, cmmContext& globalContext);
+    Function(Program* program, Type type, string name, cmmParser::FctDefinitionContext *ctx, cmmContext& globalContext);
     virtual ~Function();
 
     Any getReturnValue();
@@ -37,6 +42,9 @@ public:
     bool getHasReturnValue();
     void setHasReturnValue ( bool hasReturnValue );
     ParamsDefinition* getParams();
+
+    virtual Program* getParent();
+    virtual Function* getFunctionScope();
 
     std::string toString();
 };

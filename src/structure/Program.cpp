@@ -3,9 +3,9 @@
 //
 
 #include "Program.h"
+#include "Function.h"
 
-Program::Program()
-= default;
+Program::Program(): cmmBasicScope("Program"){}
 
 Program::~Program()
 {
@@ -71,4 +71,16 @@ map<string, cmmVar *> Program::getGlobalVarReferenceTable()
 bool Program::isFuncDeclared(string ref)
 {
     return !(funcReferences.find(ref) == funcReferences.end());
+}
+
+Program *Program::getProgramScope() {
+    return this;
+}
+
+Function *Program::getFunctionScope() {
+    return nullptr;
+}
+
+const cmmContext &Program::getGlobalContext() const {
+    return globalContext;
 }

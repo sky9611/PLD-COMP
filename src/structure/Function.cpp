@@ -5,7 +5,7 @@
 #include "Function.h"
 
 
-Function::Function(Type type, string name, cmmParser::FctDefinitionContext *ctx, cmmContext& globalContext): cmmDef(type,name)
+Function::Function(Program* program, Type type, string name, cmmParser::FctDefinitionContext *ctx, cmmContext& globalContext):cmmScope("Function"), cmmDef(type,name), program(program)
 {
     params = new ParamsDefinition(ctx->fctBrace(), globalContext, localContext);
     hasReturnValue = false;
@@ -55,4 +55,16 @@ void Function::setReturnValue(antlrcpp::Any returnValue)
 std::string Function::toString()
 {
     return "Function[ name=" + this->getName() + "]";
+}
+
+Function *Function::getFunctionScope() {
+    return this;
+}
+
+Program *Function::getParent() {
+    return program;
+}
+
+const cmmContext &Function::getLocalContext() const {
+    return localContext;
 }
