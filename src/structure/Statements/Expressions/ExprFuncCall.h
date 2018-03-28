@@ -8,30 +8,24 @@
 class ExprFuncCall;
 
 #include "Expression.h"
+#include "../../Function.h"
 
 class ExprFuncCall: public Expression
 {
 private:
     Function * function;
+    vector<Expression*> params;
 public:
-    ~ExprFuncCall() override;
-
-    ExprFuncCall(cmmScope *scope, Type type, Function *function);
+    ExprFuncCall(cmmScope* scope, Function *function, const vector<Expression*> &params );
+    virtual ~ExprFuncCall();
 
     Function *getFunction() const;
 
-    void setFunction(Function *function);
+    vector<Expression*> getParams()const;
+
+    virtual Type getType();
+
 };
-
-Function *ExprFuncCall::getFunction() const
-{
-    return function;
-}
-
-void ExprFuncCall::setFunction(Function *function)
-{
-    ExprFuncCall::function = function;
-}
 
 
 #endif //PLD_COMP_EXPRFUNCCALL_H

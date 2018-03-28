@@ -10,17 +10,13 @@
 
 class Expression : public Statement
 {
-private:
-    Type type;
 public:
-    ~Expression() override;
+    virtual ~Expression();
 
-    Type getType() const;
-
-    void setType(Type type);
+    virtual Type getType() const =0;
 
 public:
-    Expression(cmmScope *scope, Type type);
+    Expression(cmmScope *scope);
 };
 
 

@@ -4,8 +4,22 @@
 
 #include "ExprFuncCall.h"
 
-ExprFuncCall::ExprFuncCall(cmmScope *scope, Type type, Function *function) : Expression(scope, type), function(function)
-{}
+ExprFuncCall::ExprFuncCall(cmmScope* scope, Function *function, const vector<Expression*> &params ):Expression(scope), function(function), params(params){
 
-ExprFuncCall::~ExprFuncCall()
-= default;
+}
+
+ExprFuncCall::~ExprFuncCall(){
+    for(Expression* param : params) delete param;
+}
+
+Function *ExprFuncCall::getFunction() const {
+    return function;
+}
+
+vector<Expression*> ExprFuncCall::getParams()const{
+    return params;
+}
+
+Type ExprFuncCall::getType(){
+    return function->getType();
+}

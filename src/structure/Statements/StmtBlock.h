@@ -11,7 +11,7 @@
 
 class StmtBlock : public Statement, public cmmBasicScope{
 public:
-    explicit StmtBlock(cmmScope * _scope): Statement(_scope),cmmBasicScope("StmtBlock"){}
+    StmtBlock(cmmScope * scope): Statement(scope),cmmBasicScope("StmtBlock"){}
     virtual void addStatement(Statement* statement){statements.push_back(statement);}
 
     ~StmtBlock() override;

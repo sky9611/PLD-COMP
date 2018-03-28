@@ -5,17 +5,17 @@
 #ifndef PLD_COMP_CMMSCOPE_H
 #define PLD_COMP_CMMSCOPE_H
 
-#include <string>
-#include "cmmVar.h"
-#include "Statements/Statement.h"
-
-using namespace std;
-
 class cmmScope;
 class cmmBasicScop;
 
 class Function;
 class Program;
+
+#include <string>
+#include "cmmVar.h"
+#include "Statements/Statement.h"
+
+using namespace std;
 
 class cmmScope {
 protected:

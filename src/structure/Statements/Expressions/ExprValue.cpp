@@ -6,5 +6,15 @@
 
 ExprValue::~ExprValue() = default;
 
-ExprValue::ExprValue(cmmScope *scope, Type type) : Expression(scope, type)
-{}
+ExprValue::ExprValue(cmmScope *scope, Type type, Any value) : Expression(scope), type(type), value(value)
+{
+
+}
+
+Type ExprValue::getType(){
+    return type;
+}
+
+Any ExprValue::getValue(){
+    return value;
+}

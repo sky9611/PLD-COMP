@@ -14,31 +14,19 @@ class ExprAssignment : public Expression
 {
 private:
     cmmVar *var;
-    Expression *expr1;
-    Expression *expr2;
-    AssignmentOperator op;
+    Expression *expr;
 
 public:
-    ~ExprAssignment() override;
+    ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr);
+    virtual ~ExprAssignment();
 
-    cmmVar *getVar() const;
+    cmmVar *getVar() const{return var;}
 
-    void setVar(cmmVar *var);
+    Expression *getExpr() const{return expr;}
 
-    Expression *getExpr1() const;
+    virtual Type getType(){return var->getType();}
 
-    void setExpr1(Expression *expr1);
 
-    Expression *getExpr2() const;
-
-    void setExpr2(Expression *expr2);
-
-    AssignmentOperator getOp() const;
-
-    void setOp(AssignmentOperator op);
-
-    ExprAssignment(cmmScope *scope, Type type, cmmVar *var, Expression *expr1, Expression *expr2,
-                   AssignmentOperator op);
 };
 
 

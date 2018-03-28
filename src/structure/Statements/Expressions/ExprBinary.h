@@ -17,7 +17,9 @@ private:
     BinaryOperator op;
 
 public:
-    ~ExprBinary() override;
+    ExprBinary(cmmScope *scope, Expression *expr1, Expression *expr2, BinaryOperator op);
+
+    virtual ~ExprBinary();
 
     Expression *getExpr1() const;
 
@@ -31,7 +33,8 @@ public:
 
     void setOp(BinaryOperator op);
 
-    ExprBinary(cmmScope *scope, Type type, Expression *expr1, Expression *expr2, BinaryOperator op);
+    virtual Type getType(){ return  expr1->getType();}  // TODO Verifier les 2 expr pour conaitre le vrais type
+
 };
 
 

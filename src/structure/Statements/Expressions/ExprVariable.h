@@ -14,10 +14,11 @@ class ExprVariable : public Expression
 private:
     cmmVar *var;
 public:
-    ~ExprVariable() override;
 
-public:
-    ExprVariable(cmmScope *scope, Type type, cmmVar *var);
+    ExprVariable(cmmScope *scope, cmmVar *var);
+    virtual ~ExprVariable() override;
+
+    virtual Type getType();
 };
 
 

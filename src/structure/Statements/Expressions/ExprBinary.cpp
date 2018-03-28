@@ -4,12 +4,14 @@
 
 #include "ExprBinary.h"
 
-ExprBinary::ExprBinary(cmmScope *scope, Type type, Expression *expr1, Expression *expr2, BinaryOperator op)
-        : Expression(scope, type), expr1(expr1), expr2(expr2), op(op)
+ExprBinary::ExprBinary(cmmScope *scope, Expression *expr1, Expression *expr2, BinaryOperator op)
+        : Expression(scope), expr1(expr1), expr2(expr2), op(op)
 {}
 
-ExprBinary::~ExprBinary()
-= default;
+ExprBinary::~ExprBinary(){
+    delete expr1;
+    delete expr2;
+}
 
 Expression *ExprBinary::getExpr1() const
 {

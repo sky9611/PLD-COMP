@@ -16,7 +16,8 @@ private:
     Expression *expr;
     UnaryOperator op;
 public:
-    ~ExprUnary() override;
+    ExprUnary(cmmScope *scope, Expression *expr, UnaryOperator op);
+    virtual ~ExprUnary();
 
     Expression *getExpr() const;
 
@@ -26,7 +27,7 @@ public:
 
     void setOp(UnaryOperator op);
 
-    ExprUnary(cmmScope *scope, Type type, Expression *expr, UnaryOperator op);
+    virtual Type getType();
 };
 
 

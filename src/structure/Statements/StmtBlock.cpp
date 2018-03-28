@@ -6,7 +6,7 @@
 
 StmtBlock::~StmtBlock()
 {
-    delete statements;
+    for(auto statement : statements)delete statement;
 }
 
 const vector<Statement *> &StmtBlock::getStatements() const

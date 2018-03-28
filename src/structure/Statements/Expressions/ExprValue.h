@@ -9,11 +9,22 @@ class ExprValue;
 
 #include "Expression.h"
 
-class ExprValue : public Expression{
-public:
-    ~ExprValue() override;
+using namespace antlrcpp;
 
-    ExprValue(cmmScope *scope, Type type);
+class ExprValue : public Expression{
+protected:
+    Any value;
+    Type type;
+public:
+
+    ExprValue(cmmScope *scope, Type type, Any value);
+
+    virtual ~ExprValue();
+
+    virtual Type getType();
+
+    virtual Any getValue();
+
 };
 
 

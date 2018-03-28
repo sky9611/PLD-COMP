@@ -15,12 +15,12 @@ class StmtIf : public Statement
 private:
     Expression * test;
     StmtBlock * block;
-    StmtBlock * elseBlock = nullptr;
+    StmtBlock * elseBlock;
 
 public:
-    StmtIf(cmmScope * _scope, Expression * _test, StmtBlock * _block):Statement(_scope),test(_test), block(_block){}
+    StmtIf(cmmScope * scope, Expression * test, StmtBlock * block): StmtIf(scope,test,block,nullptr){}
 
-    StmtIf(cmmScope * _scope, Expression * _test, StmtBlock * _block, StmtBlock * _elseBlock):StmtIf(_scope, _test, _block),elseBlock(_elseBlock){}
+    StmtIf(cmmScope * scope, Expression * test, StmtBlock * block, StmtBlock * elseBlock): Statement(scope),test(test),block(block),elseBlock(elseBlock){}
 
     ~StmtIf() override;
 

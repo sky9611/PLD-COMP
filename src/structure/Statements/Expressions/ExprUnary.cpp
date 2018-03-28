@@ -4,13 +4,13 @@
 
 #include "ExprUnary.h"
 
-ExprUnary::ExprUnary(cmmScope *scope, Type type, Expression *expr, UnaryOperator op) : Expression(scope, type),
+ExprUnary::ExprUnary(cmmScope *scope, Expression *expr, UnaryOperator op) : Expression(scope),
                                                                                        expr(expr), op(op)
 {}
 
 ExprUnary::~ExprUnary()
 {
-
+    delete expr;
 }
 
 Expression *ExprUnary::getExpr() const
@@ -31,4 +31,8 @@ UnaryOperator ExprUnary::getOp() const
 void ExprUnary::setOp(UnaryOperator op)
 {
     ExprUnary::op = op;
+}
+
+Type ExprUnary::getType(){
+    return expr->getType();
 }
