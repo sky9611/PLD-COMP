@@ -14,19 +14,19 @@ class StmtIf : public Statement
 {
 private:
     Expression * test;
-    StmtBlock * block;
-    StmtBlock * elseBlock;
+    Statement* block;
+    Statement * elseBlock;
 
 public:
-    StmtIf(cmmScope * scope, Expression * test, StmtBlock * block): StmtIf(scope,test,block,nullptr){}
+    StmtIf(cmmScope * scope, Expression * test, Statement * block): StmtIf(scope,test,block,nullptr){}
 
-    StmtIf(cmmScope * scope, Expression * test, StmtBlock * block, StmtBlock * elseBlock): Statement(scope),test(test),block(block),elseBlock(elseBlock){}
+    StmtIf(cmmScope * scope, Expression * test, Statement * block, Statement * elseBlock): Statement(scope),test(test),block(block),elseBlock(elseBlock){}
 
     ~StmtIf() override;
 
-    StmtBlock *getBlock() const;
+    Statement *getBlock() const;
 
-    StmtBlock *getElseBlock() const;
+    Statement *getElseBlock() const;
 
     Expression *getTest() const;
 /*

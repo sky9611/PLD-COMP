@@ -14,12 +14,12 @@ class WhileStatement : public Statement
 {
 private:
     Expression * test;
-    StmtBlock * block;
+    Statement * block;
 
 public:
-    WhileStatement(cmmScope * _scope, Expression *_test, StmtBlock *_block):Statement(_scope),test(_test), block(_block){}
+    WhileStatement(cmmScope * _scope, Expression *_test, Statement *_block):Statement(_scope),test(_test), block(_block){}
 
-    ~WhileStatement() override;
+    virtual ~WhileStatement();
 };
 
 

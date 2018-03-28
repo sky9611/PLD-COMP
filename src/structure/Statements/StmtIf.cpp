@@ -8,7 +8,7 @@ StmtIf::~StmtIf()
 {
     delete test;
     delete block;
-    delete elseBlock;
+    if(elseBlock == nullptr) delete elseBlock;
 }
 
 Expression *StmtIf::getTest() const
@@ -16,12 +16,12 @@ Expression *StmtIf::getTest() const
     return test;
 }
 
-StmtBlock *StmtIf::getBlock() const
+Statement *StmtIf::getBlock() const
 {
     return block;
 }
 
-StmtBlock *StmtIf::getElseBlock() const
+Statement *StmtIf::getElseBlock() const
 {
     return elseBlock;
 }
