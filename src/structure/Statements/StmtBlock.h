@@ -11,7 +11,7 @@
 
 class StmtBlock : public Statement, public cmmBasicScope{
 public:
-    StmtBlock(): cmmBasicScope("StmtBlock"){}
+    explicit StmtBlock(cmmScope * _scope): Statement(_scope),cmmBasicScope("StmtBlock"){}
     virtual void addStatement(Statement* statement){}//TODO
 };
 

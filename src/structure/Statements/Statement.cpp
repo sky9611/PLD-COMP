@@ -4,15 +4,9 @@
 
 #include "Statement.h"
 
-Statement::Statement()
-{}
+Statement::Statement(cmmScope * _scope):scope(_scope){}
 
 Statement::~Statement()
 {
 
-}
-
-void Statement::setParent(cmmScope * _parent)
-{
-    this->parent = _parent;
 }

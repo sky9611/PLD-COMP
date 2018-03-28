@@ -7,9 +7,17 @@
 
 
 #include "Statement.h"
+#include "Expressions/Expression.h"
 
-class StmtIf : public Statement{
+class StmtIf : public Statement
+{
+private:
+    Expression * test;
+    Statement * stmt;
+    Statement * elseStmt;
 
+public:
+    StmtIf(cmmScope * _scope, Expression * _test, Statement * _stmt, Statement * _elseStmt):Statement(_scope),test(_test),stmt(_stmt),elseStmt(_elseStmt){}
 };
 
 

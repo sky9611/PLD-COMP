@@ -9,12 +9,18 @@
 
 class Statement
 {
+protected:
+    cmmScope * scope;
+
 public:
-    Statement();
+    Statement(cmmScope * scope);
 
     virtual ~Statement() = 0;
 
-    void setParent(cmmScope *);
+    void setParent(cmmScope * _scope){scope = _scope;};
+
+    cmmScope * getParent(cmmScope *){return scope;}
+
 };
 
 
