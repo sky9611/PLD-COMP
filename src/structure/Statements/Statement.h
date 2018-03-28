@@ -5,8 +5,10 @@
 #ifndef PLD_COMP_STATEMENT_H
 #define PLD_COMP_STATEMENT_H
 
+#include "../cmmScope.h"
 
-class Statement : cmmBasicScop{
+class Statement : public cmmBasicScop
+{
 
 };
 
