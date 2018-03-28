@@ -7,7 +7,32 @@
 
 enum Type
 {
-    VOID, INT32_T, INT64_T, CHAR
+    BADTYPE, VOID, INT32_T, INT64_T, CHAR, INT32_T_ARRAY, INT64_T_ARRAY, CHAR_ARRAY
 };
+
+namespace type{
+    static Type basicToArrayType(Type t){
+        switch (t){
+            case INT32_T: return INT32_T_ARRAY;
+            case INT64_T: return INT64_T_ARRAY;
+            case CHAR: return CHAR_ARRAY;
+            default: return BADTYPE;
+        }
+    }
+    static Type arrayToBasicType(Type t){
+        switch (t){
+            case INT32_T_ARRAY: return INT32_T;
+            case INT64_T_ARRAY: return INT64_T;
+            case CHAR_ARRAY: return CHAR;
+            default: return BADTYPE;
+        }
+    }
+    static bool isBasicType(Type t){
+        return basicToArrayType(t) == BADTYPE;
+    }
+    static bool isArrayType(Type t){
+        return arrayToBasicType(t) == BADTYPE;
+    }
+}
 
 #endif //CMM_TYPE_H
