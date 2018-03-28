@@ -7,9 +7,12 @@
 
 
 #include "Statement.h"
+#include "../cmmScope.h"
 
-class StmtBlock : public Statement{
-
+class StmtBlock : public Statement, public cmmBasicScope{
+public:
+    StmtBlock(): cmmBasicScope("StmtBlock"){}
+    virtual void addStatement(Statement* statement){}//TODO
 };
 
 

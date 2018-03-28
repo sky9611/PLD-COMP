@@ -10,6 +10,7 @@ Program::Program(): cmmBasicScope("Program"){}
 Program::~Program()
 {
     for(auto defPair : globalContext) delete defPair.second;
+    for(auto statment: initStatments) delete statment;
 }
 
 void Program::addVar(cmmVar *var)
@@ -34,4 +35,8 @@ Program *Program::getProgramScope() {
 
 cmmDef *Program::getDef(string name) {
     return globalContext[name];
+}
+
+void Program::addStatement(Statement *statment) {
+    this->initStatments.push_back(statment);
 }

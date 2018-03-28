@@ -11,6 +11,7 @@ class Function;
 #include <bitset>
 #include "../antlr/cmmParser.h"
 #include "../Exception/cmmRuntimeException.h"
+#include "Statements/StmtBlock.h"
 #include "cmmOperator.h"
 #include "cmmDef.h"
 #include "Program.h"
@@ -24,11 +25,11 @@ class Function : public cmmDef, public cmmScope
 private:
 
     Program* program;
-    Any returnValue;
     bool hasReturnValue;
 
     cmmContext localContext;
     vector<cmmVar*> params;
+    StmtBlock* content;
 public:
     const cmmContext &getLocalContext() const;
 
@@ -44,6 +45,8 @@ public:
     vector<cmmVar*> getParams();
 
     virtual void addVar(cmmVar* var);
+    virtual void addStatement(Statement* statment);
+
 
     virtual Program* getParent();
     virtual Function* getFunctionScope();

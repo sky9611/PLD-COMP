@@ -7,7 +7,7 @@
 
 #include "../cmmScope.h"
 
-class Statement : public cmmBasicScop
+class Statement
 {
 
 };
