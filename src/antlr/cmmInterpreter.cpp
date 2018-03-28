@@ -94,6 +94,11 @@ antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *
 
     cmmVar* res = new cmmVar(type, name);
 
+    if(ctx->expr() != nullptr){
+        Expression* exp = visit(ctx->expr());
+        program->addStatement(new ExprAssignment(currentScope,res,exp));
+    }
+
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitDecVarSimple" << endl;
     #endif
