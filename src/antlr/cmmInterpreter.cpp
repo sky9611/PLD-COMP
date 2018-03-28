@@ -336,7 +336,7 @@ antlrcpp::Any cmmInterpreter::visitExprParen(cmmParser::ExprParenContext *ctx) {
         cout << "[cmmInterpreter] + visitExprParen : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprParen(ctx);
+    auto res = visit(ctx->expr());
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprParen" << endl;
