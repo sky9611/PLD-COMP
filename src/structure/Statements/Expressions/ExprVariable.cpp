@@ -10,6 +10,6 @@ ExprVariable::ExprVariable(cmmScope *scope, cmmVar *var) : Expression(scope), va
 ExprVariable::~ExprVariable()
 = default;
 
-Type ExprVariable::getType() {
+Type ExprVariable::getType() const{
     return var->getType();
 }

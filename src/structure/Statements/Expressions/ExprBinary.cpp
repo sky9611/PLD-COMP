@@ -42,3 +42,7 @@ void ExprBinary::setOp(BinaryOperator op)
 {
     ExprBinary::op = op;
 }
+
+Type ExprBinary::getType()const{
+    return  expr1->getType(); // TODO Verifier les 2 expr pour conaitre le vrais type
+}

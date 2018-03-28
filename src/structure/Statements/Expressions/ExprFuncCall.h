@@ -23,7 +23,7 @@ public:
 
     vector<Expression*> getParams()const;
 
-    virtual Type getType();
+    virtual Type getType()const;
 
 };
 

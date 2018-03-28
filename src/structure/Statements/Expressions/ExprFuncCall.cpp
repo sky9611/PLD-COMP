@@ -20,6 +20,6 @@ vector<Expression*> ExprFuncCall::getParams()const{
     return params;
 }
 
-Type ExprFuncCall::getType(){
+Type ExprFuncCall::getType()const{
     return function->getType();
 }

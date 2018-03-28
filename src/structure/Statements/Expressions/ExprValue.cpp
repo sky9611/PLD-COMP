@@ -15,6 +15,6 @@ Type ExprValue::getType(){
     return type;
 }
 
-Any ExprValue::getValue(){
+Any ExprValue::getValue()const{
     return value;
 }

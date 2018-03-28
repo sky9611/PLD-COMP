@@ -16,9 +16,9 @@ protected:
 public:
 
     ExprVariable(cmmScope *scope, cmmVar *var);
-    virtual ~ExprVariable() override;
+    virtual ~ExprVariable();
 
-    virtual Type getType();
+    virtual Type getType()const;
 };
 
 

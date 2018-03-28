@@ -33,7 +33,7 @@ public:
 
     void setOp(BinaryOperator op);
 
-    virtual Type getType(){ return  expr1->getType();}  // TODO Verifier les 2 expr pour conaitre le vrais type
+    virtual Type getType()const;
 
 };
 

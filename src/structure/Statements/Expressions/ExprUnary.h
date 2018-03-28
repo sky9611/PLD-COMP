@@ -27,7 +27,7 @@ public:
 
     void setOp(UnaryOperator op);
 
-    virtual Type getType();
+    virtual Type getType()const;
 };
 
 

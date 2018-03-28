@@ -20,11 +20,11 @@ public:
     ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr);
     virtual ~ExprAssignment();
 
-    cmmVar *getVar() const{return var;}
+    cmmVar *getVar() const;
 
-    Expression *getExpr() const{return expr;}
+    Expression *getExpr() const;
 
-    virtual Type getType(){return var->getType();}
+    virtual Type getType()const;
 
 
 };

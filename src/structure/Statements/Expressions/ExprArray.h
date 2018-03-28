@@ -24,7 +24,7 @@ public:
 
     Expression* getExpression() const;
 
-    virtual Type getType();
+    virtual Type getType()const;
 
 };
 

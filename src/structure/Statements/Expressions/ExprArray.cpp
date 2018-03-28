@@ -18,6 +18,6 @@ Expression *ExprArray::getExpression() const {
     return expression;
 }
 
-Type ExprArray::getType() {
+Type ExprArray::getType() const {
     return type::arrayToBasicType(var->getType());
 }

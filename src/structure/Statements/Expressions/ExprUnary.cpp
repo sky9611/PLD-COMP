@@ -33,6 +33,6 @@ void ExprUnary::setOp(UnaryOperator op)
     ExprUnary::op = op;
 }
 
-Type ExprUnary::getType(){
+Type ExprUnary::getType()const{
     return expr->getType();
 }

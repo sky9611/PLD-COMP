@@ -12,3 +12,15 @@ ExprAssignment::ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr):
 ExprAssignment::~ExprAssignment(){
     delete expr;
 }
+
+cmmVar *ExprAssignment::getVar() const{
+    return var;
+}
+
+Expression *ExprAssignment::getExpr() const{
+    return expr;
+}
+
+Type ExprAssignment::getType()const{
+    return var->getType();
+}

@@ -23,7 +23,7 @@ public:
 
     virtual Type getType();
 
-    virtual Any getValue();
+    virtual Any getValue()const;
 
 };
 
