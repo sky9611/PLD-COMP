@@ -7,6 +7,7 @@
 
 #include <string>
 #include "cmmVar.h"
+#include "Statements/Statement.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ public:
     virtual Program* getProgramScope(){ return  getParent()->getProgramScope(); };
 
     virtual void addVar(cmmVar *pVar){throw cmmRuntimeException("[cmmScope::addVar] This scope don't accept var");} // Overwite this methode if you want to do that
+    virtual void addStatement(Statement* statment) = 0;
 };
 
 class cmmBasicScope : public cmmScope{

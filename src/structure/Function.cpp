@@ -7,6 +7,7 @@
 
 Function::Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params, cmmParser::FctDefinitionContext *ctx):cmmScope("Function"), cmmDef(type,name), program(program), params(params)
 {
+    content = new StmtBlock();
     hasReturnValue = false;
 
     for(auto param : params) {
@@ -27,32 +28,6 @@ bool Function::getHasReturnValue()
 void Function::setHasReturnValue(bool hasReturnValue)
 {
     this->hasReturnValue = hasReturnValue;
-}
-
-antlrcpp::Any Function::getReturnValue()
-{
-    return this->returnValue;
-}
-
-
-
-void Function::setReturnValue(antlrcpp::Any returnValue)
-{
-    if (this->type != cmmOperator::getType(returnValue)) {
-        throw cmmRuntimeException("Invalid value conversion for '" + this->name + "'.");
-    }
-
-    if (this->type == INT32_T) {
-        this->returnValue = returnValue.as<int>();
-    }
-    if (this->type == INT64_T) {
-        this->returnValue = returnValue.as<long>();
-    }
-    if (this->type == CHAR) {
-        this->returnValue = returnValue.as<char>();
-    }
-
-    this->setHasReturnValue(true);
 }
 
 
@@ -78,4 +53,8 @@ void Function::addVar(cmmVar *var) {
         throw cmmRuntimeException(string("[Function::addVar] varName alredy use : ") + var->getName() );
     }
     localContext[var->getName()] = var;
+}
+
+void Function::addStatement(Statement *statment) {
+
 }
