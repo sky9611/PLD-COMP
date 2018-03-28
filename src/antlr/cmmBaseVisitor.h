@@ -67,14 +67,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitInsDecVarList(cmmParser::InsDecVarListContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitInsStmt(cmmParser::InsStmtContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitStatementBlock(cmmParser::StatementBlockContext *ctx) override {
     return visitChildren(ctx);
   }

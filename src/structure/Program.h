@@ -23,7 +23,7 @@ public:
 
     virtual void addFunction(Function *function);
 
-    virtual cmmDef* getDef(string name);
+    virtual cmmDef* getDefLocal(string name);
 
     virtual Program* getProgramScope();
 

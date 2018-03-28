@@ -45,10 +45,6 @@ public:
 
     virtual antlrcpp::Any visitFctDefinition(cmmParser::FctDefinitionContext *context) = 0;
 
-    virtual antlrcpp::Any visitInsDecVarList(cmmParser::InsDecVarListContext *context) = 0;
-
-    virtual antlrcpp::Any visitInsStmt(cmmParser::InsStmtContext *context) = 0;
-
     virtual antlrcpp::Any visitStatementBlock(cmmParser::StatementBlockContext *context) = 0;
 
     virtual antlrcpp::Any visitStatementIf(cmmParser::StatementIfContext *context) = 0;

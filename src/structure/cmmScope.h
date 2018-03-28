@@ -18,7 +18,7 @@ class Function;
 class Program;
 
 class cmmScope {
-private:
+protected:
     string scopeName;
 
 public:
@@ -31,6 +31,8 @@ public:
     virtual Program* getProgramScope(){ return  getParent()->getProgramScope(); };
 
     virtual void addVar(cmmVar *pVar){throw cmmRuntimeException("[cmmScope::addVar] This scope don't accept var");} // Overwite this methode if you want to do that
+    virtual cmmDef* getDefLocal(string varName){return nullptr;}
+    virtual cmmDef* getDef(string varName);
     virtual void addStatement(Statement* statment) = 0;
 };
 

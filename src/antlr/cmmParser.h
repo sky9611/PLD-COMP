@@ -29,8 +29,8 @@ public:
     RuleFile = 0, RuleProgramme = 1, RuleVarDeclarationList = 2, RuleDeclarationVar = 3, 
     RuleDefinitionParameter = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, 
     RuleBrace = 8, RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDefinition = 11, 
-    RuleInstruction = 12, RuleStatement = 13, RuleExpr = 14, RuleOperatorBinaire = 15, 
-    RuleExprList = 16, RuleType = 17
+    RuleStatement = 12, RuleExpr = 13, RuleOperatorBinaire = 14, RuleExprList = 15, 
+    RuleType = 16
   };
 
   cmmParser(antlr4::TokenStream *input);
@@ -55,7 +55,6 @@ public:
   class FctBlockContext;
   class FctBraceContext;
   class FctDefinitionContext;
-  class InstructionContext;
   class StatementContext;
   class ExprContext;
   class OperatorBinaireContext;
@@ -224,8 +223,10 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *LeftBrace();
     antlr4::tree::TerminalNode *RightBrace();
-    std::vector<InstructionContext *> instruction();
-    InstructionContext* instruction(size_t i);
+    std::vector<VarDeclarationListContext *> varDeclarationList();
+    VarDeclarationListContext* varDeclarationList(size_t i);
+    std::vector<StatementContext *> statement();
+    StatementContext* statement(size_t i);
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
    
@@ -265,37 +266,6 @@ public:
   };
 
   FctDefinitionContext* fctDefinition();
-
-  class  InstructionContext : public antlr4::ParserRuleContext {
-  public:
-    InstructionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    InstructionContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(InstructionContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
-    virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  InsStmtContext : public InstructionContext {
-  public:
-    InsStmtContext(InstructionContext *ctx);
-
-    StatementContext *statement();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  InsDecVarListContext : public InstructionContext {
-  public:
-    InsDecVarListContext(InstructionContext *ctx);
-
-    VarDeclarationListContext *varDeclarationList();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  InstructionContext* instruction();
 
   class  StatementContext : public antlr4::ParserRuleContext {
   public:

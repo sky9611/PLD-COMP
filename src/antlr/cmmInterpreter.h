@@ -21,7 +21,7 @@ public:
     void setScope(cmmScope* scope);
     void unScope();
 
-    void printScopeList();
+    string getScopeList();
 
 public:
 

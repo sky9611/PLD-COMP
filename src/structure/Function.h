@@ -46,7 +46,9 @@ public:
 
     virtual void addVar(cmmVar* var);
     virtual void addStatement(Statement* statment);
+    virtual cmmDef* getDefLocal(string varName);
 
+    virtual StmtBlock* getContent();
 
     virtual Program* getParent();
     virtual Function* getFunctionScope();

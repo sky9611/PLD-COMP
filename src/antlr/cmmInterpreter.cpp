@@ -15,9 +15,7 @@ using namespace std;
 
 antlrcpp::Any cmmInterpreter::visitFile(cmmParser::FileContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] visitFile : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] visitFile : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitFile(ctx);
@@ -30,9 +28,7 @@ antlrcpp::Any cmmInterpreter::visitFile(cmmParser::FileContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitProgramme(cmmParser::ProgrammeContext *ctx) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitProgramme : scope(";
-    printScopeList();
-    cout << ")" << endl;
+    cout << "[cmmInterpreter] + visitProgramme : scope( "<< getScopeList() <<" )" << endl;
 #endif
 
     this->program = new Program();
@@ -49,9 +45,7 @@ antlrcpp::Any cmmInterpreter::visitProgramme(cmmParser::ProgrammeContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationListContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitVarDeclarationList : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitVarDeclarationList : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     Type t = visit(ctx->type());
@@ -59,6 +53,11 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
     for(cmmParser::DeclarationVarContext* varCtx :  ctx->declarationVar()){
         cmmVar* var = visit(varCtx);
         var->setType(t);
+
+        if(currentScope->getDefLocal(var->getName()) != nullptr){
+            throw cmmRuntimeException(string("[cmmInterpreter::visitVarDeclarationList] varName alredy use : ") + var->getName() + string("\n scope ( ") + getScopeList()+ string(" )"));
+        }
+
         currentScope->addVar(var);
     }
 
@@ -71,9 +70,7 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
 
 antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitDecVarSimple : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitDecVarSimple : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     Type type = VOID;
@@ -89,9 +86,7 @@ antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *
 
 antlrcpp::Any cmmInterpreter::visitDecArray(cmmParser::DecArrayContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitDecArray : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitDecArray : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitDecArray(ctx);
@@ -104,9 +99,7 @@ antlrcpp::Any cmmInterpreter::visitDecArray(cmmParser::DecArrayContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitDefinitionAttributs : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitDefinitionAttributs : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     cmmVar* res;
@@ -133,9 +126,7 @@ antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionPara
 
 antlrcpp::Any cmmInterpreter::visitArrayDef(cmmParser::ArrayDefContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitArrayDef : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitArrayDef : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     throw cmmRuntimeException("[cmmInterpreter::visitArrayDef] not implemented"); // TODO cmmInterpreter::visitArrayDef
@@ -150,9 +141,7 @@ antlrcpp::Any cmmInterpreter::visitArrayDef(cmmParser::ArrayDefContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitArrayDecl(cmmParser::ArrayDeclContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitArrayDecl : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitArrayDecl : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     Type type = VOID;
@@ -169,9 +158,7 @@ antlrcpp::Any cmmInterpreter::visitArrayDecl(cmmParser::ArrayDeclContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitBlock(cmmParser::BlockContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitBlock : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitBlock : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitBlock(ctx);
@@ -184,9 +171,7 @@ antlrcpp::Any cmmInterpreter::visitBlock(cmmParser::BlockContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitBrace(cmmParser::BraceContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitBrace : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitBrace : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitBrace(ctx);
@@ -199,10 +184,20 @@ antlrcpp::Any cmmInterpreter::visitBrace(cmmParser::BraceContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitFctBlock(cmmParser::FctBlockContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitFctBlock : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitFctBlock : scope( "<< getScopeList() <<" )" << endl;
     #endif
+
+    Function* function = currentScope->getFunctionScope();
+
+    for(auto defCtx : ctx->varDeclarationList()){
+        visit(defCtx);
+    }
+
+    setScope(function->getContent());
+    for(auto stmtCtx : ctx->statement()){
+        visit(stmtCtx);
+    }
+    unScope();
 
     auto res = cmmBaseVisitor::visitFctBlock(ctx);
 
@@ -214,9 +209,7 @@ antlrcpp::Any cmmInterpreter::visitFctBlock(cmmParser::FctBlockContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitFctBrace(cmmParser::FctBraceContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitFctBrace : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitFctBrace : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     vector<cmmVar*> params;
@@ -235,9 +228,7 @@ antlrcpp::Any cmmInterpreter::visitFctBrace(cmmParser::FctBraceContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitFctDefinition : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitFctDefinition : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
 
@@ -255,6 +246,11 @@ antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext
     vector<cmmVar*> params = visit(ctx->fctBrace());
 
     Function* function = new Function(program, type, name,params, ctx);
+
+    if(program->getDefLocal(function->getName()) != nullptr){
+        throw cmmRuntimeException(string("[cmmInterpreter::visitFctDefinition] functionName alredy use : ") + function->getName() );
+    }
+    
     program->addFunction(function);
 
     setScope(dynamic_cast<cmmScope*>(function));
@@ -271,9 +267,7 @@ antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext
 
 antlrcpp::Any cmmInterpreter::visitStatementBlock(cmmParser::StatementBlockContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitStatementBlock : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitStatementBlock : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitStatementBlock(ctx);
@@ -286,9 +280,7 @@ antlrcpp::Any cmmInterpreter::visitStatementBlock(cmmParser::StatementBlockConte
 
 antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitStatementIf : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitStatementIf : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitStatementIf(ctx);
@@ -301,9 +293,7 @@ antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ct
 
 antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitStatementWhile : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitStatementWhile : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitStatementWhile(ctx);
@@ -316,9 +306,7 @@ antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileConte
 
 antlrcpp::Any cmmInterpreter::visitStatementReturn(cmmParser::StatementReturnContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitStatementReturn : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitStatementReturn : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitStatementReturn(ctx);
@@ -332,9 +320,7 @@ antlrcpp::Any cmmInterpreter::visitStatementReturn(cmmParser::StatementReturnCon
 antlrcpp::Any
 cmmInterpreter::visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitStatementAppelFoncSansAttribut : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitStatementAppelFoncSansAttribut : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitStatementAppelFoncSansAttribut(ctx);
@@ -347,9 +333,7 @@ cmmInterpreter::visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFon
 
 antlrcpp::Any cmmInterpreter::visitExprParen(cmmParser::ExprParenContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprParen : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprParen : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprParen(ctx);
@@ -362,9 +346,7 @@ antlrcpp::Any cmmInterpreter::visitExprParen(cmmParser::ExprParenContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprValue : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprValue : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprValue(ctx);
@@ -377,9 +359,7 @@ antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprNot : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprNot : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprNot(ctx);
@@ -392,9 +372,7 @@ antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprVariable : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprVariable : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprVariable(ctx);
@@ -407,9 +385,7 @@ antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *
 
 antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprAppelFonc : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprAppelFonc : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprAppelFonc(ctx);
@@ -422,9 +398,7 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
 
 antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprMinus : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprMinus : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprMinus(ctx);
@@ -437,9 +411,7 @@ antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprIncPost : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprIncPost : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprIncPost(ctx);
@@ -452,9 +424,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ct
 
 antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprChar : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprChar : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprChar(ctx);
@@ -467,9 +437,7 @@ antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitStatementAssiggnment : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitStatementAssiggnment : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitStatementAssiggnment(ctx);
@@ -482,9 +450,7 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
 
 antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprIncPre : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprIncPre : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprIncPre(ctx);
@@ -497,9 +463,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx)
 
 antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprBinaire : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprBinaire : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprBinaire(ctx);
@@ -512,9 +476,7 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
 
 antlrcpp::Any cmmInterpreter::visitExprMultiDivMod(cmmParser::ExprMultiDivModContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprMultiDivMod : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprMultiDivMod : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprMultiDivMod(ctx);
@@ -527,9 +489,7 @@ antlrcpp::Any cmmInterpreter::visitExprMultiDivMod(cmmParser::ExprMultiDivModCon
 
 antlrcpp::Any cmmInterpreter::visitExprPlusMinus(cmmParser::ExprPlusMinusContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprPlusMinus : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprPlusMinus : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprPlusMinus(ctx);
@@ -542,9 +502,7 @@ antlrcpp::Any cmmInterpreter::visitExprPlusMinus(cmmParser::ExprPlusMinusContext
 
 antlrcpp::Any cmmInterpreter::visitExprShift(cmmParser::ExprShiftContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprShift : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprShift : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprShift(ctx);
@@ -557,9 +515,7 @@ antlrcpp::Any cmmInterpreter::visitExprShift(cmmParser::ExprShiftContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprComparative(cmmParser::ExprComparativeContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprComparative : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprComparative : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprComparative(ctx);
@@ -572,9 +528,7 @@ antlrcpp::Any cmmInterpreter::visitExprComparative(cmmParser::ExprComparativeCon
 
 antlrcpp::Any cmmInterpreter::visitExprEqualNotEqual(cmmParser::ExprEqualNotEqualContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprEqualNotEqual : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprEqualNotEqual : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprEqualNotEqual(ctx);
@@ -587,9 +541,7 @@ antlrcpp::Any cmmInterpreter::visitExprEqualNotEqual(cmmParser::ExprEqualNotEqua
 
 antlrcpp::Any cmmInterpreter::visitExprAnd(cmmParser::ExprAndContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprAnd : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprAnd : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprAnd(ctx);
@@ -602,9 +554,7 @@ antlrcpp::Any cmmInterpreter::visitExprAnd(cmmParser::ExprAndContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprCaret(cmmParser::ExprCaretContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprCaret : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprCaret : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprCaret(ctx);
@@ -617,9 +567,7 @@ antlrcpp::Any cmmInterpreter::visitExprCaret(cmmParser::ExprCaretContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprOr(cmmParser::ExprOrContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprOr : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprOr : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprOr(ctx);
@@ -632,9 +580,7 @@ antlrcpp::Any cmmInterpreter::visitExprOr(cmmParser::ExprOrContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprAndAnd(cmmParser::ExprAndAndContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprAndAnd : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprAndAnd : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprAndAnd(ctx);
@@ -647,9 +593,7 @@ antlrcpp::Any cmmInterpreter::visitExprAndAnd(cmmParser::ExprAndAndContext *ctx)
 
 antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprOrOr : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprOrOr : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprOrOr(ctx);
@@ -662,9 +606,7 @@ antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitExprList(cmmParser::ExprListContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitExprList : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitExprList : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
     auto res = cmmBaseVisitor::visitExprList(ctx);
@@ -677,9 +619,7 @@ antlrcpp::Any cmmInterpreter::visitExprList(cmmParser::ExprListContext *ctx) {
 
 antlrcpp::Any cmmInterpreter::visitType(cmmParser::TypeContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitType : scope(";
-        printScopeList();
-        cout << ")" << endl;
+        cout << "[cmmInterpreter] + visitType : scope( "<< getScopeList() <<" )" << endl;
     #endif
         antlr4::tree::TerminalNode* a = dynamic_cast<antlr4::tree::TerminalNode *>(ctx->children.at(0));
 
@@ -706,12 +646,15 @@ antlrcpp::Any cmmInterpreter::visitType(cmmParser::TypeContext *ctx) {
 }
 
 
-void cmmInterpreter::printScopeList() {
+string cmmInterpreter::getScopeList() {
     cmmScope* scope = currentScope;
+    string res;
     while(scope != nullptr){
-        cout << scope->getScopeName() << " >> " ;
+        if(res != "") res += string(" >> ");
+        res +=  scope->getScopeName();
         scope = scope->getParent();
     }
+    return res;
 }
 
 void cmmInterpreter::setScope(cmmScope *scope) {

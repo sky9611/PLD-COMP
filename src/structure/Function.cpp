@@ -56,5 +56,14 @@ void Function::addVar(cmmVar *var) {
 }
 
 void Function::addStatement(Statement *statment) {
+    content->addStatement(statment);
 
+}
+
+StmtBlock *Function::getContent() {
+    return this->content;
+}
+
+cmmDef *Function::getDefLocal(string varName) {
+    return localContext[name];
 }

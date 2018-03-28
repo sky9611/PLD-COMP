@@ -15,17 +15,11 @@ Program::~Program()
 
 void Program::addVar(cmmVar *var)
 {
-    if(globalContext.find(var->getName()) != globalContext.end()){
-        throw cmmRuntimeException(string("[Program::addVar] varName alredy use : ") + var->getName() );
-    }
     globalContext[var->getName()] = var;
 }
 
 void Program::addFunction(Function *function)
 {
-    if(globalContext.find(function->getName()) != globalContext.end()){
-        throw cmmRuntimeException(string("[Program::addFunction] functionName alredy use : ") + function->getName() );
-    }
     globalContext[function->getName()] = function;
 }
 
@@ -33,7 +27,7 @@ Program *Program::getProgramScope() {
     return this;
 }
 
-cmmDef *Program::getDef(string name) {
+cmmDef *Program::getDefLocal(string name) {
     return globalContext[name];
 }
 

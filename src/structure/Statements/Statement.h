@@ -5,6 +5,8 @@
 #ifndef PLD_COMP_STATEMENT_H
 #define PLD_COMP_STATEMENT_H
 
+class Statement;
+
 #include "../cmmScope.h"
 
 class Statement
