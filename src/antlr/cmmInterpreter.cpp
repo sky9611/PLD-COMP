@@ -10,6 +10,18 @@
 #include "../structure/cmmArray.h"
 #include "../structure/Function.h"
 #include "../structure/Program.h"
+#include "../structure/Statements/Statement.h"
+#include "../structure/Statements/StmtBlock.h"
+#include "../structure/Statements/StmtIf.h"
+#include "../structure/Statements/StmtReturn.h"
+#include "../structure/Statements/StmtWhile.h"
+#include "../structure/Statements/Expressions/Expression.h"
+#include "../structure/Statements/Expressions/ExprAssignment.h"
+#include "../structure/Statements/Expressions/ExprBinaire.h"
+#include "../structure/Statements/Expressions/ExprFuncCall.h"
+#include "../structure/Statements/Expressions/ExprUnaire.h"
+#include "../structure/Statements/Expressions/ExprValue.h"
+#include "../structure/Statements/Expressions/ExprVariable.h"
 
 using namespace std;
 
@@ -604,12 +616,17 @@ antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
     return res;
 }
 
-antlrcpp::Any cmmInterpreter::visitExprList(cmmParser::ExprListContext *ctx) {
+    antlrcpp::Any cmmInterpreter::visitExprList(cmmParser::ExprListContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitExprList : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprList(ctx);
+    vector<Expression*> res;
+
+    for(auto exprCtx: ctx->expr()){
+        Expression* expr = visit(exprCtx);
+        res.push_back(expr);
+    }
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprList" << endl;
