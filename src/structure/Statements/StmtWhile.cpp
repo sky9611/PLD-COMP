@@ -3,3 +3,9 @@
 //
 
 #include "StmtWhile.h"
+
+WhileStatement::~WhileStatement()
+{
+    delete test;
+    delete block;
+}

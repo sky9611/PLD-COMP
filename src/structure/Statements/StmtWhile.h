@@ -7,9 +7,19 @@
 
 
 #include "Statement.h"
+#include "Expressions/Expression.h"
+#include "StmtBlock.h"
 
-class WhileStatement : public Statement{
+class WhileStatement : public Statement
+{
+private:
+    Expression * test;
+    StmtBlock * block;
 
+public:
+    WhileStatement(cmmScope * _scope, Expression *_test, StmtBlock *_block):Statement(_scope),test(_test), block(_block){}
+
+    ~WhileStatement() override;
 };
 
 

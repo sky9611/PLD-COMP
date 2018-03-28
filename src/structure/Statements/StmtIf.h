@@ -8,16 +8,31 @@
 
 #include "Statement.h"
 #include "Expressions/Expression.h"
+#include "StmtBlock.h"
 
 class StmtIf : public Statement
 {
 private:
     Expression * test;
-    Statement * stmt;
-    Statement * elseStmt;
+    StmtBlock * block;
+    StmtBlock * elseBlock = nullptr;
 
 public:
-    StmtIf(cmmScope * _scope, Expression * _test, Statement * _stmt, Statement * _elseStmt):Statement(_scope),test(_test),stmt(_stmt),elseStmt(_elseStmt){}
+    StmtIf(cmmScope * _scope, Expression * _test, StmtBlock * _block):Statement(_scope),test(_test), block(_block){}
+
+    StmtIf(cmmScope * _scope, Expression * _test, StmtBlock * _block, StmtBlock * _elseBlock):StmtIf(_scope, _test, _block),elseBlock(_elseBlock){}
+
+    ~StmtIf() override;
+
+    StmtBlock *getBlock() const;
+
+    StmtBlock *getElseBlock() const;
+
+    Expression *getTest() const;
+/*
+    void setStatement(Statement * _block){block = _block;}
+
+    void setElseStatement(Statement * _elseStmt){elseStmt = _elseStmt;}*/
 };
 
 

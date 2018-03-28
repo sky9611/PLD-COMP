@@ -7,9 +7,19 @@
 
 
 #include "Statement.h"
+#include "Expressions/Expression.h"
 
-class StmtReturn : public Statement{
+class StmtReturn : public Statement
+{
+private:
+    Expression *expr = nullptr;
 
+public:
+    StmtReturn(cmmScope *_scope, Expression *_expr) : Statement(_scope), expr(_expr) {}
+
+    ~StmtReturn() override;
+
+    Expression *getExpr() const;
 };
 
 

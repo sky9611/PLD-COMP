@@ -3,3 +3,13 @@
 //
 
 #include "StmtReturn.h"
+
+StmtReturn::~StmtReturn()
+{
+    delete expr;
+}
+
+Expression *StmtReturn::getExpr() const
+{
+    return expr;
+}
