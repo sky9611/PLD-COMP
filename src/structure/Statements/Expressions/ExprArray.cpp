@@ -5,8 +5,8 @@
 #include "ExprArray.h"
 
 
-ExprArray::ExprArray(cmmScope *scope, cmmVar *var, Expression *expression)
-        : ExprVariable(scope,var), expression(expression) {
+ExprArray::ExprArray(cmmScope *scope, cmmArray *array, Expression *expression)
+        : ExprVariable(scope,array), expression(expression) {
 
 }
 
@@ -16,4 +16,8 @@ ExprArray::~ExprArray(){
 
 Expression *ExprArray::getExpression() const {
     return expression;
+}
+
+Type ExprArray::getType() {
+    return type::arrayToBasicType(var->getType());
 }

@@ -9,7 +9,7 @@ class ExprArray;
 
 #include "ExprVariable.h"
 #include "Expression.h"
-#include "../../cmmVar.h"
+#include "../../cmmArray.h"
 #include "../../cmmScope.h"
 #include "../../Type.h"
 
@@ -19,10 +19,12 @@ protected:
 
 public:
 
-    ExprArray(cmmScope *scope, cmmVar *var, Expression* expression );
+    ExprArray(cmmScope *scope, cmmArray *array, Expression* expression );
     virtual ~ExprArray();
 
     Expression* getExpression() const;
+
+    virtual Type getType();
 
 };
 

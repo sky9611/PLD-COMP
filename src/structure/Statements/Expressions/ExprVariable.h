@@ -11,7 +11,7 @@ class ExprVariable;
 
 class ExprVariable : public Expression
 {
-private:
+protected:
     cmmVar *var;
 public:
 
