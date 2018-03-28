@@ -7,9 +7,14 @@
 
 #include "../cmmScope.h"
 
-class Statement : public cmmBasicScop
+class Statement : public cmmBasicScope
 {
+public:
+    Statement();
 
+    virtual ~Statement() = 0;
+
+    void setParent(cmmScope *);
 };
 
 

@@ -3,3 +3,16 @@
 //
 
 #include "Statement.h"
+
+Statement::Statement()
+{}
+
+Statement::~Statement()
+{
+
+}
+
+void Statement::setParent(cmmScope * _parent)
+{
+    this->parent = _parent;
+}
