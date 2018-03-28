@@ -16,6 +16,7 @@
 #include "../structure/Statements/StmtReturn.h"
 #include "../structure/Statements/StmtWhile.h"
 #include "../structure/Statements/Expressions/Expression.h"
+#include "../structure/Statements/Expressions/ExprArray.h"
 #include "../structure/Statements/Expressions/ExprAssignment.h"
 #include "../structure/Statements/Expressions/ExprFuncCall.h"
 #include "../structure/Statements/Expressions/ExprValue.h"
@@ -390,12 +391,46 @@ antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *
         cout << "[cmmInterpreter] + visitExprVariable : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprVariable(ctx);
+    string varName = ctx->VarName()->getText();
+
+    cmmDef* def = currentScope->getDef(varName);
+
+
+    if(def == nullptr){
+        throw cmmRuntimeException(string("[cmmInterpreter::visitExprVariable] Unknow var name ") + varName + string(" scope( ") + getScopeList() + string(" )"));
+    }
+
+    ExprVariable* expVar;
+
+    if(ctx->expr() != nullptr){ // Array
+        if(typeid(*def) != typeid(cmmArray)){
+            throw cmmRuntimeException(string("[cmmInterpreter::visitExprVariable] Var name ") + varName + string(" is not an array scope( ") + getScopeList() + string(" )"));
+        }
+
+        cmmArray* array = dynamic_cast<cmmArray *>(def);
+
+        Expression* ex = visit(ctx->expr());
+
+        expVar = new ExprArray(currentScope,array,ex);
+
+
+    }else{ // Not Array
+        if(typeid(*def) != typeid(cmmVar)){
+            throw cmmRuntimeException(string("[cmmInterpreter::visitExprVariable] Var name ") + varName + string(" is not var( ") + getScopeList() + string(" )"));
+        }
+
+        cmmVar* var = dynamic_cast<cmmVar *>(def);
+
+        expVar = new ExprVariable(currentScope,var);
+
+    }
+
+
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprVariable" << endl;
     #endif
-    return res;
+    return expVar;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext *ctx) {
