@@ -288,13 +288,17 @@ antlrcpp::Any cmmInterpreter::visitStatementBlock(cmmParser::StatementBlockConte
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitStatementBlock : scope( "<< getScopeList() <<" )" << endl;
     #endif
+    StmtBlock* block = new StmtBlock(currentScope);
+    setScope(block);
 
-    auto res = cmmBaseVisitor::visitStatementBlock(ctx);
+    cmmBaseVisitor::visitStatementBlock(ctx);
+
+    unScope();
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementBlock" << endl;
     #endif
-    return res;
+    return block;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ctx) {
@@ -302,12 +306,31 @@ antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ct
         cout << "[cmmInterpreter] + visitStatementIf : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitStatementIf(ctx);
+    Expression* expression = visit(ctx->brace());
+
+    auto statmentIfCtx = ctx->statement(0);
+    auto statmentElseCtx = ctx->statement(1);
+
+    Statement* statmentIf = visit(statmentIfCtx);
+
+    StmtIf* stmtIf;
+
+    if(statmentElseCtx == nullptr){ // NO ELSE
+
+        stmtIf = new StmtIf(currentScope, expression, statmentIf);
+
+    }else{
+
+        Statement* statmentElse = visit(statmentElseCtx);
+
+        stmtIf = new StmtIf(currentScope, expression, statmentIf, statmentElse);
+
+    }
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementIf" << endl;
     #endif
-    return res;
+    return stmtIf;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileContext *ctx) {
