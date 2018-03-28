@@ -5,14 +5,15 @@
 #ifndef PLD_COMP_EXPRVALUE_H
 #define PLD_COMP_EXPRVALUE_H
 
+class ExprValue;
 
 #include "Expression.h"
 
 class ExprValue : public Expression{
 public:
-	ExprValue();
+    ~ExprValue() override;
 
-	virtual ~ExprValue();
+    ExprValue(cmmScope *scope, Type type);
 };
 
 

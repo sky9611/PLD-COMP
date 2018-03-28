@@ -3,3 +3,9 @@
 //
 
 #include "ExprVariable.h"
+
+ExprVariable::ExprVariable(cmmScope *scope, Type type, cmmVar *var) : Expression(scope, type), var(var)
+{}
+
+ExprVariable::~ExprVariable()
+= default;

@@ -4,8 +4,7 @@
 
 #include "ExprValue.h"
 
-ExprValue::ExprValue() {}
+ExprValue::~ExprValue() = default;
 
-ExprValue::~ExprValue() {
-
-}
+ExprValue::ExprValue(cmmScope *scope, Type type) : Expression(scope, type)
+{}

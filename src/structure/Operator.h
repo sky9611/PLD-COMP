@@ -33,7 +33,7 @@ enum UnaryOperator
     MINUS
 };
 
-enum OperatorBinaire
+enum BinaryOperator
 {
     Star,Div,Mod,Plus,Minus,LeftShift,RightShift,Less,LessEqual,Greater,GreaterEqual,Equal,NotEqual,And,Caret,Or,AndAnd,OrOr
 };

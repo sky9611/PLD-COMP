@@ -8,8 +8,19 @@
 
 #include "../Statement.h"
 
-class Expression : public Statement{
+class Expression : public Statement
+{
+private:
+    Type type;
+public:
+    ~Expression() override;
 
+    Type getType() const;
+
+    void setType(Type type);
+
+public:
+    Expression(cmmScope *scope, Type type);
 };
 
 
