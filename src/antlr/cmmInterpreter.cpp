@@ -215,12 +215,10 @@ antlrcpp::Any cmmInterpreter::visitFctBlock(cmmParser::FctBlockContext *ctx) {
     }
     unScope();
 
-    auto res = cmmBaseVisitor::visitFctBlock(ctx);
-
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitFctBlock" << endl;
     #endif
-    return res;
+    return function->getContent();
 }
 
 antlrcpp::Any cmmInterpreter::visitFctBrace(cmmParser::FctBraceContext *ctx) {
