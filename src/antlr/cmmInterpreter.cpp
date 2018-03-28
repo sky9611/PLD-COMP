@@ -62,7 +62,12 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
 
     for(cmmParser::DeclarationVarContext* varCtx :  ctx->declarationVar()){
         cmmVar* var = visit(varCtx);
-        var->setType(t);
+
+        if(typeid(*var) == typeid(cmmArray)){
+            var->setType(type::basicToArrayType(t));
+        }else{
+            var->setType(t);
+        }
 
         if(currentScope->getDefLocal(var->getName()) != nullptr){
             throw cmmRuntimeException(string("[cmmInterpreter::visitVarDeclarationList] varName alredy use : ") + var->getName() + string("\n scope ( ") + getScopeList()+ string(" )"));
