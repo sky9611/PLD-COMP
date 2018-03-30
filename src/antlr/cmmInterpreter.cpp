@@ -719,10 +719,12 @@ antlrcpp::Any cmmInterpreter::visitExprAnd(cmmParser::ExprAndContext *ctx) {
         cout << "[cmmInterpreter] + visitExprAnd : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
+    auto res = And;
+
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprAnd" << endl;
     #endif
-    return And;
+    return res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprCaret(cmmParser::ExprCaretContext *ctx) {
@@ -730,12 +732,12 @@ antlrcpp::Any cmmInterpreter::visitExprCaret(cmmParser::ExprCaretContext *ctx) {
         cout << "[cmmInterpreter] + visitExprCaret : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprCaret(ctx);
+    auto res = Caret;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprCaret" << endl;
     #endif
-    return Caret;
+    return res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprOr(cmmParser::ExprOrContext *ctx) {
@@ -743,12 +745,12 @@ antlrcpp::Any cmmInterpreter::visitExprOr(cmmParser::ExprOrContext *ctx) {
         cout << "[cmmInterpreter] + visitExprOr : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprOr(ctx);
+    auto res = Or;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprOr" << endl;
     #endif
-    return Or;
+    return res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprAndAnd(cmmParser::ExprAndAndContext *ctx) {
@@ -756,12 +758,12 @@ antlrcpp::Any cmmInterpreter::visitExprAndAnd(cmmParser::ExprAndAndContext *ctx)
         cout << "[cmmInterpreter] + visitExprAndAnd : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprAndAnd(ctx);
+    auto res = AndAnd;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprAndAnd" << endl;
     #endif
-    return AndAnd;
+    return res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
@@ -769,12 +771,12 @@ antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
         cout << "[cmmInterpreter] + visitExprOrOr : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprOrOr(ctx);
+    auto res = OrOr;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprOrOr" << endl;
     #endif
-    return OrOr;
+    return res;
 }
 
     antlrcpp::Any cmmInterpreter::visitExprList(cmmParser::ExprListContext *ctx) {
