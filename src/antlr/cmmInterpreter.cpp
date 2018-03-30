@@ -484,6 +484,13 @@ antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
     Expression * expr = visit(ctx->expr());
     ExprUnary * res = new ExprUnary(currentScope, expr, NOT);
 
+    ExprUnary * res = nullptr;
+
+    if(type::isBasicType(expr->getType()))
+        res = new ExprUnary(currentScope, expr, NOT);
+    else
+        throw cmmRuntimeException("[cmmInterpreter:visitExprNot()] Array is not operable " + getScopeList() + string(" )"));
+
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprNot" << endl;
     #endif
@@ -566,8 +573,15 @@ antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
         cout << "[cmmInterpreter] + visitExprMinus : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
+    ExprUnary * res = nullptr;
+
     Expression * expr = visit(ctx->expr());
     ExprUnary * res = new ExprUnary(currentScope, expr, MINUS);
+
+    if(type::isBasicType(expr->getType()))
+        res = new ExprUnary(currentScope, expr, MINUS);
+    else
+        throw cmmRuntimeException("[cmmInterpreter:visitExprMinus()] Array is not operable " + getScopeList() + string(" )"));
 
 
 #ifdef  VIEW_VISITOR_COUT
