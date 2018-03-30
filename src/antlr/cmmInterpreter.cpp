@@ -536,7 +536,16 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ct
         cout << "[cmmInterpreter] + visitExprIncPost : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprIncPost(ctx);
+    /*auto res = cmmBaseVisitor::visitExprIncPost(ctx);*/
+
+    UnaryAssignmentOperator op;
+
+    if(ctx->MinusMinus()!= nullptr)
+        op = MINUSMINUS;
+    if(ctx->PlusPlus()!= nullptr)
+        op = PLUSPLUS;
+
+    new ExprBinary(currentScope, ctx->)
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprIncPost" << endl;
