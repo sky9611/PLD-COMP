@@ -20,6 +20,8 @@ public:
 
     const vector<Statement *> &getStatements() const;
 
+    virtual string buildIR(CFG* cfg)const;
+
 private:
     vector<Statement *> statements;
 };

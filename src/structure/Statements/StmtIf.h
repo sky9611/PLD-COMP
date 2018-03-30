@@ -33,6 +33,8 @@ public:
     void setStatement(Statement * _block){block = _block;}
 
     void setElseStatement(Statement * _elseStmt){elseStmt = _elseStmt;}*/
+
+    virtual string buildIR(CFG* cfg)const;
 };
 
 

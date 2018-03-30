@@ -22,6 +22,8 @@ public:
     ~StmtReturn() override;
 
     Expression *getExpr() const;
+
+    virtual string buildIR(CFG* cfg)const;
 };
 
 

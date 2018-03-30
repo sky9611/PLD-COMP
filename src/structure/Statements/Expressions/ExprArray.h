@@ -26,6 +26,8 @@ public:
 
     virtual Type getType()const;
 
+    virtual string buildIR(CFG* cfg)const;
+
 };
 
 

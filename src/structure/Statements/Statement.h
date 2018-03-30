@@ -8,6 +8,7 @@
 class Statement;
 
 #include "../cmmScope.h"
+#include "../../ir/CFG.h"
 
 class Statement
 {
@@ -22,6 +23,8 @@ public:
     void setParent(cmmScope * _scope){scope = _scope;};
 
     cmmScope * getParent(cmmScope *){return scope;}
+
+    virtual string buildIR(CFG* cfg)const =  0;
 
 };
 

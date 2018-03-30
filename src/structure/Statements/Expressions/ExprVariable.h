@@ -23,6 +23,8 @@ public:
     cmmVar *getVar() const;
 
     void setVar(cmmVar *var);
+
+    virtual string buildIR(CFG* cfg)const;
 };
 
 

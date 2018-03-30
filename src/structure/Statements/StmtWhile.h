@@ -20,6 +20,8 @@ public:
     StmtWhile(cmmScope * _scope, Expression *_test, Statement *_block):Statement(_scope),test(_test), block(_block){}
 
     virtual ~StmtWhile();
+
+    virtual string buildIR(CFG* cfg)const;
 };
 
 

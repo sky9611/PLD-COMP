@@ -28,6 +28,8 @@ public:
     void setOp(UnaryOperator op);
 
     virtual Type getType()const;
+
+    virtual string buildIR(CFG* cfg)const;
 };
 
 

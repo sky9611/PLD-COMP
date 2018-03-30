@@ -25,6 +25,7 @@ public:
 
     virtual Any getValue()const;
 
+    virtual string buildIR(CFG* cfg)const;
 };
 
 
