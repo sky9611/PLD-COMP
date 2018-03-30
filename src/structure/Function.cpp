@@ -5,7 +5,7 @@
 #include "Function.h"
 
 
-Function::Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params, cmmParser::FctDefinitionContext *ctx):cmmScope("Function"), cmmDef(type,name), program(program), params(params)
+Function::Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params):cmmScope("Function"), cmmDef(type,name), program(program), params(params)
 {
     content = new StmtBlock(this);
     hasReturnValue = false;
@@ -66,4 +66,8 @@ StmtBlock *Function::getContent() {
 
 cmmDef *Function::getDefLocal(string varName) {
     return localContext[name];
+}
+
+vector<cmmVar *> Function::getParams() {
+    return params;
 }

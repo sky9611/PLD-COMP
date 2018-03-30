@@ -8,11 +8,8 @@
 class Function;
 
 #include <antlr4-runtime.h>
-#include <bitset>
-#include "../antlr/cmmParser.h"
 #include "../Exception/cmmRuntimeException.h"
 #include "Statements/StmtBlock.h"
-#include "cmmOperator.h"
 #include "cmmDef.h"
 #include "Program.h"
 #include "cmmScope.h"
@@ -35,7 +32,7 @@ public:
 
 public:
 
-    Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params, cmmParser::FctDefinitionContext *ctx);
+    Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params);
     virtual ~Function();
 
     Any getReturnValue();
