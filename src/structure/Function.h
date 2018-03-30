@@ -10,7 +10,8 @@ class Function;
 #include <antlr4-runtime.h>
 #include "cmmScope.h"
 #include "../Exception/cmmRuntimeException.h"
-class StmtBlock; //#include "Statements/StmtBlock.h"
+#include "../ir/CFG.h"
+#include "Statements/StmtBlock.h"
 #include "cmmDef.h"
 #include "Program.h"
 
@@ -21,6 +22,7 @@ class Function : public cmmDef, public cmmScope
 {
 private:
 
+    CFG* cfg;
     Program* program;
     bool hasReturnValue;
 
@@ -36,6 +38,9 @@ public:
     virtual ~Function();
 
     Any getReturnValue();
+
+    CFG *getCfg() const;
+
     void setReturnValue ( Any returnValue );
     bool getHasReturnValue();
     void setHasReturnValue ( bool hasReturnValue );

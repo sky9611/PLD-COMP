@@ -10,6 +10,8 @@ Function::Function(Program* program, Type type, const string &name,const vector<
     content = new StmtBlock(this);
     hasReturnValue = false;
 
+    cfg = new CFG(this);
+
     for(auto param : params) {
         if (localContext.find(param->getName()) != localContext.end()) { // varName alredy use
             throw cmmRuntimeException(string("[Function:Function()] Multiple definition du paramétre ") + param->getName() +
@@ -18,7 +20,11 @@ Function::Function(Program* program, Type type, const string &name,const vector<
         localContext[param->getName()] = param;
     }
 }
-Function::~Function(){}
+Function::~Function(){
+    delete cfg;
+    delete content;
+    for(auto a : localContext)delete a.second;
+}
 
 bool Function::getHasReturnValue()
 {
@@ -70,4 +76,8 @@ cmmDef *Function::getDefLocal(string varName) {
 
 vector<cmmVar *> Function::getParams() {
     return params;
+}
+
+CFG *Function::getCfg() const {
+    return cfg;
 }
