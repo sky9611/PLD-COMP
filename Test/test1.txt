@@ -1,14 +1,16 @@
 char a;
 char var4;
 void fonct1(int32_t var1, int32_t var2, char var3, int32_t var4, int64_t var5[], char var6[12]){
-    int32_t var7, int32_t var8;
-    int32_t var9, int32_t var10 = 2;
-    var3 = a;
+    int32_t var7, var8;
+    int32_t var9, var10 ;
+    if(a){
+
+    }
 }
 void fonct2(int32_t var1, int64_t var2, char var3, int32_t var4, int64_t var5[], int64_t var6[12]){
     var3 = a;
 }
 
 void fonct3(int32_t var4, int32_t var6){
-    var3 = a;
+    var4 = var6;
 }

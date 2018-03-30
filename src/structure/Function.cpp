@@ -55,9 +55,6 @@ const cmmContext &Function::getLocalContext() const {
 }
 
 void Function::addVar(cmmVar *var) {
-    if(localContext.find(var->getName()) != localContext.end()){
-        throw cmmRuntimeException(string("[Function::addVar] varName alredy use : ") + var->getName() );
-    }
     localContext[var->getName()] = var;
 }
 
@@ -71,7 +68,7 @@ StmtBlock *Function::getContent() {
 }
 
 cmmDef *Function::getDefLocal(string varName) {
-    return localContext[name];
+    return localContext[varName];
 }
 
 vector<cmmVar *> Function::getParams() {

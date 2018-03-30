@@ -307,7 +307,7 @@ antlrcpp::Any cmmInterpreter::visitStatementBlock(cmmParser::StatementBlockConte
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementBlock" << endl;
     #endif
-    return block;
+    return (Statement*)block;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ctx) {
@@ -339,7 +339,7 @@ antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ct
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementIf" << endl;
     #endif
-    return stmtIf;
+    return (Statement*)stmtIf;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileContext *ctx) {
@@ -355,7 +355,7 @@ antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileConte
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementWhile" << endl;
     #endif
-    return res;
+    return (Statement*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementReturn(cmmParser::StatementReturnContext *ctx) {
@@ -377,7 +377,7 @@ antlrcpp::Any cmmInterpreter::visitStatementReturn(cmmParser::StatementReturnCon
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementReturn" << endl;
     #endif
-    return res;
+    return (Statement*)res;
 }
 
 antlrcpp::Any
@@ -391,7 +391,7 @@ cmmInterpreter::visitStatementExpr(cmmParser::StatementExprContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementExpr" << endl;
     #endif
-    return res;
+    return (Statement*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitVarCall(cmmParser::VarCallContext *ctx){
@@ -436,7 +436,7 @@ antlrcpp::Any cmmInterpreter::visitVarCall(cmmParser::VarCallContext *ctx){
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitVarCall" << endl;
     #endif
-    return expVar;
+    return (ExprVariable*)expVar;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprParen(cmmParser::ExprParenContext *ctx) {
@@ -449,7 +449,7 @@ antlrcpp::Any cmmInterpreter::visitExprParen(cmmParser::ExprParenContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprParen" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
@@ -473,7 +473,7 @@ antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
 #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprValue" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
@@ -493,7 +493,7 @@ antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprNot" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *ctx) {
@@ -506,7 +506,7 @@ antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprVariable" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext *ctx) {
@@ -564,7 +564,7 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprAppelFonc" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
@@ -585,7 +585,7 @@ antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
 #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprMinus" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ctx) {
@@ -614,7 +614,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ct
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprIncPost" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
@@ -628,7 +628,7 @@ antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprChar" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) {
@@ -658,7 +658,7 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementAssiggnment" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx) {
@@ -687,7 +687,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx)
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprIncPre" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 //expr op expr
@@ -719,7 +719,7 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
 #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprBinaire" << endl;
     #endif
-    return res;
+    return (Expression*)res;
 }
 
 //expr *|% expr

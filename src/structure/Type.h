@@ -28,10 +28,10 @@ namespace type{
         }
     }
     static bool isBasicType(Type t){
-        return basicToArrayType(t) == BADTYPE;
+        return basicToArrayType(t) != BADTYPE;
     }
     static bool isArrayType(Type t){
-        return arrayToBasicType(t) == BADTYPE;
+        return arrayToBasicType(t) != BADTYPE;
     }
     static std::string toString(Type t){
         switch (t){
