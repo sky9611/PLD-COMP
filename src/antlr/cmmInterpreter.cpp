@@ -558,7 +558,8 @@ antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
         cout << "[cmmInterpreter] + visitExprChar : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprChar(ctx);
+    char c = ctx->getText()[1];
+    ExprValue* res = new ExprValue(currentScope, CHAR, c);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprChar" << endl;
