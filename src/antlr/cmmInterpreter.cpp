@@ -643,19 +643,19 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
 
     Expression * expr0 = visit(ctx->expr(0));
     Expression * expr1 = visit(ctx->expr(1));
+    BinaryOperator oB = visit(ctx->operatorBinaire());
 
-    Type t1 = expr0->getType();
-    Type t2 = expr1->getType();
+    Type t0 = expr0->getType();
+    Type t1 = expr1->getType();
 
-    if(type::isBasicType(expr0->getType())&&type::isBasicType(expr1->getType())){
-        if(t1 == t2)
-            BinaryOperator oB = visit(ctx->operatorBinaire());
-        else
-            throw cmmRuntimeException("[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " + getScopeList() + string(" )"));
-    } else {
-        throw cmmRuntimeException("[cmmInterpreter:visitExprBinaire()] Array is not operable " + getScopeList() + string(" )"));
+    if(!type::isBasicType(t0) || !type::isBasicType(t1)) {
+        throw cmmRuntimeException(
+                "[cmmInterpreter:visitExprBinaire()] Array is not operable " + getScopeList() + string(" )"));
+    }else if(t0 != t1) {
+        throw cmmRuntimeException("[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " + getScopeList() + string(" )"));
     }
-    Expression * res = new ExprBinary(currentScope,expr0,expr1,oB);
+
+    Expression * res = new ExprBinary(currentScope, expr0, expr1, oB);
 
 #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprBinaire" << endl;
