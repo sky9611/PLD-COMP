@@ -195,7 +195,7 @@ antlrcpp::Any cmmInterpreter::visitBrace(cmmParser::BraceContext *ctx) {
         cout << "[cmmInterpreter] + visitBrace : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitBrace(ctx);
+    auto res = visit(ctx->expr());
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitBrace" << endl;
@@ -338,7 +338,10 @@ antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileConte
         cout << "[cmmInterpreter] + visitStatementWhile : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitStatementWhile(ctx);
+    Statement* stmt = visit(ctx->statement());
+    Expression* test = visit(ctx->brace());
+
+    StmtWhile* res = new StmtWhile(currentScope, test, stmt);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementWhile" << endl;
