@@ -5,11 +5,11 @@
 #include "cmmInterpreter.h"
 #define VIEW_VISITOR_COUT
 
+#include "../structure/Function.h"
+#include "../structure/Program.h"
 #include "../structure/cmmDef.h"
 #include "../structure/cmmVar.h"
 #include "../structure/cmmArray.h"
-#include "../structure/Function.h"
-#include "../structure/Program.h"
 #include "../structure/Statements/Statement.h"
 #include "../structure/Statements/StmtBlock.h"
 #include "../structure/Statements/StmtIf.h"
@@ -273,7 +273,7 @@ antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext
 
     vector<cmmVar*> params = visit(ctx->fctBrace());
 
-    Function* function = new Function(program, type, name,params, ctx);
+    Function* function = new Function(program, type, name,params);
 
     if(program->getDefLocal(function->getName()) != nullptr){
         throw cmmRuntimeException(string("[cmmInterpreter::visitFctDefinition] functionName alredy use : ") + function->getName() );
