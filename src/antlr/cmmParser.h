@@ -29,8 +29,8 @@ public:
     RuleFile = 0, RuleProgramme = 1, RuleVarDeclarationList = 2, RuleDeclarationVar = 3, 
     RuleDefinitionParameter = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, 
     RuleBrace = 8, RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDefinition = 11, 
-    RuleStatement = 12, RuleExpr = 13, RuleOperatorBinaire = 14, RuleExprList = 15, 
-    RuleType = 16
+    RuleStatement = 12, RuleVarCall = 13, RuleExpr = 14, RuleOperatorBinaire = 15, 
+    RuleExprList = 16, RuleType = 17
   };
 
   cmmParser(antlr4::TokenStream *input);
@@ -56,6 +56,7 @@ public:
   class FctBraceContext;
   class FctDefinitionContext;
   class StatementContext;
+  class VarCallContext;
   class ExprContext;
   class OperatorBinaireContext;
   class ExprListContext;
@@ -331,6 +332,21 @@ public:
 
   StatementContext* statement();
 
+  class  VarCallContext : public antlr4::ParserRuleContext {
+  public:
+    VarCallContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *VarName();
+    antlr4::tree::TerminalNode *LeftBracket();
+    ExprContext *expr();
+    antlr4::tree::TerminalNode *RightBracket();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  VarCallContext* varCall();
+
   class  ExprContext : public antlr4::ParserRuleContext {
   public:
     ExprContext(antlr4::ParserRuleContext *parent, size_t invokingState);
@@ -375,10 +391,7 @@ public:
   public:
     ExprVariableContext(ExprContext *ctx);
 
-    antlr4::tree::TerminalNode *VarName();
-    antlr4::tree::TerminalNode *LeftBracket();
-    ExprContext *expr();
-    antlr4::tree::TerminalNode *RightBracket();
+    VarCallContext *varCall();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -406,12 +419,9 @@ public:
   public:
     ExprIncPostContext(ExprContext *ctx);
 
-    antlr4::tree::TerminalNode *VarName();
+    VarCallContext *varCall();
     antlr4::tree::TerminalNode *PlusPlus();
     antlr4::tree::TerminalNode *MinusMinus();
-    antlr4::tree::TerminalNode *LeftBracket();
-    ExprContext *expr();
-    antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -427,7 +437,7 @@ public:
   public:
     StatementAssiggnmentContext(ExprContext *ctx);
 
-    antlr4::tree::TerminalNode *VarName();
+    VarCallContext *varCall();
     ExprContext *expr();
     antlr4::tree::TerminalNode *Assign();
     antlr4::tree::TerminalNode *StarAssign();
@@ -440,9 +450,6 @@ public:
     antlr4::tree::TerminalNode *AndAssign();
     antlr4::tree::TerminalNode *XorAssign();
     antlr4::tree::TerminalNode *OrAssign();
-    antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *Value();
-    antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -450,12 +457,9 @@ public:
   public:
     ExprIncPreContext(ExprContext *ctx);
 
-    antlr4::tree::TerminalNode *VarName();
+    VarCallContext *varCall();
     antlr4::tree::TerminalNode *PlusPlus();
     antlr4::tree::TerminalNode *MinusMinus();
-    antlr4::tree::TerminalNode *LeftBracket();
-    ExprContext *expr();
-    antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 

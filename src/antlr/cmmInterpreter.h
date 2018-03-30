@@ -61,6 +61,8 @@ public:
 
     antlrcpp::Any visitStatementExpr(cmmParser::StatementExprContext *ctx) override;
 
+    antlrcpp::Any visitVarCall(cmmParser::VarCallContext *ctx) override ;
+
     antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *ctx) override;
 
     antlrcpp::Any visitExprValue(cmmParser::ExprValueContext *ctx) override;

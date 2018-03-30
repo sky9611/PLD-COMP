@@ -87,6 +87,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitVarCall(cmmParser::VarCallContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *ctx) override {
     return visitChildren(ctx);
   }

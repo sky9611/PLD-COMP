@@ -55,6 +55,8 @@ public:
 
     virtual antlrcpp::Any visitStatementExpr(cmmParser::StatementExprContext *context) = 0;
 
+    virtual antlrcpp::Any visitVarCall(cmmParser::VarCallContext *context) = 0;
+
     virtual antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *context) = 0;
 
     virtual antlrcpp::Any visitExprValue(cmmParser::ExprValueContext *context) = 0;

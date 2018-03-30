@@ -44,12 +44,15 @@ statement :
     |expr Semi                                      #statementExpr
     ;
 
+varCall: VarName (LeftBracket expr RightBracket)?;
+
+
 expr:
-    Value                                                              #exprValue
-    |VarName (LeftBracket Value RightBracket)? (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr     #statementAssiggnment
-    |VarName (LeftBracket expr RightBracket)?                          #exprVariable
-    |VarName (LeftBracket expr RightBracket)? (PlusPlus|MinusMinus)    #exprIncPost
-    |(PlusPlus|MinusMinus) VarName (LeftBracket expr RightBracket)?    #exprIncPre
+    Value                                                               #exprValue
+    |varCall (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr     #statementAssiggnment
+    |varCall                                                            #exprVariable
+    |varCall (PlusPlus|MinusMinus)                                      #exprIncPost
+    |(PlusPlus|MinusMinus) varCall                                      #exprIncPre
     |Not expr                                                           #exprNot
     |Minus expr                                                         #exprMinus
     |expr operatorBinaire expr                                          #exprBinaire
