@@ -4,3 +4,11 @@
 
 #include "IRInstr.h"
 #include "BasicBlock.h"
+
+IRInstr::IRInstr(BasicBlock *bb_, IRInstr::Operation op, Type t, vector<string> params) {
+
+}
+
+void IRInstr::gen_asm(ostream &o) {
+
+}
