@@ -468,7 +468,7 @@ antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
     else if (value<LONG_MAX)
         res = new ExprValue(currentScope, INT64_T, value);
     else
-        throw cmmRuntimeException(string("[cmmInterpreter::visitExprValue] Outside range: ") + to_string(value));
+        throw cmmRuntimeException(string("[cmmInterpreter::visitExprValue] Outside range: ") + to_string(value) + getScopeList() + string(" )"));
 
 #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprValue" << endl;
@@ -548,6 +548,8 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ct
             exprBi = new ExprBinary(currentScope, var, one, Minus);
         if(ctx->PlusPlus()!= nullptr)
             exprBi = new ExprBinary(currentScope, var, one, Plus);
+    } else {
+        throw cmmRuntimeException("[cmmInterpreter:visitExprIncPost()] Array is not assignable " + getScopeList() + string(" )"));
     }
 
     ExprAssignment *res = new ExprAssignment(currentScope, var->getVar(), exprBi, false);
@@ -585,10 +587,16 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
 
     ExprAssignment * res = nullptr;
 
-    if(gauche->getType()==droite->getType())
-        res = new ExprAssignment(currentScope, gauche->getVar(), droite);
-    else
-        throw cmmRuntimeException("[cmmInterpreter:visitStatementAssiggnment()] Error cast from " + type::toString(droite->getType()) + "to " + type::toString(gauche->getType()));
+    if(type::isBasicType(gauche->getType())) {
+        if (gauche->getType() == droite->getType())
+            res = new ExprAssignment(currentScope, gauche->getVar(), droite);
+        else
+            throw cmmRuntimeException("[cmmInterpreter:visitStatementAssiggnment()] Error cast from " +
+                                      type::toString(droite->getType()) + "to " + type::toString(gauche->getType()) +
+                                      getScopeList() + string(" )"));
+    } else {
+        throw cmmRuntimeException("[cmmInterpreter:visitExprIncPost()] Array is not assignable " + getScopeList() + string(" )"));
+    }
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementAssiggnment" << endl;
@@ -613,6 +621,8 @@ antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx)
             exprBi = new ExprBinary(currentScope, var, one, Minus);
         if(ctx->PlusPlus()!= nullptr)
             exprBi = new ExprBinary(currentScope, var, one, Plus);
+    } else {
+        throw cmmRuntimeException("[cmmInterpreter:ExprIncPreContext()] Array is not assignable " + getScopeList() + string(" )"));
     }
 
     ExprAssignment *res = new ExprAssignment(currentScope, var->getVar(), exprBi, true);
@@ -634,8 +644,17 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
     Expression * expr0 = visit(ctx->expr(0));
     Expression * expr1 = visit(ctx->expr(1));
 
-    BinaryOperator oB = visit(ctx->operatorBinaire());
+    Type t1 = expr0->getType();
+    Type t2 = expr1->getType();
 
+    if(type::isBasicType(expr0->getType())&&type::isBasicType(expr1->getType())){
+        if(t1 == t2)
+            BinaryOperator oB = visit(ctx->operatorBinaire());
+        else
+            throw cmmRuntimeException("[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " + getScopeList() + string(" )"));
+    } else {
+        throw cmmRuntimeException("[cmmInterpreter:visitExprBinaire()] Array is not operable " + getScopeList() + string(" )"));
+    }
     Expression * res = new ExprBinary(currentScope,expr0,expr1,oB);
 
 #ifdef  VIEW_VISITOR_COUT
@@ -847,7 +866,7 @@ antlrcpp::Any cmmInterpreter::visitType(cmmParser::TypeContext *ctx) {
                 res =  CHAR;
                 break;
             default:
-                throw cmmRuntimeException("[cmmInterpreter:visitType()] Unknow type");
+                throw cmmRuntimeException("[cmmInterpreter:visitType()] Unknow type" + getScopeList() + string(" )"));
         }
 
     #ifdef  VIEW_VISITOR_COUT
