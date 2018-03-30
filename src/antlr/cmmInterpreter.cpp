@@ -508,7 +508,52 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
         cout << "[cmmInterpreter] + visitExprAppelFonc : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprAppelFonc(ctx);
+    string fctName = ctx->VarName()->getText();
+
+    cmmDef* fctDef = currentScope->getProgramScope()->getDef(fctName);
+    if(fctDef == nullptr){
+        throw cmmRuntimeException(string("[cmmInterpreter::visitExprAppelFonc] la fonction ")+string(fctName) + string(" n'exist pas : scope( ") + getScopeList() + string(" )"));
+    }else if(typeid(*fctDef) != typeid(Function)){
+        throw cmmRuntimeException(string("[cmmInterpreter::visitExprAppelFonc] ")+string(fctName) + string(" n'est pas une fonction : scope( ") + getScopeList() + string(" )"));
+    }
+
+    Function* fct = dynamic_cast<Function *>(fctDef);
+    vector<cmmVar* > signature = fct->getParams();
+    vector<Expression*> parmsExp = visit(ctx->exprList());
+
+
+
+    if(signature.size() != parmsExp.size()){
+        throw cmmRuntimeException(
+                string("[cmmInterpreter::visitExprAppelFonc] la fonction ")
+                + string(fctName)
+                + string(" demande ")
+                + to_string(parmsExp.size())
+                + string(" paramétre mais ")
+                + to_string(parmsExp.size())
+                + string(" sont données: scope( ")
+                + getScopeList()
+                + string(" )"));
+    }
+
+    for(int i=0; i<signature.size();i++){
+        if(signature[i]->getType() == parmsExp[i]->getType()){
+            throw cmmRuntimeException(
+                    string("[cmmInterpreter::visitExprAppelFonc] la fonction ")
+                    + string(fctName)
+                    + string(" demande un ")
+                    + type::toString(signature[i]->getType())
+                    + string(" pour le paramétre")
+                    + to_string(i)
+                    + string(" mais un ")
+                    + type::toString(parmsExp[i]->getType())
+                    + string(" est données: scope( ")
+                    + getScopeList()
+                    + string(" )"));
+        }
+    }
+
+    ExprFuncCall* res = new ExprFuncCall(currentScope,fct, parmsExp);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprAppelFonc" << endl;
