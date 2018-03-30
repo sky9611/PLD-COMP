@@ -41,7 +41,7 @@ namespace type{
             case CHAR : return "CHAR";
             case INT32_T_ARRAY : return "INT32_T_ARRAY";
             case INT64_T_ARRAY : return "INT64_T_ARRAY";
-            case:CHAR_ARRAY : return "CHAR_ARRAY";
+            case CHAR_ARRAY : return "CHAR_ARRAY";
             default: return "Unknown type";
         }
     }
