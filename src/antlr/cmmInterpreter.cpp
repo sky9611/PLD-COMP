@@ -61,6 +61,7 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
 
     Type t = visit(ctx->type());
 
+
     for(cmmParser::DeclarationVarContext* varCtx :  ctx->declarationVar()){
         cmmVar* var = visit(varCtx);
 
@@ -110,7 +111,13 @@ antlrcpp::Any cmmInterpreter::visitDecArray(cmmParser::DecArrayContext *ctx) {
         cout << "[cmmInterpreter] + visitDecArray : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitDecArray(ctx);
+    cmmArray* res;
+
+    if(ctx->arrayDecl() != nullptr){
+        res = visit(ctx->arrayDecl());
+    } else {
+        res = visit(ctx->arrayDef());
+    }
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitDecArray" << endl;
