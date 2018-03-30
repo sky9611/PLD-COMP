@@ -21,6 +21,8 @@
 #include "../structure/Statements/Expressions/ExprFuncCall.h"
 #include "../structure/Statements/Expressions/ExprValue.h"
 #include "../structure/Statements/Expressions/ExprVariable.h"
+#include "../structure/Statements/Expressions/ExprBinary.h"
+#include "../structure/Statements/Expressions/ExprUnary.h"
 
 using namespace std;
 
@@ -410,9 +412,20 @@ antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
         cout << "[cmmInterpreter] + visitExprValue : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprValue(ctx);
+    /*auto res = cmmBaseVisitor::visitExprValue(ctx);*/
 
-    #ifdef  VIEW_VISITOR_COUT
+    ExprValue *res = nullptr;
+
+    long value = stol(ctx->getText());
+
+    if(value<INT_MAX)
+        res = new ExprValue(currentScope, INT32_T, value);
+    else if (value<LONG_MAX)
+        res = new ExprValue(currentScope, INT64_T, value);
+    else
+        throw cmmRuntimeException(string("[cmmInterpreter::visitExprValue] Outside range: ") + to_string(value));
+
+#ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprValue" << endl;
     #endif
     return res;
@@ -423,7 +436,8 @@ antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
         cout << "[cmmInterpreter] + visitExprNot : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprNot(ctx);
+    Expression * expr = visit(ctx->expr());
+    ExprUnary * res = new ExprUnary(currentScope, expr, NOT);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprNot" << endl;
@@ -496,9 +510,11 @@ antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
         cout << "[cmmInterpreter] + visitExprMinus : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprMinus(ctx);
+    Expression * expr = visit(ctx->expr());
+    ExprUnary * res = new ExprUnary(currentScope, expr, MINUS);
 
-    #ifdef  VIEW_VISITOR_COUT
+
+#ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprMinus" << endl;
     #endif
     return res;
@@ -556,25 +572,41 @@ antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx)
     return res;
 }
 
+//expr op expr
 antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitExprBinaire : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprBinaire(ctx);
+    /*auto res = cmmBaseVisitor::visitExprBinaire(ctx);*/
 
-    #ifdef  VIEW_VISITOR_COUT
+    Expression * expr0 = visit(ctx->expr(0));
+    Expression * expr1 = visit(ctx->expr(1));
+
+    BinaryOperator oB = visit(ctx->operatorBinaire());
+
+    Expression * res = new ExprBinary(currentScope,expr0,expr1,oB);
+
+#ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprBinaire" << endl;
     #endif
     return res;
 }
 
+//expr *|% expr
 antlrcpp::Any cmmInterpreter::visitExprMultiDivMod(cmmParser::ExprMultiDivModContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitExprMultiDivMod : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprMultiDivMod(ctx);
+    BinaryOperator res = Div;
+
+    if(ctx->Div()!= nullptr)
+        res = Div;
+    else if(ctx->Mod()!= nullptr)
+        res = Mod;
+    else if(ctx->Star()!= nullptr)
+        res = Star;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprMultiDivMod" << endl;
@@ -582,27 +614,41 @@ antlrcpp::Any cmmInterpreter::visitExprMultiDivMod(cmmParser::ExprMultiDivModCon
     return res;
 }
 
+//expr +- expr
 antlrcpp::Any cmmInterpreter::visitExprPlusMinus(cmmParser::ExprPlusMinusContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitExprPlusMinus : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprPlusMinus(ctx);
+    BinaryOperator res = Plus;
 
-    #ifdef  VIEW_VISITOR_COUT
+    if(ctx->Plus()!= nullptr)
+        res = Plus;
+    else if(ctx->Minus()!= nullptr)
+        res = Minus;
+
+
+#ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprPlusMinus" << endl;
     #endif
     return res;
 }
 
+//expr >><< expr
 antlrcpp::Any cmmInterpreter::visitExprShift(cmmParser::ExprShiftContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitExprShift : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprShift(ctx);
+    BinaryOperator res = LeftShift;
 
-    #ifdef  VIEW_VISITOR_COUT
+    if(ctx->LeftShift()!= nullptr)
+        res = LeftShift;
+    else if(ctx->RightShift()!= nullptr)
+        res = RightShift;
+
+
+#ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprShift" << endl;
     #endif
     return res;
@@ -613,7 +659,16 @@ antlrcpp::Any cmmInterpreter::visitExprComparative(cmmParser::ExprComparativeCon
         cout << "[cmmInterpreter] + visitExprComparative : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprComparative(ctx);
+    BinaryOperator res = Less;
+
+    if(ctx->Greater()!= nullptr)
+        res = Greater;
+    else if(ctx->GreaterEqual()!= nullptr)
+        res = GreaterEqual;
+    else if(ctx->Less()!= nullptr)
+        res = Less;
+    else if(ctx->LessEqual()!= nullptr)
+        res = LessEqual;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprComparative" << endl;
@@ -626,7 +681,12 @@ antlrcpp::Any cmmInterpreter::visitExprEqualNotEqual(cmmParser::ExprEqualNotEqua
         cout << "[cmmInterpreter] + visitExprEqualNotEqual : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprEqualNotEqual(ctx);
+    BinaryOperator res = Equal;
+
+    if(ctx->Equal()!= nullptr)
+        res = Equal;
+    else if(ctx->NotEqual()!= nullptr)
+        res = NotEqual;
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprEqualNotEqual" << endl;
@@ -639,12 +699,10 @@ antlrcpp::Any cmmInterpreter::visitExprAnd(cmmParser::ExprAndContext *ctx) {
         cout << "[cmmInterpreter] + visitExprAnd : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprAnd(ctx);
-
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprAnd" << endl;
     #endif
-    return res;
+    return And;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprCaret(cmmParser::ExprCaretContext *ctx) {
@@ -657,7 +715,7 @@ antlrcpp::Any cmmInterpreter::visitExprCaret(cmmParser::ExprCaretContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprCaret" << endl;
     #endif
-    return res;
+    return Caret;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprOr(cmmParser::ExprOrContext *ctx) {
@@ -670,7 +728,7 @@ antlrcpp::Any cmmInterpreter::visitExprOr(cmmParser::ExprOrContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprOr" << endl;
     #endif
-    return res;
+    return Or;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprAndAnd(cmmParser::ExprAndAndContext *ctx) {
@@ -683,7 +741,7 @@ antlrcpp::Any cmmInterpreter::visitExprAndAnd(cmmParser::ExprAndAndContext *ctx)
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprAndAnd" << endl;
     #endif
-    return res;
+    return AndAnd;
 }
 
 antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
@@ -696,7 +754,7 @@ antlrcpp::Any cmmInterpreter::visitExprOrOr(cmmParser::ExprOrOrContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprOrOr" << endl;
     #endif
-    return res;
+    return OrOr;
 }
 
     antlrcpp::Any cmmInterpreter::visitExprList(cmmParser::ExprListContext *ctx) {

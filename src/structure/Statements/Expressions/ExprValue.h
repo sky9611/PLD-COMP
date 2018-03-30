@@ -21,7 +21,7 @@ public:
 
     virtual ~ExprValue();
 
-    virtual Type getType();
+    virtual Type getType()const;
 
     virtual Any getValue()const;
 

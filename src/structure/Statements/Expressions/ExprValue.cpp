@@ -11,7 +11,7 @@ ExprValue::ExprValue(cmmScope *scope, Type type, Any value) : Expression(scope),
 
 }
 
-Type ExprValue::getType(){
+Type ExprValue::getType()const{
     return type;
 }
 
