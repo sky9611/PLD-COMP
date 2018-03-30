@@ -33,6 +33,18 @@ namespace type{
     static bool isArrayType(Type t){
         return arrayToBasicType(t) == BADTYPE;
     }
+    static std::string toString(Type t){
+        switch (t){
+            case VOID : return "VOID";
+            case INT32_T : return "INT32_T";
+            case INT64_T : return "INT64_T";
+            case CHAR : return "CHAR";
+            case INT32_T_ARRAY : return "INT32_T_ARRAY";
+            case INT64_T_ARRAY : return "INT64_T_ARRAY";
+            case:CHAR_ARRAY : return "CHAR_ARRAY";
+            default: return "Unknown type";
+        }
+    }
 }
 
 #endif //CMM_TYPE_H

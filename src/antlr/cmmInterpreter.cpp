@@ -495,7 +495,7 @@ antlrcpp::Any cmmInterpreter::visitExprVariable(cmmParser::ExprVariableContext *
         cout << "[cmmInterpreter] + visitExprVariable : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    cmmVar* res = visit(ctx->varCall());
+    ExprVariable* res = visit(ctx->varCall());
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprVariable" << endl;
@@ -536,16 +536,21 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost(cmmParser::ExprIncPostContext *ct
         cout << "[cmmInterpreter] + visitExprIncPost : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    /*auto res = cmmBaseVisitor::visitExprIncPost(ctx);*/
+    ExprVariable *var = visit(ctx->varCall());
 
-    UnaryAssignmentOperator op;
+    ExprBinary *exprBi = nullptr;
 
-    if(ctx->MinusMinus()!= nullptr)
-        op = MINUSMINUS;
-    if(ctx->PlusPlus()!= nullptr)
-        op = PLUSPLUS;
+    Type t = var->getType();
 
-    new ExprBinary(currentScope, ctx->)
+    if(type::isBasicType(t)){
+        ExprValue *one = new ExprValue(currentScope, var->getType(), 1);
+        if(ctx->MinusMinus()!= nullptr)
+            exprBi = new ExprBinary(currentScope, var, one, Minus);
+        if(ctx->PlusPlus()!= nullptr)
+            exprBi = new ExprBinary(currentScope, var, one, Plus);
+    }
+
+    ExprAssignment *res = new ExprAssignment(currentScope, var->getVar(), exprBi, false);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprIncPost" << endl;
@@ -572,7 +577,18 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
         cout << "[cmmInterpreter] + visitStatementAssiggnment : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitStatementAssiggnment(ctx);
+//    auto res = cmmBaseVisitor::visitStatementAssiggnment(ctx);
+
+    ExprVariable * gauche = visit(ctx->varCall());
+
+    Expression * droite = visit(ctx->expr());
+
+    ExprAssignment * res = nullptr;
+
+    if(gauche->getType()==droite->getType())
+        res = new ExprAssignment(currentScope, gauche->getVar(), droite);
+    else
+        throw cmmRuntimeException("[cmmInterpreter:visitStatementAssiggnment()] Error cast from " + type::toString(droite->getType()) + "to " + type::toString(gauche->getType()));
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementAssiggnment" << endl;
@@ -585,7 +601,21 @@ antlrcpp::Any cmmInterpreter::visitExprIncPre(cmmParser::ExprIncPreContext *ctx)
         cout << "[cmmInterpreter] + visitExprIncPre : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitExprIncPre(ctx);
+    ExprVariable *var = visit(ctx->varCall());
+
+    ExprBinary *exprBi = nullptr;
+
+    Type t = var->getType();
+
+    if(type::isBasicType(t)){
+        ExprValue *one = new ExprValue(currentScope, var->getType(), 1);
+        if(ctx->MinusMinus()!= nullptr)
+            exprBi = new ExprBinary(currentScope, var, one, Minus);
+        if(ctx->PlusPlus()!= nullptr)
+            exprBi = new ExprBinary(currentScope, var, one, Plus);
+    }
+
+    ExprAssignment *res = new ExprAssignment(currentScope, var->getVar(), exprBi, true);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprIncPre" << endl;

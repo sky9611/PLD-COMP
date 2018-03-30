@@ -19,6 +19,10 @@ public:
     virtual ~ExprVariable();
 
     virtual Type getType()const;
+
+    cmmVar *getVar() const;
+
+    void setVar(cmmVar *var);
 };
 
 

@@ -13,3 +13,13 @@ ExprVariable::~ExprVariable()
 Type ExprVariable::getType() const{
     return var->getType();
 }
+
+cmmVar *ExprVariable::getVar() const
+{
+    return var;
+}
+
+void ExprVariable::setVar(cmmVar *var)
+{
+    ExprVariable::var = var;
+}
