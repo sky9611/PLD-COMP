@@ -5,7 +5,12 @@
 #include "ExprAssignment.h"
 
 ExprAssignment::ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr):
-        Expression(scope), var(var), expr(expr) {
+        ExprAssignment(scope, var, expr, true) {
+
+}
+
+ExprAssignment::ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr, bool postReturn):
+        Expression(scope), var(var), expr(expr), postReturn(postReturn) {
 
 }
 
