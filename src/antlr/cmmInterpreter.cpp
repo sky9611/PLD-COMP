@@ -482,7 +482,6 @@ antlrcpp::Any cmmInterpreter::visitExprNot(cmmParser::ExprNotContext *ctx) {
     #endif
 
     Expression * expr = visit(ctx->expr());
-    ExprUnary * res = new ExprUnary(currentScope, expr, NOT);
 
     ExprUnary * res = nullptr;
 
@@ -576,7 +575,6 @@ antlrcpp::Any cmmInterpreter::visitExprMinus(cmmParser::ExprMinusContext *ctx) {
     ExprUnary * res = nullptr;
 
     Expression * expr = visit(ctx->expr());
-    ExprUnary * res = new ExprUnary(currentScope, expr, MINUS);
 
     if(type::isBasicType(expr->getType()))
         res = new ExprUnary(currentScope, expr, MINUS);
@@ -711,7 +709,9 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
         throw cmmRuntimeException(
                 "[cmmInterpreter:visitExprBinaire()] Array is not operable " + getScopeList() + string(" )"));
     }else if(t0 != t1) {
-        throw cmmRuntimeException("[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " + getScopeList() + string(" )"));
+        throw cmmRuntimeException(
+                "[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " +
+                getScopeList() + string(" )"));
     }
 
     Expression * res = new ExprBinary(currentScope, expr0, expr1, oB);
