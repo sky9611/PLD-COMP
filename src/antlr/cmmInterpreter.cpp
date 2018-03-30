@@ -361,7 +361,16 @@ antlrcpp::Any cmmInterpreter::visitStatementReturn(cmmParser::StatementReturnCon
         cout << "[cmmInterpreter] + visitStatementReturn : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitStatementReturn(ctx);
+
+
+    StmtReturn* res;
+
+    if(ctx->expr() != nullptr){
+        Expression* exp = visit(ctx->expr());
+        res = new StmtReturn(currentScope ,exp);
+    }else{
+        res = new StmtReturn(currentScope);
+    }
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementReturn" << endl;
