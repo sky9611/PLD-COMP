@@ -386,7 +386,7 @@ cmmInterpreter::visitStatementExpr(cmmParser::StatementExprContext *ctx) {
         cout << "[cmmInterpreter] + visitStatementAppelFoncSansAttribut : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitStatementExpr(ctx);
+    Expression* res = visit(ctx->expr());
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementAppelFoncSansAttribut" << endl;
