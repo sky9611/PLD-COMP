@@ -21,3 +21,7 @@ Expression *ExprArray::getExpression() const {
 Type ExprArray::getType() const {
     return type::arrayToBasicType(var->getType());
 }
+
+string ExprArray::buildIR(CFG* cfg)const{
+
+}

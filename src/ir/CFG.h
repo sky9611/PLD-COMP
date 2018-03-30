@@ -12,7 +12,7 @@ class CFG;
 #include <string>
 #include <iostream>
 #include "BasicBlock.h"
-#include "../structure/Function.h"
+class Function; //#include "../structure/Function.h"
 #include "../structure/Type.h"
 
 using namespace std;

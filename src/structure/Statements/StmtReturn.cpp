@@ -13,3 +13,7 @@ Expression *StmtReturn::getExpr() const
 {
     return expr;
 }
+
+string StmtReturn::buildIR(CFG* cfg)const{
+
+}

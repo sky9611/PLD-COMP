@@ -29,3 +29,7 @@ Expression *ExprAssignment::getExpr() const{
 Type ExprAssignment::getType()const{
     return var->getType();
 }
+
+string ExprAssignment::buildIR(CFG* cfg)const{
+
+}

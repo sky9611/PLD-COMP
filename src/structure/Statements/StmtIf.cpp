@@ -25,3 +25,7 @@ Statement *StmtIf::getElseBlock() const
 {
     return elseBlock;
 }
+
+string StmtIf::buildIR(CFG* cfg)const{
+
+}

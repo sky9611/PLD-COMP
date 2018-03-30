@@ -18,3 +18,7 @@ Type ExprValue::getType()const{
 Any ExprValue::getValue()const{
     return value;
 }
+
+string ExprValue::buildIR(CFG* cfg)const{
+
+}

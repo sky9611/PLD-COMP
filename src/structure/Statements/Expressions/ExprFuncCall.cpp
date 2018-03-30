@@ -23,3 +23,7 @@ vector<Expression*> ExprFuncCall::getParams()const{
 Type ExprFuncCall::getType()const{
     return function->getType();
 }
+
+string ExprFuncCall::buildIR(CFG* cfg)const{
+
+}

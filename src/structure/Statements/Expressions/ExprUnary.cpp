@@ -36,3 +36,7 @@ void ExprUnary::setOp(UnaryOperator op)
 Type ExprUnary::getType()const{
     return expr->getType();
 }
+
+string ExprUnary::buildIR(CFG* cfg)const{
+
+}

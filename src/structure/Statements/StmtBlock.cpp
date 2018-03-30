@@ -18,3 +18,7 @@ void StmtBlock::setStatements(const vector<Statement *> &statements)
 {
     StmtBlock::statements = statements;
 }
+
+string StmtBlock::buildIR(CFG* cfg)const{
+
+}

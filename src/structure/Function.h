@@ -8,11 +8,11 @@
 class Function;
 
 #include <antlr4-runtime.h>
+#include "cmmScope.h"
 #include "../Exception/cmmRuntimeException.h"
-#include "Statements/StmtBlock.h"
+class StmtBlock; //#include "Statements/StmtBlock.h"
 #include "cmmDef.h"
 #include "Program.h"
-#include "cmmScope.h"
 
 using namespace std;
 using namespace antlrcpp;

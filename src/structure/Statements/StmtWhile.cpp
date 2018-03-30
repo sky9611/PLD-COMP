@@ -9,3 +9,7 @@ StmtWhile::~StmtWhile()
     delete test;
     delete block;
 }
+
+string StmtWhile::buildIR(CFG* cfg)const{
+
+}

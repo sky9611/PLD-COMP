@@ -5,6 +5,7 @@
 #ifndef PLD_COMP_BLOCK_H
 #define PLD_COMP_BLOCK_H
 
+class StmtBlock;
 
 #include "Statement.h"
 #include "../cmmScope.h"

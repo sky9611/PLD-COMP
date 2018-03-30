@@ -23,3 +23,7 @@ void ExprVariable::setVar(cmmVar *var)
 {
     ExprVariable::var = var;
 }
+
+string ExprVariable::buildIR(CFG* cfg)const{
+
+}
