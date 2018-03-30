@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 11)
 SET (PROJECT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 file (GLOB PROJECT_MODELS
         ${PROJECT_SRC}/structure/*.cpp
-        ${PROJECT_SRC}/structure/functions/*.cpp
         ${PROJECT_SRC}/structure/Statements/*.cpp
         ${PROJECT_SRC}/structure/Statements/Expressions/*.cpp
+        ${PROJECT_SRC}/ir/*.cpp
         )
 file (GLOB PROJECT_ANTLR4_FILES	${PROJECT_SRC}/antlr/*.cpp)
 file (GLOB PROJECT_EXCEPTION	${PROJECT_SRC}/Exception/*.cpp)
