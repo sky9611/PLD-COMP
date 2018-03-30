@@ -83,7 +83,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx) override {
+  virtual antlrcpp::Any visitStatementExpr(cmmParser::StatementExprContext *ctx) override {
     return visitChildren(ctx);
   }
 

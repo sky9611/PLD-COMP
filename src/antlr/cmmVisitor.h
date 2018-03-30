@@ -53,7 +53,7 @@ public:
 
     virtual antlrcpp::Any visitStatementReturn(cmmParser::StatementReturnContext *context) = 0;
 
-    virtual antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *context) = 0;
+    virtual antlrcpp::Any visitStatementExpr(cmmParser::StatementExprContext *context) = 0;
 
     virtual antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *context) = 0;
 

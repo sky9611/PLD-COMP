@@ -1031,24 +1031,6 @@ void cmmParser::StatementContext::copyFrom(StatementContext *ctx) {
   ParserRuleContext::copyFrom(ctx);
 }
 
-//----------------- StatementAppelFoncSansAttributContext ------------------------------------------------------------------
-
-cmmParser::ExprContext* cmmParser::StatementAppelFoncSansAttributContext::expr() {
-  return getRuleContext<cmmParser::ExprContext>(0);
-}
-
-tree::TerminalNode* cmmParser::StatementAppelFoncSansAttributContext::Semi() {
-  return getToken(cmmParser::Semi, 0);
-}
-
-cmmParser::StatementAppelFoncSansAttributContext::StatementAppelFoncSansAttributContext(StatementContext *ctx) { copyFrom(ctx); }
-
-antlrcpp::Any cmmParser::StatementAppelFoncSansAttributContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<cmmVisitor*>(visitor))
-    return parserVisitor->visitStatementAppelFoncSansAttribut(this);
-  else
-    return visitor->visitChildren(this);
-}
 //----------------- StatementReturnContext ------------------------------------------------------------------
 
 tree::TerminalNode* cmmParser::StatementReturnContext::Return() {
@@ -1082,6 +1064,24 @@ cmmParser::StatementBlockContext::StatementBlockContext(StatementContext *ctx) {
 antlrcpp::Any cmmParser::StatementBlockContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<cmmVisitor*>(visitor))
     return parserVisitor->visitStatementBlock(this);
+  else
+    return visitor->visitChildren(this);
+}
+//----------------- StatementExprContext ------------------------------------------------------------------
+
+cmmParser::ExprContext* cmmParser::StatementExprContext::expr() {
+  return getRuleContext<cmmParser::ExprContext>(0);
+}
+
+tree::TerminalNode* cmmParser::StatementExprContext::Semi() {
+  return getToken(cmmParser::Semi, 0);
+}
+
+cmmParser::StatementExprContext::StatementExprContext(StatementContext *ctx) { copyFrom(ctx); }
+
+antlrcpp::Any cmmParser::StatementExprContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<cmmVisitor*>(visitor))
+    return parserVisitor->visitStatementExpr(this);
   else
     return visitor->visitChildren(this);
 }
@@ -1228,7 +1228,7 @@ cmmParser::StatementContext* cmmParser::statement() {
       case cmmParser::Character:
       case cmmParser::VarName:
       case cmmParser::Value: {
-        _localctx = dynamic_cast<StatementContext *>(_tracker.createInstance<cmmParser::StatementAppelFoncSansAttributContext>(_localctx));
+        _localctx = dynamic_cast<StatementContext *>(_tracker.createInstance<cmmParser::StatementExprContext>(_localctx));
         enterOuterAlt(_localctx, 5);
         setState(157);
         expr(0);

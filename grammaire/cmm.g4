@@ -41,7 +41,7 @@ statement :
     |If brace statement (Else statement)?           #statementIf
     |While brace statement                          #statementWhile
     |Return (expr)? Semi                            #statementReturn
-    |expr Semi                                      #statementAppelFoncSansAttribut
+    |expr Semi                                      #statementExpr
     ;
 
 expr:

@@ -379,12 +379,12 @@ antlrcpp::Any cmmInterpreter::visitStatementReturn(cmmParser::StatementReturnCon
 }
 
 antlrcpp::Any
-cmmInterpreter::visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx) {
+cmmInterpreter::visitStatementExpr(cmmParser::StatementExprContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitStatementAppelFoncSansAttribut : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    auto res = cmmBaseVisitor::visitStatementAppelFoncSansAttribut(ctx);
+    auto res = cmmBaseVisitor::visitStatementExpr(ctx);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementAppelFoncSansAttribut" << endl;

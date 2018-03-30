@@ -280,15 +280,6 @@ public:
    
   };
 
-  class  StatementAppelFoncSansAttributContext : public StatementContext {
-  public:
-    StatementAppelFoncSansAttributContext(StatementContext *ctx);
-
-    ExprContext *expr();
-    antlr4::tree::TerminalNode *Semi();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  StatementReturnContext : public StatementContext {
   public:
     StatementReturnContext(StatementContext *ctx);
@@ -304,6 +295,15 @@ public:
     StatementBlockContext(StatementContext *ctx);
 
     BlockContext *block();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StatementExprContext : public StatementContext {
+  public:
+    StatementExprContext(StatementContext *ctx);
+
+    ExprContext *expr();
+    antlr4::tree::TerminalNode *Semi();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 

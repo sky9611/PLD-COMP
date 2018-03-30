@@ -59,7 +59,7 @@ public:
 
     antlrcpp::Any visitStatementReturn(cmmParser::StatementReturnContext *ctx) override;
 
-    antlrcpp::Any visitStatementAppelFoncSansAttribut(cmmParser::StatementAppelFoncSansAttributContext *ctx) override;
+    antlrcpp::Any visitStatementExpr(cmmParser::StatementExprContext *ctx) override;
 
     antlrcpp::Any visitExprParen(cmmParser::ExprParenContext *ctx) override;
 
