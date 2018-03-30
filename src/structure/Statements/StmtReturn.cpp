@@ -15,5 +15,9 @@ Expression *StmtReturn::getExpr() const
 }
 
 string StmtReturn::buildIR(CFG* cfg)const{
+    expr->buildIR(cfg);
+    cfg->current_bb->exit_true = nullptr;// PAS DE SUIS APRES LE BLOCK
+    cfg->current_bb->exit_false = nullptr;
 
+    cfg->current_bb = nullptr;
 }

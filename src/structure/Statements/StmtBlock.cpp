@@ -21,6 +21,10 @@ void StmtBlock::setStatements(const vector<Statement *> &statements)
 
 string StmtBlock::buildIR(CFG* cfg)const{
     for(Statement* stmt: statements){
-        stmt->buildIR(cfg);
+        if(cfg->current_bb != nullptr){// Si il y a un return current_bb et null il n'y a donc pas a ajouter d'element a la suite
+            stmt->buildIR(cfg);
+        } else {
+            cout << "INSTRUCTION AFTER RETURN!" << endl;
+        }
     }
 }
