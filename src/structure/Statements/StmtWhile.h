@@ -10,16 +10,16 @@
 #include "Expressions/Expression.h"
 #include "StmtBlock.h"
 
-class WhileStatement : public Statement
+class StmtWhile : public Statement
 {
 private:
     Expression * test;
     Statement * block;
 
 public:
-    WhileStatement(cmmScope * _scope, Expression *_test, Statement *_block):Statement(_scope),test(_test), block(_block){}
+    StmtWhile(cmmScope * _scope, Expression *_test, Statement *_block):Statement(_scope),test(_test), block(_block){}
 
-    virtual ~WhileStatement();
+    virtual ~StmtWhile();
 };
 
 

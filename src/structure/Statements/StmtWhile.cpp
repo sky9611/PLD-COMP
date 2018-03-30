@@ -4,7 +4,7 @@
 
 #include "StmtWhile.h"
 
-WhileStatement::~WhileStatement()
+StmtWhile::~StmtWhile()
 {
     delete test;
     delete block;
