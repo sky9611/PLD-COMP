@@ -30,19 +30,21 @@ void CFG::gen_asm_epilogue(ostream &o) {
 }
 
 void CFG::add_to_symbol_table(string name, Type t) {
-
+    SymbolType[name] = t;
 }
 
 string CFG::create_new_tempvar(Type t) {
-
+    string name = string("tmp_")+to_string(SymbolType.size());
+    SymbolType[name] = t;
+    return name;
 }
 
 int CFG::get_var_index(string name) {
-
+    return SymbolIndex[name];
 }
 
 Type CFG::get_var_type(string name) {
-
+    return SymbolType[name];
 }
 
 string CFG::new_BB_name() {

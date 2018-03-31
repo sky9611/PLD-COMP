@@ -18,6 +18,8 @@ Function::Function(Program* program, Type type, const string &name,const vector<
                                               string(" pour la fonction ") + name);
         }
         localContext[param->getName()] = param;
+
+        cfg->add_to_symbol_table(string("var_") + param->getName(), param->getType());
     }
 }
 Function::~Function(){
@@ -56,6 +58,8 @@ const cmmContext &Function::getLocalContext() const {
 
 void Function::addVar(cmmVar *var) {
     localContext[var->getName()] = var;
+
+    cfg->add_to_symbol_table(string("var_") + var->getName(), var->getType());
 }
 
 void Function::addStatement(Statement *statment) {
