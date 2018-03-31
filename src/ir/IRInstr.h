@@ -26,6 +26,7 @@ public:
         add,
         sub,
         mul,
+        div,
         rmem,
         wmem,
         call,
@@ -37,7 +38,6 @@ public:
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, vector<string> params);
-    IRInstr(BasicBlock* bb_, Operation op, Type t, string... params);
 
     /** Actual code generation */
     void gen_asm(ostream &o); /**< x86 assembly code generation for this IR instruction */

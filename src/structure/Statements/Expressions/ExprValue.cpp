@@ -18,7 +18,18 @@ Type ExprValue::getType()const{
 Any ExprValue::getValue()const{
     return value;
 }
-
+string ExprValue::getStringValue() const{
+    Any cpValue = value;
+    switch (getType()){
+        case CHAR:
+            return to_string((short)cpValue.as<char>());
+        case INT32_T:
+            return to_string(cpValue.as<int32_t>());
+        case INT64_T:
+            return to_string(cpValue.as<int64_t>());
+    }
+}
 string ExprValue::buildIR(CFG* cfg)const{
-
+    string tmpVar = cfg->create_new_tempvar(getType());
+    cfg->current_bb->add_IRInstr(IRInstr::ldconst,getType(),vector<string>({tmpVar, getStringValue()}));
 }

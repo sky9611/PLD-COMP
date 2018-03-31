@@ -18,7 +18,6 @@ public:
 public:
     Expression(cmmScope *scope);
 
-    virtual string buildIR(CFG* cfg)const;
 };
 
 

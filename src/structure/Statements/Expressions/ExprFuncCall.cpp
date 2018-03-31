@@ -25,5 +25,10 @@ Type ExprFuncCall::getType()const{
 }
 
 string ExprFuncCall::buildIR(CFG* cfg)const{
-
+    vector<string> paramsVar;
+    paramsVar.push_back(cfg->create_new_tempvar(getType()));
+    for(Expression* paramExpr: params){
+        paramsVar.push_back(paramExpr->buildIR(cfg));
+    }
+    cfg->current_bb->add_IRInstr(IRInstr::call,getType(),paramsVar);
 }

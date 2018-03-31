@@ -10,7 +10,4 @@ Expression::Expression(cmmScope *scope) : Statement(scope)
 Expression::~Expression()
 = default;
 
-string Expression::buildIR(CFG* cfg)const{
-
-}
 

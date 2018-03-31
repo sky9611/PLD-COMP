@@ -38,5 +38,17 @@ Type ExprUnary::getType()const{
 }
 
 string ExprUnary::buildIR(CFG* cfg)const{
+    string tmpVarexp = expr->buildIR(cfg);
+    string tmpVarRES = cfg->create_new_tempvar(getType());
+    cfg->current_bb->add_IRInstr(getIRInstOperation(),getType(),vector<string>({tmpVarRES, tmpVarexp}));
+}
 
+IRInstr::Operation ExprUnary::getIRInstOperation()const{
+
+
+    switch (op){
+        //case NOT: return IRInstr::Operation:: ;
+        //case MINUS: return IRInstr::Operation:: ;
+        default: throw cmmRuntimeException("[ExprBinary::getIRInstOperation]" );
+    }
 }

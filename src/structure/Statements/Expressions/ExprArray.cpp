@@ -22,6 +22,8 @@ Type ExprArray::getType() const {
     return type::arrayToBasicType(var->getType());
 }
 
-string ExprArray::buildIR(CFG* cfg)const{
-
+string ExprArray::buildIR(CFG* cfg)const{ // only for Read ( write in assignment)
+    /*string arrayAccessValue = expression->buildIR(cfg);
+    string tmpVar = cfg->create_new_tempvar(getType());
+    cfg->current_bb->add_IRInstr(IRInstr::rmem,getType(), tmp,)*/
 }

@@ -10,8 +10,6 @@ IRInstr::IRInstr(BasicBlock *bb_, IRInstr::Operation op, Type t, vector<string> 
 }
 
 void IRInstr::gen_asm(ostream &o) {
-}
-
-IRInstr::IRInstr(BasicBlock *bb_, IRInstr::Operation op, Type t, string... params):bb(bb),op(op),t(t),params(vector(params)) {
 
 }
+

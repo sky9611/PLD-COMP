@@ -25,5 +25,5 @@ void ExprVariable::setVar(cmmVar *var)
 }
 
 string ExprVariable::buildIR(CFG* cfg)const{
-
+    return string("var_") + var->getName();
 }
