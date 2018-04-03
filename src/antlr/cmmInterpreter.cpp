@@ -478,7 +478,7 @@ antlrcpp::Any cmmInterpreter::visitExprValue(cmmParser::ExprValueContext *ctx) {
     } else if(abs(stoi(value))<INT_MAX)
         res = new ExprValue(currentScope, INT32_T, stoi(value));
     else
-        throw cmmRuntimeException(string("[cmmInterpreter::visitExprValue] Outside range: ") + to_string(value) + getScopeList() + string(" )"));
+        throw cmmRuntimeException(string("[cmmInterpreter::visitExprValue] Outside range: ") + value + getScopeList() + string(" )"));
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitExprValue" << endl;
