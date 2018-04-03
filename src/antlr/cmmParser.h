@@ -28,10 +28,9 @@ public:
 
   enum {
     RuleFile = 0, RuleProgramme = 1, RuleVarDeclarationList = 2, RuleDeclarationVar = 3, 
-    RuleDefinitionParameter = 4, RuleArrayDef = 5, RuleArrayDecl = 6, RuleBlock = 7, 
-    RuleBrace = 8, RuleFctBlock = 9, RuleFctBrace = 10, RuleFctDefinition = 11, 
-    RuleStatement = 12, RuleVarCall = 13, RuleExpr = 14, RuleOperatorBinaire = 15, 
-    RuleExprList = 16, RuleType = 17
+    RuleDefinitionParameter = 4, RuleBlock = 5, RuleBrace = 6, RuleFctBlock = 7, 
+    RuleFctBrace = 8, RuleFctDefinition = 9, RuleStatement = 10, RuleVarCall = 11, 
+    RuleExpr = 12, RuleOperatorBinaire = 13, RuleExprList = 14, RuleType = 15
   };
 
   cmmParser(antlr4::TokenStream *input);
@@ -49,8 +48,6 @@ public:
   class VarDeclarationListContext;
   class DeclarationVarContext;
   class DefinitionParameterContext;
-  class ArrayDefContext;
-  class ArrayDeclContext;
   class BlockContext;
   class BraceContext;
   class FctBlockContext;
@@ -120,13 +117,29 @@ public:
    
   };
 
-  class  DecArrayContext : public DeclarationVarContext {
+  class  ArrayDefContext : public DeclarationVarContext {
   public:
-    DecArrayContext(DeclarationVarContext *ctx);
+    ArrayDefContext(DeclarationVarContext *ctx);
 
     antlr4::tree::TerminalNode *VarName();
-    ArrayDefContext *arrayDef();
-    ArrayDeclContext *arrayDecl();
+    antlr4::tree::TerminalNode *LeftBracket();
+    antlr4::tree::TerminalNode *RightBracket();
+    antlr4::tree::TerminalNode *Assign();
+    antlr4::tree::TerminalNode *LeftBrace();
+    antlr4::tree::TerminalNode *RightBrace();
+    antlr4::tree::TerminalNode *Value();
+    ExprListContext *exprList();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ArrayDeclContext : public DeclarationVarContext {
+  public:
+    ArrayDeclContext(DeclarationVarContext *ctx);
+
+    antlr4::tree::TerminalNode *VarName();
+    antlr4::tree::TerminalNode *LeftBracket();
+    antlr4::tree::TerminalNode *Value();
+    antlr4::tree::TerminalNode *RightBracket();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -157,38 +170,6 @@ public:
   };
 
   DefinitionParameterContext* definitionParameter();
-
-  class  ArrayDefContext : public antlr4::ParserRuleContext {
-  public:
-    ArrayDefContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *RightBracket();
-    antlr4::tree::TerminalNode *Assign();
-    antlr4::tree::TerminalNode *LeftBrace();
-    antlr4::tree::TerminalNode *RightBrace();
-    antlr4::tree::TerminalNode *Value();
-    ExprListContext *exprList();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
-
-  ArrayDefContext* arrayDef();
-
-  class  ArrayDeclContext : public antlr4::ParserRuleContext {
-  public:
-    ArrayDeclContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *LeftBracket();
-    antlr4::tree::TerminalNode *Value();
-    antlr4::tree::TerminalNode *RightBracket();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
-  };
-
-  ArrayDeclContext* arrayDecl();
 
   class  BlockContext : public antlr4::ParserRuleContext {
   public:

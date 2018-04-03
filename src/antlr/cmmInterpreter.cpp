@@ -108,25 +108,6 @@ antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *
     return res;
 }
 
-antlrcpp::Any cmmInterpreter::visitDecArray(cmmParser::DecArrayContext *ctx) {
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] + visitDecArray : scope( "<< getScopeList() <<" )" << endl;
-    #endif
-
-    cmmArray* res;
-
-    if(ctx->arrayDecl() != nullptr){
-        res = visit(ctx->arrayDecl());
-    } else {
-        res = visit(ctx->arrayDef());
-    }
-
-    #ifdef  VIEW_VISITOR_COUT
-        cout << "[cmmInterpreter] - visitDecArray" << endl;
-    #endif
-    return res;
-}
-
 antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] + visitDefinitionAttributs : scope( "<< getScopeList() <<" )" << endl;
@@ -138,6 +119,7 @@ antlrcpp::Any cmmInterpreter::visitDefinitionParameter(cmmParser::DefinitionPara
     string name = ctx->VarName()->getText();
 
     if(ctx->LeftBracket() != nullptr){// is table
+        type = type::basicToArrayType(type);
         if(ctx->Value() != nullptr){// fix size
             res = new cmmArray(type, name, stoi(ctx->Value()->getText()));
         }else{
@@ -166,7 +148,7 @@ antlrcpp::Any cmmInterpreter::visitArrayDef(cmmParser::ArrayDefContext *ctx) {
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitArrayDef" << endl;
     #endif
-    return res;
+    return (cmmVar*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitArrayDecl(cmmParser::ArrayDeclContext *ctx) {
@@ -175,15 +157,15 @@ antlrcpp::Any cmmInterpreter::visitArrayDecl(cmmParser::ArrayDeclContext *ctx) {
     #endif
 
     Type type = VOID;
-    string name;
-    int size;
+    string name = ctx->VarName()->getText();
+    int size = stoi(ctx->Value()->getText());
 
     cmmArray* res = new cmmArray(type, name, size);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitArrayDecl" << endl;
     #endif
-    return res;
+    return (cmmVar*)res;
 }
 
 antlrcpp::Any cmmInterpreter::visitBlock(cmmParser::BlockContext *ctx) {
@@ -425,7 +407,7 @@ antlrcpp::Any cmmInterpreter::visitVarCall(cmmParser::VarCallContext *ctx){
 
 
     }else{ // Not Array
-        if(typeid(*def) != typeid(cmmVar)){
+        if(typeid(*def) != typeid(cmmVar) && typeid(*def) != typeid(cmmArray)){
             throw cmmRuntimeException(string("[cmmInterpreter::visitExprVariable] Var name ") + varName + string(" is not var( ") + getScopeList() + string(" )"));
         }
 
@@ -539,7 +521,7 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
 
     if(ctx->exprList() != nullptr){
         vector<Expression*> tmp = visit(ctx->exprList());
-        parmsExp = parmsExp;
+        parmsExp = tmp;
     }
 
 
@@ -558,7 +540,7 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
     }
 
     for(int i=0; i<signature.size();i++){
-        if(signature[i]->getType() == parmsExp[i]->getType()){
+        if(signature[i]->getType() != parmsExp[i]->getType()){
             throw cmmRuntimeException(
                     string("[cmmInterpreter::visitExprAppelFonc] la fonction ")
                     + string(fctName)

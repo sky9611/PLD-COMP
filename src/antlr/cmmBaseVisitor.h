@@ -31,19 +31,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual antlrcpp::Any visitArrayDecl(cmmParser::ArrayDeclContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) override {
     return visitChildren(ctx);
   }
 

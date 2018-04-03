@@ -6,11 +6,11 @@
 #include "../BasicBlock.h"
 
 IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb, Type t, string dest, string v1, string v2, BinaryOperator op)
-        :IRInstrBasicOperator(bb,t,dest, v1, v2,IRInstrBasicOperator::OperatorToAsmOperator(op)){}
-IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb, Type t, string dest, string v1, string v2, string asmOp)
-        :IRInstr(bb, t), dest(dest), v1(v1), v2(v2), asmOp(asmOp){}
+        :IRInstr(bb, t), dest(dest), v1(v1), v2(v2), op(op){}
 
 void IRInstrBasicOperator::gen_asm(ostream &o){
+
+    string asmOp = OperatorToAsmOperator(op);
 
     string reg1;
     string reg2;
@@ -49,14 +49,14 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
         move(o,v2,2); // var2 => reg2
     }
 
-    o << "    "<< asmOp << " " <<  reg1 << ", " << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
+    o << "    "<< asmOp << " " <<  reg1 << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
 
     move(o,1,dest);
 }
 
 string IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
     switch (op){
-        case Star: return "imul" ;
+        case Star: return "mul" ;
 //        case Div: return IRInstr::Operation::div ;
             //case Mod: return IRInstr::Operation:: ;
         case Plus: return "add" ;
@@ -67,7 +67,7 @@ string IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
             //case LessEqual: return "" ;
         case Greater: return "" ;
             //case GreaterEqual: return "" ;
-        case Equal: return "" ;
+        //  case Equal: return "" ;
             //case NotEqual: return "" ;
         case And: return "and";
             //case Caret: return "" ;
@@ -75,4 +75,6 @@ string IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
             //case AndAnd: return "" ;
             //case OrOr: return "" ;
     }
+
+    return "UNKNOW";
 }

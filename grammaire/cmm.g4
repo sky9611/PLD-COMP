@@ -12,8 +12,9 @@ varDeclarationList:
     type declarationVar (Comma declarationVar)* Semi;
 
 declarationVar:
-    VarName (Assign expr)?              #decVarSimple
-    |VarName (arrayDef|arrayDecl)       #decArray
+    VarName (Assign expr)?                                                              #decVarSimple
+    | VarName LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace)   #arrayDef
+    | VarName LeftBracket Value RightBracket                                            #arrayDecl
     ;
 
 //declarationVarSimple: VarName (Assign expr)?;
@@ -22,10 +23,6 @@ declarationVar:
 
 definitionParameter : type VarName (LeftBracket Value? RightBracket)?;
 
-arrayDef :
-    LeftBracket Value? RightBracket (Assign LeftBrace exprList? RightBrace);
-arrayDecl:
-    LeftBracket Value RightBracket;
 
 //zones
 block: LeftBrace statement* RightBrace;

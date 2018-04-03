@@ -20,14 +20,13 @@ int32_t fonct3(int32_t var4){
 
 void main(){
     int32_t t;
-    fonct1();
-    fonct2();
-    void main(void){
-        if(1<2){
-            putchar('V');
-        } else {
-            putchar('F');
-        }
-        t = fonct3(64);
+    char test[12];
+    int64_t test2[1];
+    fonct1(12,32,'5',12,test2,test);
+    if(1<2){
+        putchar('V');
+    } else {
+        putchar('F');
     }
+    t = fonct3(64);
 }

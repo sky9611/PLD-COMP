@@ -27,13 +27,11 @@ public:
 
     virtual antlrcpp::Any visitDecVarSimple(cmmParser::DecVarSimpleContext *context) = 0;
 
-    virtual antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *context) = 0;
-
-    virtual antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *context) = 0;
-
     virtual antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *context) = 0;
 
     virtual antlrcpp::Any visitArrayDecl(cmmParser::ArrayDeclContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *context) = 0;
 
     virtual antlrcpp::Any visitBlock(cmmParser::BlockContext *context) = 0;
 

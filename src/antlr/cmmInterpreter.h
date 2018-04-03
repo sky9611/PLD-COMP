@@ -33,8 +33,6 @@ public:
 
     antlrcpp::Any visitDecVarSimple(cmmParser::DecVarSimpleContext *ctx) override;
 
-    antlrcpp::Any visitDecArray(cmmParser::DecArrayContext *ctx) override;
-
     antlrcpp::Any visitDefinitionParameter(cmmParser::DefinitionParameterContext *ctx) override;
 
     antlrcpp::Any visitArrayDef(cmmParser::ArrayDefContext *ctx) override;

@@ -10,10 +10,9 @@
 
 class IRInstrBasicOperator : public IRInstr{
 protected:
-    string asmOp;
+    BinaryOperator op;
     string dest, v1, v2;
 public:
-    IRInstrBasicOperator(BasicBlock* bb_, Type t, string dest, string v1, string v2, string asmOp);
     IRInstrBasicOperator(BasicBlock* bb_, Type t, string dest, string v1, string v2, BinaryOperator op);
 
     virtual void gen_asm(ostream &o);
