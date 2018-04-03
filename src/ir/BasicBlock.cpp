@@ -15,7 +15,7 @@ void BasicBlock::gen_asm(ostream &o) {
     for(IRInstr* inst : instrs)
         inst->gen_asm(o);
     if(exit_true == nullptr) { //Si il y a un return
-        o << "\tjmp\t.END_:" << cfg->ast->getName()  << endl;
+        o << "\tjmp\t.END_" << cfg->ast->getName()  << endl;
     }else if(exit_false == exit_true || exit_false == nullptr){ // si il n'y qu'un block aprés
         o << "\tjmp\t." << exit_true->label << endl;
     }else{ // si il y a une separation conditionnel

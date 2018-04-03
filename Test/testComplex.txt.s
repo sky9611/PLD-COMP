@@ -3,9 +3,10 @@
 	.file	"testComplex.txt"
 	.text
 
- 	.globl	_fonct1
-	.type	_fonct1, @function
+ 	.globl	fonct1
+	.type	fonct1, @function
 fonct1:
+.START_fonct1: 
 	push	%rbp
 	mov	%rsp,%rbp
 	sub	$0x2d,%rsp
@@ -26,49 +27,52 @@ B7_blockThen:
     movl  -0x2d(%rbp), %eax
 	jmp	.B8_blockEndIf
 B8_blockEndIf:
-	jmp	.BLOCK_END
+	jmp	.END_fonct1
 
-.BLOCK_END:
+.END_fonct1: 
 	leaveq
 	ret
 	.size	fonct1, .-fonct1
 
 
- 	.globl	_fonct2
-	.type	_fonct2, @function
+ 	.globl	fonct2
+	.type	fonct2, @function
 fonct2:
+.START_fonct2: 
 	push	%rbp
 	mov	%rsp,%rbp
 	sub	$0x19,%rsp
 
 B4_STARTED_BLOCK:
-	jmp	.BLOCK_END
+	jmp	.END_fonct2
 
-.BLOCK_END:
+.END_fonct2: 
 	leaveq
 	ret
 	.size	fonct2, .-fonct2
 
 
- 	.globl	_fonct3
-	.type	_fonct3, @function
+ 	.globl	fonct3
+	.type	fonct3, @function
 fonct3:
+.START_fonct3: 
 	push	%rbp
 	mov	%rsp,%rbp
 	sub	$0x4,%rsp
 
 B5_STARTED_BLOCK:
-	jmp	.BLOCK_END
+	jmp	.END_fonct3
 
-.BLOCK_END:
+.END_fonct3: 
 	leaveq
 	ret
 	.size	fonct3, .-fonct3
 
 
- 	.globl	_main
-	.type	_main, @function
+ 	.globl	main
+	.type	main, @function
 main:
+.START_main: 
 	push	%rbp
 	mov	%rsp,%rbp
 	sub	$0x33,%rsp
@@ -119,11 +123,11 @@ B10_blockEndIf:
     sub     $0x8,%rsp
     call    tmp_47
     add     $0x10,%rsp
-	jmp	.BLOCK_END
+	jmp	.END_main
 B11_blockElse:
 	jmp	.B10_blockEndIf
 
-.BLOCK_END:
+.END_main: 
 	leaveq
 	ret
 	.size	main, .-main

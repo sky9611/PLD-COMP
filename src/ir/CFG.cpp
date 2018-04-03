@@ -39,9 +39,10 @@ string CFG::IR_reg_to_asm(string reg) {
 }
 
 void CFG::gen_asm_prologue(ostream &o) {
-    o <<    " \t.globl	_" <<  ast->getName() << endl;
-    o <<    "\t.type	_" <<  ast->getName() << ", @function" << endl;
+    o <<    " \t.globl	" <<  ast->getName() << endl;
+    o <<    "\t.type	" <<  ast->getName() << ", @function" << endl;
     o << "" << ast->getName() << ":"<< endl;
+    o <<    ".START_" << ast->getName() << ": " << endl;
     o <<    "\tpush\t%rbp" << endl;
     o <<    "\tmov\t%rsp,%rbp" << endl;
     o <<    "\tsub\t$0x"<< hex << -nextFreeSymbolIndex;
@@ -50,7 +51,7 @@ void CFG::gen_asm_prologue(ostream &o) {
 
 void CFG::gen_asm_epilogue(ostream &o) {
     o << endl;
-    o <<    ".END_:" << ast->getName() << endl;
+    o <<    ".END_" << ast->getName() << ": " << endl;
     o <<    "\tleaveq" << endl;
     o <<    "\tret" << endl;
     o <<    "\t.size\t" << ast->getName() << ", .-" << ast->getName() << endl << endl<< endl;
