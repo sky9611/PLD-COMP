@@ -32,7 +32,20 @@ string ExprValue::getStringValue() const{
 }
 string ExprValue::buildIR(CFG* cfg)const{
     string tmpVar = cfg->create_new_tempvar(getType());
-    IRInstrValue *instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, value);
+    IRInstrValue *instruction;
+    Any cp = value;
+
+    switch(type){
+        case INT32_T:
+            instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, (int)cp);
+            break;
+        case INT64_T:
+            instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, (long)cp);
+            break;
+        case CHAR:
+            instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, (char)cp);
+            break;
+    }
     cfg->current_bb->add_IRInstr(instruction);
 
     return tmpVar;
