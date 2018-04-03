@@ -225,7 +225,7 @@ antlrcpp::Any cmmInterpreter::visitFctBlock(cmmParser::FctBlockContext *ctx) {
 
     setScope(function->getContent());
     for(auto stmtCtx : ctx->statement()){
-        visit(stmtCtx);
+        function->addStatement(visit(stmtCtx));
     }
     unScope();
 
@@ -298,10 +298,11 @@ antlrcpp::Any cmmInterpreter::visitStatementBlock(cmmParser::StatementBlockConte
         cout << "[cmmInterpreter] + visitStatementBlock : scope( "<< getScopeList() <<" )" << endl;
     #endif
     StmtBlock* block = new StmtBlock(currentScope);
-    currentScope->addStatement(block);
     setScope(block);
 
-    cmmBaseVisitor::visitStatementBlock(ctx);
+    for(auto stmtCtx : ctx->block()->statement()){
+        block->addStatement(visit(stmtCtx));
+    }
 
     unScope();
 
@@ -337,8 +338,6 @@ antlrcpp::Any cmmInterpreter::visitStatementIf(cmmParser::StatementIfContext *ct
 
     }
 
-    currentScope->addStatement(stmtIf);
-
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementIf" << endl;
     #endif
@@ -354,8 +353,6 @@ antlrcpp::Any cmmInterpreter::visitStatementWhile(cmmParser::StatementWhileConte
     Expression* test = visit(ctx->brace());
 
     StmtWhile* res = new StmtWhile(currentScope, test, stmt);
-
-    currentScope->addStatement(res);
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitStatementWhile" << endl;

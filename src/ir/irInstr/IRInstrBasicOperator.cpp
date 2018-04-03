@@ -5,10 +5,10 @@
 #include "IRInstrBasicOperator.h"
 #include "../BasicBlock.h"
 
-IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb_, Type t, string dest, string v1, string v2, BinaryOperator op)
+IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb, Type t, string dest, string v1, string v2, BinaryOperator op)
         :IRInstrBasicOperator(bb,t,dest, v1, v2,IRInstrBasicOperator::OperatorToAsmOperator(op)){}
-IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb_, Type t, string dest, string v1, string v2, string asmOp)
-        :IRInstr(bb_, t), dest(dest), v1(v1), v2(v2), asmOp(asmOp){}
+IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb, Type t, string dest, string v1, string v2, string asmOp)
+        :IRInstr(bb, t), dest(dest), v1(v1), v2(v2), asmOp(asmOp){}
 
 void IRInstrBasicOperator::gen_asm(ostream &o){
 

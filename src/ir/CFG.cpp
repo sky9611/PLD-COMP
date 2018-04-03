@@ -36,13 +36,14 @@ string CFG::IR_reg_to_asm(string reg) {
 
     string result( stream.str() );
 
+    return result;
 }
 
 void CFG::gen_asm_prologue(ostream &o) {
     o << "    push   %rbp" << endl;
     o << "    mov    %rsp,%rbp" << endl;
     o << "    sub    $0x"<< hex << -nextFreeSymbolIndex;
-                      o <<",%rsp";
+                      o <<",%rsp" << endl << endl;
 }
 
 void CFG::indexVar(){
@@ -50,8 +51,9 @@ void CFG::indexVar(){
 }
 
 void CFG::gen_asm_epilogue(ostream &o) {
+    o << endl;
     o << "    leaveq" << endl;
-    o << "    retq" << endl;
+    o << "    retq" << endl<< endl<< endl;
 }
 
 void CFG::add_to_symbol_table(string name, Type t) {
@@ -82,5 +84,5 @@ Type CFG::get_var_type(string name) {
 }
 
 string CFG::new_BB_name(string basicString) {
-    return string("block") + to_string(nextBBnumber++);
+    return string("block") + to_string(nextBBnumber++) + string("_") + basicString;
 }

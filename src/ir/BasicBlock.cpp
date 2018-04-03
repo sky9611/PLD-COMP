@@ -4,9 +4,8 @@
 
 #include "BasicBlock.h"
 
-BasicBlock::BasicBlock(CFG *cfg, string entry_label):cfg(cfg) {
-    cfg->new_BB_name(label);
-    cfg->add_bb(this);
+BasicBlock::BasicBlock(CFG *cfg, string entry_label):cfg(cfg), label(cfg->new_BB_name(entry_label)) {
+
 }
 
 void BasicBlock::gen_asm(ostream &o) {

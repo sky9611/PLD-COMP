@@ -5,7 +5,7 @@
 #include "IRInstr.h"
 #include "BasicBlock.h"
 
-IRInstr::IRInstr(BasicBlock *bb_, Type t):bb(bb),t(t) {
+IRInstr::IRInstr(BasicBlock *bb, Type t):bb(bb),t(t) {
 
 }
 
@@ -17,10 +17,16 @@ string IRInstr::getAsmReg(int regNumber, int size){
 
     string regName;
     switch (regNumber){
-        case 0: regName = "a";
-        case 1: regName = "d";
-        case 2: regName = "c";
-        case 3: regName = "b";
+        case 1: regName = "a";
+            break;
+        case 2: regName = "d";
+            break;
+        case 3: regName = "c";
+            break;
+        case 4: regName = "b";
+            break;
+        default:
+            throw runtime_error("[IRInstr::getAsmReg] NOT IMPLEMENTED");
 
     }
     switch (size){
@@ -34,22 +40,27 @@ string IRInstr::getAsmReg(int regNumber, int size){
             return string("r") +regName + string("x");
     }
 }
-void IRInstr::move(ostream &o, int regNumber, string var){
+void IRInstr::move(ostream &o, string var, int regNumber){
     int sizeVar = bb->cfg->get_var_size(var);
     string asmVar = bb->cfg->IR_reg_to_asm(var);
     switch (sizeVar){
         case 8: // move 8 bits to reg 32 byte (movzbl)
             o << "    movzbl  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
+            break;
         case 16: // move 16 bit to reg 32 byte (movswl)
             o << "    movswl  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
+            break;
         case 32: // move 32 bit to reg 32 byte (mov)
             o << "    mov  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
+            break;
         case 64: // move 64 bit to reg 64 byte (mov)
-            o << "    mov  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
+            o << "    mov  " << asmVar << ", " << getAsmReg(regNumber,64) << endl;
+            break;
     }
 }
-void IRInstr::move(ostream &o, string var, int regNumber){
+void IRInstr::move(ostream &o, int regNumber, string var){
     int sizeVar = bb->cfg->get_var_size(var);
     string asmVar = bb->cfg->IR_reg_to_asm(var);
-    o << getAsmReg(regNumber,sizeVar) << "    mov  " << asmVar;
+    string reg = getAsmReg(regNumber, sizeVar);
+    o << "    mov  " << reg << ", " << asmVar  << endl;
 }
