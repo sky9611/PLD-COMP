@@ -15,6 +15,10 @@ string StmtWhile::buildIR(CFG* cfg)const{
     BasicBlock* whileBlock = new BasicBlock(cfg, "WhileContent");
     BasicBlock* outBlock = new BasicBlock(cfg, "WhileOut");
 
+    cfg->add_bb(testBlock);
+    cfg->add_bb(whileBlock);
+    cfg->add_bb(outBlock);
+
     outBlock->exit_true = cfg->current_bb->exit_true;
     outBlock->exit_false = cfg->current_bb->exit_false;
 

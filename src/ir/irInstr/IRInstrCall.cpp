@@ -21,7 +21,7 @@ void IRInstrCall::gen_asm(ostream &o){
     o << "    add     $0x"  << hex << vars.size()*8+8; // +8 for return space
         o << ",%rsp" << endl;
     string tmpVar = bb->cfg->create_new_tempvar(t);
-    o << "    mov     " << bb->cfg->getReturnReg() << ", %rax";
+//TODO    o << "    mov     " << bb->cfg->getReturnReg() << ", %rax";
 
 
 }

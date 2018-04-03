@@ -37,7 +37,7 @@ public:
     cmmContext(){};
     virtual ~cmmContext(){
         for(auto def : *this){
-            delete def.second;
+            //delete def.second;
         }
     }
 };

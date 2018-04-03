@@ -29,11 +29,25 @@ public:
 
     virtual void addStatement(Statement* statment);
 
-protected:
+    cmmContext getContext();
 
+    void builIR();
+
+protected:
+public:
+    const vector<Function *> &getFunctions() const;
+
+    const vector<cmmVar *> &getVars() const;
+
+protected:
     cmmContext globalContext;
+    vector<Function*> functions;
+    vector<cmmVar*> vars;
 
     vector<Statement*> initStatments;
+
+    Function* putchar;
+    Function* getchar;
 
 };
 

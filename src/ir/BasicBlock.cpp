@@ -4,7 +4,7 @@
 
 #include "BasicBlock.h"
 
-BasicBlock::BasicBlock(CFG *cfg, string entry_label) {
+BasicBlock::BasicBlock(CFG *cfg, string entry_label):cfg(cfg) {
     cfg->new_BB_name(label);
     cfg->add_bb(this);
 }

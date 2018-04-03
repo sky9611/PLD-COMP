@@ -7,7 +7,8 @@
 #include "../structure/Function.h"
 
 CFG::CFG(Function *ast):ast(ast) {
-
+    current_bb = new BasicBlock(this, "startedBlock");
+    bbs.push_back(current_bb);
 }
 
 void CFG::add_bb(BasicBlock *bb) {
@@ -40,7 +41,7 @@ string CFG::IR_reg_to_asm(string reg) {
 void CFG::gen_asm_prologue(ostream &o) {
     o << "    push   %rbp" << endl;
     o << "    mov    %rsp,%rbp" << endl;
-    o << "    sub    $0x"<< hex << nextFreeSymbolIndex;
+    o << "    sub    $0x"<< hex << -nextFreeSymbolIndex;
                       o <<",%rsp";
 }
 

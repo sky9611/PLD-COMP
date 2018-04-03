@@ -56,6 +56,8 @@ public:
     virtual Function* getFunctionScope();
 
     std::string toString();
+
+    void builIR();
 };
 
 

@@ -35,6 +35,10 @@ string StmtIf::buildIR(CFG* cfg)const{
     BasicBlock* blockThen = new BasicBlock(cfg, "blockThen");
     BasicBlock* blockOut = new BasicBlock(cfg, "blockEndIf");
 
+    cfg->add_bb(blockThen);
+    cfg->add_bb(blockOut);
+
+
     //Copy les sorti du blockInit dans le nouveau block de de sortie blockOut
     blockInit->exit_true = blockInit->exit_true;
     blockOut->exit_false = blockInit->exit_false;
@@ -56,6 +60,7 @@ string StmtIf::buildIR(CFG* cfg)const{
 
 
         BasicBlock * blockElse = new BasicBlock(cfg,"blockElse");
+        cfg->add_bb(blockElse);
         blockInit->exit_false = blockElse;
 
         //Parcour le code du else

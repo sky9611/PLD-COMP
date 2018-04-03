@@ -4,6 +4,7 @@
 #include "antlr/cmmParser.h"
 #include "antlr/cmmVisitor.h"
 #include "antlr/cmmInterpreter.h"
+#include "ir/ir.h"
 
 using namespace antlr4;
 int main(int argc, const char* argv[]) {
@@ -21,9 +22,12 @@ int main(int argc, const char* argv[]) {
 
     cmmInterpreter* interpreter = new cmmInterpreter();
 
+
     Program* b = tree->accept(interpreter);
 
+    b->builIR();
 
+    ir::gen_asm(b, cout);
 
     std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;

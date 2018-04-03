@@ -82,3 +82,7 @@ vector<cmmVar *> Function::getParams() {
 CFG *Function::getCfg() const {
     return cfg;
 }
+
+void Function::builIR() {
+    content->buildIR(cfg);
+}

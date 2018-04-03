@@ -27,4 +27,5 @@ string StmtBlock::buildIR(CFG* cfg)const{
             cout << "INSTRUCTION AFTER RETURN!" << endl;
         }
     }
+    return "";
 }
