@@ -9,6 +9,7 @@ file (GLOB PROJECT_MODELS
         ${PROJECT_SRC}/structure/Statements/*.cpp
         ${PROJECT_SRC}/structure/Statements/Expressions/*.cpp
         ${PROJECT_SRC}/ir/*.cpp
+        ${PROJECT_SRC}/ir/irInstr/*.cpp
         )
 file (GLOB PROJECT_ANTLR4_FILES	${PROJECT_SRC}/antlr/*.cpp)
 file (GLOB PROJECT_EXCEPTION	${PROJECT_SRC}/Exception/*.cpp)
