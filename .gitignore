@@ -7,3 +7,5 @@ cmake-build-debug/**
 .idea/PLD-COMP.iml
 .idea/workspace.xml___jb_tmp___
 libraries/macOS/**
+
+*.s
