@@ -10,11 +10,13 @@ IRInstrCall::IRInstrCall(BasicBlock* bb, Type t, string dest, string fctName, ve
         : IRInstr(bb,t),dest(dest), fctName(fctName), vars(vars){}
 
 void IRInstrCall::gen_asm(ostream &o){
+    
+
     for(int i = vars.size()-1 ; i>=0 ; i--){
         move(o, vars[i],1);
         o << "    push    %rax" << endl;
     }
-    o << "    sub     $0x8,%rsp"; // add space for return addr
+    o << "    sub     $0x8,%rsp" << endl; // add space for return addr
 
 
     o << "    call    " << fctName << endl;

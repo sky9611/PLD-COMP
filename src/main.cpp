@@ -7,9 +7,13 @@
 #include "ir/ir.h"
 
 using namespace antlr4;
+
 int main(int argc, const char* argv[]) {
 
-    ANTLRFileStream input("../Test/testComplex.txt");
+    string fileIn = "../Test/testComplex.txt";
+    string fileOut = "../Test/testComplex.txt.s";
+
+    ANTLRFileStream input(fileIn);
     cmmLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     tokens.fill();
@@ -27,7 +31,12 @@ int main(int argc, const char* argv[]) {
 
     b->builIR();
 
-    ir::gen_asm(b, cout);
+    ofstream outFile;
+    outFile.open(fileOut);
+
+
+    ir::gen_asm(cout,"testComplex.txt", b);
+    ir::gen_asm(outFile,"testComplex.txt", b);
 
     std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;

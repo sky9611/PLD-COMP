@@ -31,7 +31,7 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
             if (sizeV2 != 64) move(o, v2, 2);
 
             // passage des reg 32 en 64
-            o << "    cltq" << endl;
+            o << "\tcltq" << endl;
 
             // on charge les var 64 bit
             if (sizeV1 == 64) move(o, v1, 1);
@@ -49,7 +49,7 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
         move(o,v2,2); // var2 => reg2
     }
 
-    o << "    "<< asmOp << " " <<  reg1 << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
+    o << "\t"<< asmOp << " " <<  reg1 << ", " << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
 
     move(o,1,dest);
 }

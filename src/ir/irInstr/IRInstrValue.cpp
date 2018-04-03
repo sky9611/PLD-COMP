@@ -3,12 +3,26 @@
 //
 
 #include "IRInstrValue.h"
+#include "../BasicBlock.h"
 
 IRInstrValue::IRInstrValue(BasicBlock *bb_, Type t, string _var, long _value) : IRInstr(bb_, t),var(_var), value(_value)
 {}
 
 void IRInstrValue::gen_asm(ostream &o)
 {
-    o << "movl  $" << value << "%eax" <<endl;
-    move(o,1,var);
+    string varAsm = bb->cfg->IR_reg_to_asm(var);
+    switch (type::getSize(t)){
+        case 8: // move 8 bits to reg 32 byte (movzbl)
+            o << "    movb  $" << to_string(value) << ", " << varAsm  << endl;
+            break;
+        case 16: // move 16 bit to reg 32 byte (movswl)
+            o << "    movw  $" << to_string(value) << ", " << varAsm  << endl;
+            break;
+        case 32: // move 32 bit to reg 32 byte (mov)
+            o << "    movl  $" << to_string(value) << ", " << varAsm  << endl;
+            break;
+        case 64: // move 64 bit to reg 64 byte (mov)
+            o << "    movq  $" << to_string(value) << ", " << varAsm  << endl;
+            break;
+    }
 }

@@ -9,8 +9,13 @@
 #include "../structure/Function.h"
 
 namespace ir {
-    static void gen_asm(Program* p, ostream &o){
+    static void gen_asm(ostream &o, string fileName,Program* p){
 
+        o << endl
+          << endl
+          << "\t.file\t\"" << fileName <<"\"" << endl
+          << "\t.text" << endl
+          << endl;
 
         for(auto def : p->getContext()){
             if(typeid(*def.second) == typeid(Function)){

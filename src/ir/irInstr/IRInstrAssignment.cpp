@@ -16,7 +16,7 @@ void IRInstrAssignment::gen_asm(ostream &o){
     move(o, from, 1);
 
     if( sizeDest == 64 && sizeFrom != 64){
-        o << "    cltq" << endl;
+        o << "\tcltq" << endl;
     }
     move(o,1, dest);
 

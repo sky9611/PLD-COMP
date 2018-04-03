@@ -50,7 +50,7 @@ void CFG::gen_asm_prologue(ostream &o) {
 
 void CFG::gen_asm_epilogue(ostream &o) {
     o << endl;
-    o <<    ".BLOCK_END:" << endl;
+    o <<    ".END_:" << ast->getName() << endl;
     o <<    "\tleaveq" << endl;
     o <<    "\tret" << endl;
     o <<    "\t.size\t" << ast->getName() << ", .-" << ast->getName() << endl << endl<< endl;
@@ -84,5 +84,10 @@ Type CFG::get_var_type(string name) {
 }
 
 string CFG::new_BB_name(string basicString) {
-    return string("B") + to_string(nextBBnumber++) + string("_") + basicString;
+    return string("B") + to_string(getNextBBnumber()) + string("_") + basicString;
+}
+
+int CFG::getNextBBnumber(){
+    static int nb = 0;
+    return ++nb;
 }

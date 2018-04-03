@@ -31,13 +31,13 @@ string IRInstr::getAsmReg(int regNumber, int size){
     }
     switch (size){
         case 8: // 8 bits
-            return regName + string("l");
+            return string("%") +regName + string("l");
         case 16: // 16 bits
-            return regName + string("x");
+            return string("%") +regName + string("x");
         case 32: // 32 bits
-            return string("e") +regName + string("x");
+            return string("%e") +regName + string("x");
         case 64: // 64 bits
-            return string("r") +regName + string("x");
+            return string("%r") +regName + string("x");
     }
 }
 void IRInstr::move(ostream &o, string var, int regNumber){
@@ -51,10 +51,10 @@ void IRInstr::move(ostream &o, string var, int regNumber){
             o << "    movswl  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
             break;
         case 32: // move 32 bit to reg 32 byte (mov)
-            o << "    mov  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
+            o << "    movl  " << asmVar << ", " << getAsmReg(regNumber,32) << endl;
             break;
         case 64: // move 64 bit to reg 64 byte (mov)
-            o << "    mov  " << asmVar << ", " << getAsmReg(regNumber,64) << endl;
+            o << "    movq  " << asmVar << ", " << getAsmReg(regNumber,64) << endl;
             break;
     }
 }
@@ -62,5 +62,18 @@ void IRInstr::move(ostream &o, int regNumber, string var){
     int sizeVar = bb->cfg->get_var_size(var);
     string asmVar = bb->cfg->IR_reg_to_asm(var);
     string reg = getAsmReg(regNumber, sizeVar);
-    o << "    mov  " << reg << ", " << asmVar  << endl;
+    switch(sizeVar){
+        case 8: // move 8 bits to reg 32 byte (movzbl)
+            o << "    movb  " << reg << ", " << asmVar  << endl;
+            break;
+        case 16: // move 16 bit to reg 32 byte (movswl)
+            o << "    movw  " << reg << ", " << asmVar  << endl;
+            break;
+        case 32: // move 32 bit to reg 32 byte (mov)
+            o << "    movl  " << reg << ", " << asmVar  << endl;
+            break;
+        case 64: // move 64 bit to reg 64 byte (mov)
+            o << "    movq  " << reg << ", " << asmVar  << endl;
+            break;
+    }
 }
