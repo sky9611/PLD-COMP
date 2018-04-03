@@ -7,7 +7,7 @@
 
 #include "../IRInstr.h"
 
-class IRInstrAssignment : IRInstr{
+class IRInstrAssignment : public IRInstr{
 protected:
     string dest, from;
 public:

@@ -3,13 +3,15 @@
 //
 
 #include "IRInstrAssignment.h"
+#include "../BasicBlock.h"
+
 IRInstrAssignment::IRInstrAssignment(BasicBlock* bb_, Type t, string dest, string from)
     :IRInstr(bb_,t),dest(dest),from(from){}
 
-void gen_asm(ostream &o){
+void IRInstrAssignment::gen_asm(ostream &o){
 
-    int sizeFrom = type::getSize(bb->cfg->get_var_size(from));
-    int sizeDest = type::getSize(bb->cfg->get_var_size(dest));
+    int sizeFrom = bb->cfg->get_var_size(from);
+    int sizeDest = bb->cfg->get_var_size(dest);
 
     move(o, from, 1);
 
