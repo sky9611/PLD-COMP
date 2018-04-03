@@ -36,4 +36,6 @@ string ExprFuncCall::buildIR(CFG* cfg)const{
     IRInstrCall * inst = new IRInstrCall(cfg->current_bb, getType(),string("_") + function->getName(), returnVar, paramsVar);
     cfg->current_bb->add_IRInstr(inst);
 
+    return returnVar;
+
 }

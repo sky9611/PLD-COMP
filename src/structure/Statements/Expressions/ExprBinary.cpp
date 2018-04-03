@@ -59,7 +59,7 @@ string ExprBinary::buildIR(CFG* cfg)const{
 
     cfg->current_bb->add_IRInstr(instruction);
 
-
+    return tmpVarRES;
 
 
 }
