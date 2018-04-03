@@ -535,7 +535,12 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
 
     Function* fct = dynamic_cast<Function *>(fctDef);
     vector<cmmVar* > signature = fct->getParams();
-    vector<Expression*> parmsExp = visit(ctx->exprList());
+    vector<Expression*> parmsExp;
+
+    if(ctx->exprList() != nullptr){
+        vector<Expression*> tmp = visit(ctx->exprList());
+        parmsExp = parmsExp;
+    }
 
 
 
@@ -544,7 +549,7 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc(cmmParser::ExprAppelFoncContext
                 string("[cmmInterpreter::visitExprAppelFonc] la fonction ")
                 + string(fctName)
                 + string(" demande ")
-                + to_string(parmsExp.size())
+                + to_string(signature.size())
                 + string(" paramétre mais ")
                 + to_string(parmsExp.size())
                 + string(" sont données: scope( ")
