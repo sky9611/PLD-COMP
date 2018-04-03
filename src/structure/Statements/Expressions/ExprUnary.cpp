@@ -3,6 +3,7 @@
 //
 
 #include "ExprUnary.h"
+#include "../../../ir/irInstr/IRInstrUnaryOperator.h"
 
 ExprUnary::ExprUnary(cmmScope *scope, Expression *expr, UnaryOperator op) : Expression(scope),
                                                                                        expr(expr), op(op)
@@ -40,7 +41,12 @@ Type ExprUnary::getType()const{
 string ExprUnary::buildIR(CFG* cfg)const{
     string tmpVarexp = expr->buildIR(cfg);
     string tmpVarRES = cfg->create_new_tempvar(getType());
-//TODO    cfg->current_bb->add_IRInstr(getIRInstOperation(),getType(),vector<string>({tmpVarRES, tmpVarexp}));
+
+    IRInstrUnaryOperator *instruction = new IRInstrUnaryOperator(cfg->current_bb, getType(), tmpVarRES, tmpVarexp, op);
+
+    cfg->current_bb->add_IRInstr(instruction);
+
+    return tmpVarRES;
 }
 
 IRInstr::Operation ExprUnary::getIRInstOperation()const{

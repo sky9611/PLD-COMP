@@ -3,6 +3,7 @@
 //
 
 #include "ExprValue.h"
+#include "../../../ir/irInstr/IRInstrValue.h"
 
 ExprValue::~ExprValue() = default;
 
@@ -31,5 +32,8 @@ string ExprValue::getStringValue() const{
 }
 string ExprValue::buildIR(CFG* cfg)const{
     string tmpVar = cfg->create_new_tempvar(getType());
-//TODO    cfg->current_bb->add_IRInstr(IRInstr::ldconst,getType(),vector<string>({tmpVar, getStringValue()}));
+    IRInstrValue *instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, value);
+    cfg->current_bb->add_IRInstr(instruction);
+
+    return tmpVar;
 }
