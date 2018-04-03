@@ -49,6 +49,7 @@ varCall: VarName (LeftBracket expr RightBracket)?;
 
 expr:
     Value                                                               #exprValue
+    |LongValue                                                          #exprLongValue
     |varCall                                                            #exprVariable
     |varCall (PlusPlus|MinusMinus)                                      #exprIncPost
     |(PlusPlus|MinusMinus) varCall                                      #exprIncPre
@@ -157,7 +158,8 @@ NotEqual : '!=';
 
 Character: '\'' ((~'\'')|'\\'~'\'') '\'';
 VarName: Nondigit (Digit|Nondigit)*;
-Value: Digit+;
+Value: Minus? Digit+;
+LongValue: Value'L';
 
 fragment Digit:[0-9];
 fragment Nondigit:[a-zA-Z_];
