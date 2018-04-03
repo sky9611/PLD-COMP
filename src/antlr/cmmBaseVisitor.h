@@ -123,11 +123,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) override {
+  virtual antlrcpp::Any visitExprIncPre(cmmParser::ExprIncPreContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExprIncPre(cmmParser::ExprIncPreContext *ctx) override {
+  virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *ctx) override {
     return visitChildren(ctx);
   }
 

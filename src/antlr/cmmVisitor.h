@@ -73,9 +73,9 @@ public:
 
     virtual antlrcpp::Any visitExprChar(cmmParser::ExprCharContext *context) = 0;
 
-    virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *context) = 0;
-
     virtual antlrcpp::Any visitExprIncPre(cmmParser::ExprIncPreContext *context) = 0;
+
+    virtual antlrcpp::Any visitStatementAssiggnment(cmmParser::StatementAssiggnmentContext *context) = 0;
 
     virtual antlrcpp::Any visitExprBinaire(cmmParser::ExprBinaireContext *context) = 0;
 

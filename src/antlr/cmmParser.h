@@ -433,6 +433,16 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  ExprIncPreContext : public ExprContext {
+  public:
+    ExprIncPreContext(ExprContext *ctx);
+
+    VarCallContext *varCall();
+    antlr4::tree::TerminalNode *PlusPlus();
+    antlr4::tree::TerminalNode *MinusMinus();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StatementAssiggnmentContext : public ExprContext {
   public:
     StatementAssiggnmentContext(ExprContext *ctx);
@@ -450,16 +460,6 @@ public:
     antlr4::tree::TerminalNode *AndAssign();
     antlr4::tree::TerminalNode *XorAssign();
     antlr4::tree::TerminalNode *OrAssign();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprIncPreContext : public ExprContext {
-  public:
-    ExprIncPreContext(ExprContext *ctx);
-
-    VarCallContext *varCall();
-    antlr4::tree::TerminalNode *PlusPlus();
-    antlr4::tree::TerminalNode *MinusMinus();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
