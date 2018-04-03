@@ -49,13 +49,13 @@ varCall: VarName (LeftBracket expr RightBracket)?;
 
 expr:
     Value                                                               #exprValue
-    |varCall (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr     #statementAssiggnment
     |varCall                                                            #exprVariable
     |varCall (PlusPlus|MinusMinus)                                      #exprIncPost
     |(PlusPlus|MinusMinus) varCall                                      #exprIncPre
     |Not expr                                                           #exprNot
     |Minus expr                                                         #exprMinus
     |expr operatorBinaire expr                                          #exprBinaire
+    |varCall (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr     #statementAssiggnment
     |LeftParen expr RightParen                                          #exprParen
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar
