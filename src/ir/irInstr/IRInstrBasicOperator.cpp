@@ -49,7 +49,7 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
         move(o,v2,2); // var2 => reg2
     }
 
-    o << "    "<< asmOp << " " <<  reg1 << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
+    o << "    "<< asmOp << " " <<  reg1 << ", " << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
 
     move(o,1,dest);
 }
