@@ -15,7 +15,12 @@ void CFG::add_bb(BasicBlock *bb) {
 }
 
 void CFG::gen_asm(ostream &o) {
-
+    o << "_" << ast->getName() << endl;
+    gen_asm_prologue(o);
+    for(BasicBlock* bb : bbs){
+        bb->gen_asm(o);
+    }
+    gen_asm_epilogue(o);
 }
 
 string CFG::IR_reg_to_asm(string reg) {
@@ -33,11 +38,19 @@ string CFG::IR_reg_to_asm(string reg) {
 }
 
 void CFG::gen_asm_prologue(ostream &o) {
+    o << "    push   %rbp" << endl;
+    o << "    mov    %rsp,%rbp" << endl;
+    o << "    sub    $0x"<< hex << nextFreeSymbolIndex;
+                      o <<",%rsp";
+}
+
+void CFG::indexVar(){
 
 }
 
 void CFG::gen_asm_epilogue(ostream &o) {
-
+    o << "    leaveq" << endl;
+    o << "    retq" << endl;
 }
 
 void CFG::add_to_symbol_table(string name, Type t) {

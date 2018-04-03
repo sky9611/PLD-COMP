@@ -23,7 +23,4 @@ void IRInstrCall::gen_asm(ostream &o){
     o << "    mov     " << bb->cfg->getReturnReg() << ", %rax";
 
 
-
-
-
 }

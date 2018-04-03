@@ -47,7 +47,6 @@ protected:
     void move(ostream &o, int regNumber, string var);
     void move(ostream &o, string var, int regNumber);
 
-private:
     BasicBlock* bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
     Type t;
     // vector<string> params; /**< For 3-op instrs: d, x, y; for ldconst: d, c;  For call: label, d, params;  for wmem and rmem: choose yourself */

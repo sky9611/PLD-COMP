@@ -37,8 +37,10 @@ public:
     // x86 code generation: could be encapsulated in a processor class in a retargetable compiler
     void gen_asm(ostream& o);
     string IR_reg_to_asm(string reg); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
+    string getReturnReg();
     void gen_asm_prologue(ostream& o);
     void gen_asm_epilogue(ostream& o);
+    void indexVar();
 
     // symbol table methods
     void add_to_symbol_table(string name, Type t);

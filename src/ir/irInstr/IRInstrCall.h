@@ -10,6 +10,7 @@
 class IRInstrCall : public IRInstr{
 protected:
     string fctName;
+    string dest;
     vector<string> vars;
 
 public:
