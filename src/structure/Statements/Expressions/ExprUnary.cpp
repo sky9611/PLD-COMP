@@ -40,7 +40,7 @@ Type ExprUnary::getType()const{
 string ExprUnary::buildIR(CFG* cfg)const{
     string tmpVarexp = expr->buildIR(cfg);
     string tmpVarRES = cfg->create_new_tempvar(getType());
-    cfg->current_bb->add_IRInstr(getIRInstOperation(),getType(),vector<string>({tmpVarRES, tmpVarexp}));
+//TODO    cfg->current_bb->add_IRInstr(getIRInstOperation(),getType(),vector<string>({tmpVarRES, tmpVarexp}));
 }
 
 IRInstr::Operation ExprUnary::getIRInstOperation()const{

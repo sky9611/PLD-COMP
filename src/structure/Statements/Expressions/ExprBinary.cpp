@@ -3,7 +3,7 @@
 //
 
 #include "ExprBinary.h"
-#include "../../../ir/irInstr/IRInstrBasicOperator.cpp"
+#include "../../../ir/irInstr/IRInstrBasicOperator.h"
 
 ExprBinary::ExprBinary(cmmScope *scope, Expression *expr1, Expression *expr2, BinaryOperator op)
         : Expression(scope), expr1(expr1), expr2(expr2), op(op)

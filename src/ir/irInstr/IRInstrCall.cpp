@@ -3,6 +3,7 @@
 //
 
 #include "IRInstrCall.h"
+#include "../BasicBlock.h"
 #include <iomanip>
 
 IRInstrCall::IRInstrCall(BasicBlock* bb, Type t, string dest, string fctName, vector<string> vars)
@@ -10,7 +11,7 @@ IRInstrCall::IRInstrCall(BasicBlock* bb, Type t, string dest, string fctName, ve
 
 void IRInstrCall::gen_asm(ostream &o){
     for(int i = vars.size()-1 ; i>=0 ; i--){
-        move(vars[i],1);
+        move(o, vars[i],1);
         o << "    push    %rax" << endl;
     }
     o << "    sub     $0x8,%rsp"; // add space for return addr
