@@ -3,6 +3,7 @@
 //
 
 #include "ExprFuncCall.h"
+#include "../../../ir/irInstr/IRInstrCall.h"
 
 ExprFuncCall::ExprFuncCall(cmmScope* scope, Function *function, const vector<Expression*> &params ):Expression(scope), function(function), params(params){
 
@@ -26,9 +27,13 @@ Type ExprFuncCall::getType()const{
 
 string ExprFuncCall::buildIR(CFG* cfg)const{
     vector<string> paramsVar;
-    paramsVar.push_back(cfg->create_new_tempvar(getType()));
     for(Expression* paramExpr: params){
         paramsVar.push_back(paramExpr->buildIR(cfg));
     }
-    cfg->current_bb->add_IRInstr(IRInstr::call,getType(),paramsVar);
+
+    string returnVar  = cfg->create_new_tempvar(getType());
+
+    IRInstrCall * inst = new IRInstrCall(cfg->current_bb, getType(),string("_") + function->getName(), returnVar, paramsVar);
+    cfg->current_bb->add_IRInstr(inst);
+
 }

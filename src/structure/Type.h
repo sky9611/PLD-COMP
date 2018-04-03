@@ -45,6 +45,17 @@ namespace type{
             default: return "Unknown type";
         }
     }
+    static short getSize(Type t){
+        switch (t){
+            case INT32_T : return 32;
+            case INT64_T : return 64;
+            case CHAR : return 8;
+            case INT32_T_ARRAY : return 32;
+            case INT64_T_ARRAY : return 32;
+            case CHAR_ARRAY : return 32;
+            default: return 0;
+        }
+    }
 }
 
 #endif //CMM_TYPE_H

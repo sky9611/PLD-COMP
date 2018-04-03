@@ -37,8 +37,6 @@ public:
 
     virtual string buildIR(CFG* cfg)const;
 
-    IRInstr::Operation getIRInstOperation()const;
-
 };
 
 

@@ -3,6 +3,7 @@
 //
 
 #include "ExprBinary.h"
+#include "../../../ir/irInstr/IRInstrBasicOperator.cpp"
 
 ExprBinary::ExprBinary(cmmScope *scope, Expression *expr1, Expression *expr2, BinaryOperator op)
         : Expression(scope), expr1(expr1), expr2(expr2), op(op)
@@ -47,35 +48,18 @@ Type ExprBinary::getType()const{
     return  expr1->getType(); // TODO Verifier les 2 expr pour conaitre le vrais type
 }
 
-IRInstr::Operation ExprBinary::getIRInstOperation()const{
-    switch (op){
-        case Star: return IRInstr::Operation::mul ;
-        case Div: return IRInstr::Operation::div ;
-        //case Mod: return IRInstr::Operation:: ;
-        case Plus: return IRInstr::Operation::add ;
-        case Minus: return IRInstr::Operation::sub ;
-        //case LeftShift: return IRInstr::Operation:: ;
-        //case RightShift: return IRInstr::Operation:: ;
-        case Less: return IRInstr::Operation::cmp_le ;
-        //case LessEqual: return IRInstr::Operation:: ;
-        case Greater: return IRInstr::Operation::cmp_lt ;
-        //case GreaterEqual: return IRInstr::Operation:: ;
-        case Equal: return IRInstr::Operation::cmp_eq ;
-        //case NotEqual: return IRInstr::Operation:: ;
-        //case And: return IRInstr::Operation:: ;
-        //case Caret: return IRInstr::Operation:: ;
-        //case Or: return IRInstr::Operation:: ;
-        //case AndAnd: return IRInstr::Operation:: ;
-        //case OrOr: return IRInstr::Operation:: ;
-        default: throw cmmRuntimeException("[ExprBinary::getIRInstOperation]" );
-    }
-}
+
 
 string ExprBinary::buildIR(CFG* cfg)const{
     string tmpVar1 = expr1->buildIR(cfg);
     string tmpVar2 = expr2->buildIR(cfg);
     string tmpVarRES = cfg->create_new_tempvar(getType());
-    cfg->current_bb->add_IRInstr(getIRInstOperation(),getType(),vector<string>({tmpVarRES, tmpVar1,tmpVar2}));
+
+    IRInstrBasicOperator* instruction = new IRInstrBasicOperator(cfg->current_bb, getType(), tmpVarRES, tmpVar1, tmpVar2, op);
+
+    cfg->current_bb->add_IRInstr(instruction);
+
+
 
 
 }

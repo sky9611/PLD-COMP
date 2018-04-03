@@ -35,18 +35,22 @@ public:
         cmp_le
     } Operation;
 
-
     /**  constructor */
-    IRInstr(BasicBlock* bb_, Operation op, Type t, vector<string> params);
+    IRInstr(BasicBlock* bb_, Type t);
 
     /** Actual code generation */
-    void gen_asm(ostream &o); /**< x86 assembly code generation for this IR instruction */
+    virtual void gen_asm(ostream &o) =0; /**< x86 assembly code generation for this IR instruction */
+
+protected:
+    string getAsmReg(int regNumber, Type t);
+    string getAsmReg(int regNumber, int size);
+    void move(ostream &o, int regNumber, string var);
+    void move(ostream &o, string var, int regNumber);
 
 private:
     BasicBlock* bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
-    Operation op;
     Type t;
-    vector<string> params; /**< For 3-op instrs: d, x, y; for ldconst: d, c;  For call: label, d, params;  for wmem and rmem: choose yourself */
+    // vector<string> params; /**< For 3-op instrs: d, x, y; for ldconst: d, c;  For call: label, d, params;  for wmem and rmem: choose yourself */
     // if you subclass IRInstr, each IRInstr subclass has its parameters and the previous (very important) comment becomes useless: it would be a better design.
 };
 

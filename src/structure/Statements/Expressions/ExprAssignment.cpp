@@ -3,6 +3,7 @@
 //
 
 #include "ExprAssignment.h"
+#include "../../../ir/irInstr/IRInstrAssignment.cpp"
 
 ExprAssignment::ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr):
         ExprAssignment(scope, var, expr, true) {
@@ -32,12 +33,8 @@ Type ExprAssignment::getType()const{
 
 string ExprAssignment::buildIR(CFG* cfg)const{
 
-    if(typeid(*var) == typeid(cmmVar)){
-
-        string tmpVarExpr = expr->buildIR(cfg);
-        cfg->current_bb->add_IRInstr(IRInstr::mov, getType(),vector<string>( {var->getName(), tmpVarExpr}));
-    }else{
-        throw cmmRuntimeException("[ExprAssignment::buildIR] assigne to array not implemented yet");
-    }
+    string tmpVarExpr = expr->buildIR(cfg);
+    IRInstrAssignment* instr = new IRInstrAssignment(cfg->current_bb,getType(), var->getName(), tmpVarExpr);
+    cfg->current_bb->add_IRInstr(instr);
 
 }
