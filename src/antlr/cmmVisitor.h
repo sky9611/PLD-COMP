@@ -69,6 +69,8 @@ public:
 
     virtual antlrcpp::Any visitExprMinus(cmmParser::ExprMinusContext *context) = 0;
 
+    virtual antlrcpp::Any visitExprLongValue(cmmParser::ExprLongValueContext *context) = 0;
+
     virtual antlrcpp::Any visitExprIncPost(cmmParser::ExprIncPostContext *context) = 0;
 
     virtual antlrcpp::Any visitExprChar(cmmParser::ExprCharContext *context) = 0;

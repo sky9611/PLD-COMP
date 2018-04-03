@@ -115,6 +115,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitExprLongValue(cmmParser::ExprLongValueContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitExprIncPost(cmmParser::ExprIncPostContext *ctx) override {
     return visitChildren(ctx);
   }

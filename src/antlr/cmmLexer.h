@@ -22,7 +22,8 @@ public:
     Quote = 40, Colon = 41, Semi = 42, Comma = 43, Assign = 44, StarAssign = 45, 
     DivAssign = 46, ModAssign = 47, PlusAssign = 48, MinusAssign = 49, LeftShiftAssign = 50, 
     RightShiftAssign = 51, AndAssign = 52, XorAssign = 53, OrAssign = 54, 
-    Equal = 55, NotEqual = 56, Character = 57, VarName = 58, Value = 59
+    Equal = 55, NotEqual = 56, Character = 57, VarName = 58, Value = 59, 
+    LongValue = 60
   };
 
   cmmLexer(antlr4::CharStream *input);
