@@ -13,13 +13,6 @@ namespace ir {
 
 
         for(auto def : p->getContext()){
-            o << ".globl _" << def.second->getName() << endl;
-            /*if(typeid(*def.second) == typeid(Function)){
-                Function* f = def.second;
-            }*/
-        }
-
-        for(auto def : p->getContext()){
             if(typeid(*def.second) == typeid(Function)){
                 Function* f = dynamic_cast<Function*>(def.second);
                 f->getCfg()->gen_asm(o);

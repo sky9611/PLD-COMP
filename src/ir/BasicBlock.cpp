@@ -13,6 +13,15 @@ void BasicBlock::gen_asm(ostream &o) {
 
     for(IRInstr* inst : instrs)
         inst->gen_asm(o);
+    if(exit_true != exit_false){
+        o << "\tjne	." << exit_false->label << endl;
+        o << "\tjmp\t." << exit_true->label << endl;
+    }else if(exit_true == nullptr){
+        o << "\tjmp\t.BLOCK_END" << endl;
+    }else{
+
+        o << "\tjmp\t." << exit_true->label << endl;
+    }
 }
 
 void BasicBlock::add_IRInstr(IRInstr* instruction) {

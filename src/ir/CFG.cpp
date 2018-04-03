@@ -7,7 +7,7 @@
 #include "../structure/Function.h"
 
 CFG::CFG(Function *ast):ast(ast) {
-    current_bb = new BasicBlock(this, "startedBlock");
+    current_bb = new BasicBlock(this, "STARTED_BLOCK");
     bbs.push_back(current_bb);
 }
 
@@ -16,7 +16,6 @@ void CFG::add_bb(BasicBlock *bb) {
 }
 
 void CFG::gen_asm(ostream &o) {
-    o << "_" << ast->getName() << endl;
     gen_asm_prologue(o);
     for(BasicBlock* bb : bbs){
         bb->gen_asm(o);
@@ -40,20 +39,21 @@ string CFG::IR_reg_to_asm(string reg) {
 }
 
 void CFG::gen_asm_prologue(ostream &o) {
-    o << "    push   %rbp" << endl;
-    o << "    mov    %rsp,%rbp" << endl;
-    o << "    sub    $0x"<< hex << -nextFreeSymbolIndex;
+    o <<    " \t.globl	_" <<  ast->getName() << endl;
+    o <<    "\t.type	_" <<  ast->getName() << ", @function" << endl;
+    o << "_" << ast->getName() << ":"<< endl;
+    o <<    "\tpush\t%rbp" << endl;
+    o <<    "\tmov\t%rsp,%rbp" << endl;
+    o <<    "\tsub\t$0x"<< hex << -nextFreeSymbolIndex;
                       o <<",%rsp" << endl << endl;
-}
-
-void CFG::indexVar(){
-
 }
 
 void CFG::gen_asm_epilogue(ostream &o) {
     o << endl;
-    o << "    leaveq" << endl;
-    o << "    retq" << endl<< endl<< endl;
+    o <<    ".BLOCK_END:" << endl;
+    o <<    "\tleaveq" << endl;
+    o <<    "\tret" << endl;
+    o <<    "\t.size\t" << ast->getName() << ", .-" << ast->getName() << endl << endl<< endl;
 }
 
 void CFG::add_to_symbol_table(string name, Type t) {
@@ -84,5 +84,5 @@ Type CFG::get_var_type(string name) {
 }
 
 string CFG::new_BB_name(string basicString) {
-    return string("block") + to_string(nextBBnumber++) + string("_") + basicString;
+    return string("B") + to_string(nextBBnumber++) + string("_") + basicString;
 }
