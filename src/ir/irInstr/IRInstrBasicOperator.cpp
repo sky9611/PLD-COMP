@@ -50,7 +50,7 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
 
     o << "    "<< asmOp << " " <<  reg1 << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
 
-    move(1,dest);
+    move(o,1,dest);
 }
 
 string IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
