@@ -9,7 +9,7 @@
 using namespace antlr4;
 int main(int argc, const char* argv[]) {
 
-    ANTLRFileStream input("../Test/test1.txt");
+    ANTLRFileStream input("../Test/testComplex.txt");
     cmmLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     tokens.fill();
