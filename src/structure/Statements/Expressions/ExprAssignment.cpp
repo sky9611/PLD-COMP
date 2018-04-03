@@ -3,7 +3,7 @@
 //
 
 #include "ExprAssignment.h"
-#include "../../../ir/irInstr/IRInstrAssignment.cpp"
+#include "../../../ir/irInstr/IRInstrAssignment.h"
 
 ExprAssignment::ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr):
         ExprAssignment(scope, var, expr, true) {

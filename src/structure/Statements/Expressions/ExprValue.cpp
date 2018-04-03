@@ -31,5 +31,5 @@ string ExprValue::getStringValue() const{
 }
 string ExprValue::buildIR(CFG* cfg)const{
     string tmpVar = cfg->create_new_tempvar(getType());
-    cfg->current_bb->add_IRInstr(IRInstr::ldconst,getType(),vector<string>({tmpVar, getStringValue()}));
+//TODO    cfg->current_bb->add_IRInstr(IRInstr::ldconst,getType(),vector<string>({tmpVar, getStringValue()}));
 }
