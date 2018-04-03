@@ -41,7 +41,7 @@ string CFG::IR_reg_to_asm(string reg) {
 void CFG::gen_asm_prologue(ostream &o) {
     o <<    " \t.globl	_" <<  ast->getName() << endl;
     o <<    "\t.type	_" <<  ast->getName() << ", @function" << endl;
-    o << "_" << ast->getName() << ":"<< endl;
+    o << "" << ast->getName() << ":"<< endl;
     o <<    "\tpush\t%rbp" << endl;
     o <<    "\tmov\t%rsp,%rbp" << endl;
     o <<    "\tsub\t$0x"<< hex << -nextFreeSymbolIndex;
