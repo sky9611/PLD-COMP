@@ -19,7 +19,7 @@ void BasicBlock::gen_asm(ostream &o) {
     }else if(exit_false == exit_true || exit_false == nullptr){ // si il n'y qu'un block aprés
         o << "\tjmp\t." << exit_true->label << endl;
     }else{ // si il y a une separation conditionnel
-        o << "\tje	." << exit_true->label << endl;
+        o << "\tjne	." << exit_true->label << endl;
         o << "\tjmp\t." << exit_false->label << endl;
     }
 }
