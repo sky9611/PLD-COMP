@@ -125,3 +125,7 @@ int CFG::getNextBBnumber(){
     return ++nb;
 }
 
+string CFG::IR_regArray_to_asm(string reg) {
+    return std::__cxx11::string();
+}
+
