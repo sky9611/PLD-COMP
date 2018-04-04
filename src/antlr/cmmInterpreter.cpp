@@ -666,7 +666,10 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
 
     if(type::isBasicType(gauche->getType())) {
         //if (gauche->getType() == droite->getType())
+        if(gauche->getType()==droite->getType())
             res = new ExprAssignment(currentScope, gauche->getVar(), droite);
+        else
+            throw cmmRuntimeException("[cmmInterpreter:visitExprIncPost()] Assignment is not allowed between different type " + getScopeList() + string(" )"));
         /*else
             throw cmmRuntimeException("[cmmInterpreter:visitStatementAssiggnment()] Error cast from " +
                                       type::toString(droite->getType()) + "to " + type::toString(gauche->getType()) +
