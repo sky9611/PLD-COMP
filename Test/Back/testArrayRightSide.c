@@ -1,5 +1,6 @@
 void main(void) {
-    char a[5] = {'a','b','c','d','e'};
+    char a[5];
+    a[0] = '2';
     char a0 = a[0];
     char a1 = a[0];
     char a2 = a[0];
