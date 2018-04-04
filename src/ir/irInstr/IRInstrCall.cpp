@@ -5,25 +5,46 @@
 #include "IRInstrCall.h"
 #include "../BasicBlock.h"
 #include <iomanip>
+#include "../ir.h"
 
 IRInstrCall::IRInstrCall(BasicBlock* bb, Type t, string dest, string fctName, vector<string> vars)
         : IRInstr(bb,t),dest(dest), fctName(fctName), vars(vars){}
 
 void IRInstrCall::gen_asm(ostream &o){
-    
+    int nbInStack = vars.size() > 6 ?  vars.size()-6 : 0;
 
-    for(int i = vars.size()-1 ; i>=0 ; i--){
-        move(o, vars[i],1);
-        o << "    push    %rax" << endl;
+    for (int i = vars.size() - 1; i >= 6; i--) {
+        ir::move(o, vars[i], 1, bb->cfg);
+        o << "    pushl    %rax" << endl;
     }
-    o << "    sub     $0x8,%rsp" << endl; // add space for return addr
-
+    switch (vars.size()-nbInStack){
+        case 6:
+            ir::move(o, vars[5], 1, bb->cfg);
+            o << "    movl    %rax, %r9" << endl;
+        case 5:
+            ir::move(o, vars[4], 1, bb->cfg);
+            o << "    movl    %rax, %r8" << endl;
+        case 4:
+            ir::move(o, vars[3], 1, bb->cfg);
+            o << "    movl    %rax, %rcx" << endl;
+        case 3:
+            ir::move(o, vars[2], 1, bb->cfg);
+            o << "    movl    %rax, %rdx" << endl;
+        case 2:
+            ir::move(o, vars[1], 1, bb->cfg);
+            o << "    movl    %rax, %rsi" << endl;
+        case 1:
+            ir::move(o, vars[0], 1, bb->cfg);
+            o << "    movl    %rax, %rdi" << endl;
+    }
 
     o << "    call    " << fctName << endl;
-    o << "    add     $0x"  << hex << vars.size()*8+8; // +8 for return space
-        o << ",%rsp" << endl;
+    if(nbInStack > 0){
+        o << "    add     $" << (nbInStack * 8) << ",%rsp" << endl;
+    }
+    if(t != VOID){
+        ir::move(o,1,dest, bb->cfg);
+    }
     string tmpVar = bb->cfg->create_new_tempvar(t);
-//TODO    o << "    mov     " << bb->cfg->getReturnReg() << ", %rax";
-
 
 }

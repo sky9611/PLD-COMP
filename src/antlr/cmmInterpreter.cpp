@@ -706,9 +706,9 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
         throw cmmRuntimeException(
                 "[cmmInterpreter:visitExprBinaire()] Array is not operable " + getScopeList() + string(" )"));
     }else if(t0 != t1) {
-        throw cmmRuntimeException(
-                "[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " +
-                getScopeList() + string(" )"));
+        //throw cmmRuntimeException(
+        //        "[cmmInterpreter:visitExprBinaire()] Assignement is not allowed between different types " +
+        //        getScopeList() + string(" )"));
     }
 
     Expression * res = new ExprBinary(currentScope, expr0, expr1, oB);

@@ -12,14 +12,21 @@ Function::Function(Program* program, Type type, const string &name,const vector<
 
     cfg = new CFG(this);
 
+    int i =0;
+
     for(auto param : params) {
         if (localContext.find(param->getName()) != localContext.end()) { // varName alredy use
             throw cmmRuntimeException(string("[Function:Function()] Multiple definition du paramétre ") + param->getName() +
                                               string(" pour la fonction ") + name);
         }
         localContext[param->getName()] = param;
+        if(i<6) {
+            cfg->add_to_symbol_table(string("var_") + param->getName(), param->getType());
+        }else {
+            cfg->add_to_symbol_table_params(string("var_") + param->getName(), param->getType());
+        }
 
-        cfg->add_to_symbol_table(string("var_") + param->getName(), param->getType());
+        i++;
     }
 }
 Function::~Function(){

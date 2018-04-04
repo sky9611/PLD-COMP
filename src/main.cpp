@@ -10,8 +10,22 @@ using namespace antlr4;
 
 int main(int argc, const char* argv[]) {
 
-    string fileIn = "../Test/testComplex.txt";
-    string fileOut = "../Test/testComplex.txt.s";
+    string testName;
+    testName = "1_decls";
+    testName = "1_empty";
+    testName = "2_putchar";
+    testName = "3_variables";
+    testName = "4-VarConstAddCall";
+    testName = "5-IfThenElse";
+    testName = "6-While";
+    testName = "7-testWhileAndVariables";
+
+    if(argc > 1){
+        testName = argv[1];
+    }
+
+    string fileIn = string("../Test/Back/") + testName + string(".c");
+    string fileOut =string("../Test/Back/") + testName + string(".s");
 
     ANTLRFileStream input(fileIn);
     cmmLexer lexer(&input);
@@ -35,8 +49,8 @@ int main(int argc, const char* argv[]) {
     outFile.open(fileOut);
 
 
-    ir::gen_asm(cout,"testComplex.txt", b);
-    ir::gen_asm(outFile,"testComplex.txt", b);
+    ir::gen_asm(cout,testName + string(".c"), b);
+    ir::gen_asm(outFile,testName + string(".c"), b);
 
     std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;

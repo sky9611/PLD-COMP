@@ -4,13 +4,14 @@
 
 #include "IRInstrUnaryOperator.h"
 #include "../BasicBlock.h"
+#include "../ir.h"
 
 IRInstrUnaryOperator::IRInstrUnaryOperator(BasicBlock* bb_, Type t, string dest, string var, UnaryOperator _op)
         :IRInstr(bb_, t), dest(dest), var(var), op(_op){}
 
 
 void IRInstrUnaryOperator::gen_asm(ostream &o){
-    string reg = getAsmReg(1, type::getSize(t) == 64 ? 64 : 32);
+    string reg = ir::getAsmReg(1, type::getSize(t) == 64 ? 64 : 32);
     if(op==NOT)
         gen_asm_not(o);
     else if (op == MINUS)
@@ -26,11 +27,11 @@ string IRInstrUnaryOperator::OperatorToAsmOperator(UnaryOperator op){
 
 void IRInstrUnaryOperator::gen_asm_not(ostream &o)
 {
-    move(o, var, 1);
+    ir::move(o, var, 1, bb->cfg);
 
     int size = bb->cfg->get_var_size(var);
 
-    string reg1 = getAsmReg(1,size);
+    string reg1 = ir::getAsmReg(1,size);
 
     if(size == 32){
         o << "    "<< "cmpl" << " " << "$0x0," <<  reg1 << endl;
@@ -39,7 +40,7 @@ void IRInstrUnaryOperator::gen_asm_not(ostream &o)
 
         o << "    "<< "movzbl %al, %eax" << endl;
 
-        move(o,1,dest);
+        ir::move(o,1,dest, bb->cfg);
     } else if (size == 64){
         o << "    "<< "cmpq" << " " << "$0x0," <<  reg1 << endl;
 
@@ -47,25 +48,25 @@ void IRInstrUnaryOperator::gen_asm_not(ostream &o)
 
         o << "    "<< "movzbl %al, %eax" << endl;
 
-        move(o,1,dest);
+        ir::move(o,1,dest, bb->cfg);
     }
 
 
 
     o << "    "<< OperatorToAsmOperator(op) << " " <<  reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
 
-    move(o, 1,dest);
+    ir::move(o, 1,dest, bb->cfg);
 }
 
 void IRInstrUnaryOperator::gen_asm_minus(ostream &o)
 {
-    move(o, var, 1);
+    ir::move(o, var, 1, bb->cfg);
 
     int size = bb->cfg->get_var_size(var);
 
-    string reg1 = getAsmReg(1,size);
+    string reg1 = ir::getAsmReg(1,size);
 
     o << "    "<< "neg" << " " <<  reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
 
-    move(o, 1,dest);
+    ir::move(o, 1,dest, bb->cfg);
 }
