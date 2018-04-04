@@ -21,7 +21,7 @@ public:
 
     virtual ~StmtWhile();
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 };

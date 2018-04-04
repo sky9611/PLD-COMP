@@ -192,7 +192,7 @@ bool cmmOperator::getBool(antlrcpp::Any v)
 
 void cmmOperator::trimStr(string &s)
 {
-    if ((s[0] = '\'' && s[s.length() - 1] == '\'') || (s[0] = '\"' && s[s.length() - 1] == '\"') && s.length() > 1) {
+    if (((s[0] = '\'' && s[s.length() - 1] == '\'') || (s[0] = '\"' && s[s.length() - 1] == '\"')) && (s.length() > 1)) {
         s = s.substr(1, s.length() - 2);
     }
 }

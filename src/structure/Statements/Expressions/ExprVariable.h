@@ -18,13 +18,13 @@ public:
     ExprVariable(cmmScope *scope, cmmVar *var);
     virtual ~ExprVariable();
 
-    virtual Type getType()const;
+    virtual Type getType()const override;
 
     cmmVar *getVar() const;
 
     void setVar(cmmVar *var);
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 };

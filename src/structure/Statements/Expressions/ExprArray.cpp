@@ -32,6 +32,7 @@ string ExprArray::buildIR(CFG* cfg)const{ // only for Read ( write in assignment
     return tmpVar;
 }
 
+
 vector<cmmVar *> ExprArray::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
     varAffectPrec = expression->CheckVariablesAffectes(varAffectPrec);
     return varAffectPrec;

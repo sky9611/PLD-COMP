@@ -27,9 +27,9 @@ public:
 
     void setOp(UnaryOperator op);
 
-    virtual Type getType()const;
+    virtual Type getType()const override;
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 
     IRInstr::Operation getIRInstOperation()const;
 

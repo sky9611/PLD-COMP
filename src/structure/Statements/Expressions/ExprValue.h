@@ -21,11 +21,11 @@ public:
 
     virtual ~ExprValue();
 
-    virtual Type getType()const;
+    virtual Type getType()const override;
 
     virtual Any getValue()const;
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 
     string getStringValue() const;
 

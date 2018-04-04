@@ -23,9 +23,9 @@ public:
 
     vector<Expression*> getParams()const;
 
-    virtual Type getType()const;
+    virtual Type getType()const override;
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 

@@ -33,9 +33,9 @@ public:
 
     void setOp(BinaryOperator op);
 
-    virtual Type getType()const;
+    virtual Type getType()const override;
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
     virtual string buildIRDefault(CFG* cfg)const;
     virtual string buildIROrOr(CFG* cfg)const;
     virtual string buildIRAndAnd(CFG* cfg)const;
