@@ -45,6 +45,5 @@ void IRInstrCall::gen_asm(ostream &o){
     if(t != VOID){
         ir::move(o,1,dest, bb->cfg);
     }
-    string tmpVar = bb->cfg->create_new_tempvar(t);
 
 }
