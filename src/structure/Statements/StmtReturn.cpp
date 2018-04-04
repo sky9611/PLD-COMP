@@ -3,6 +3,8 @@
 //
 
 #include "StmtReturn.h"
+#include "../../ir/irInstr/IRInstrAssignment.h"
+#include "../Function.h"
 
 StmtReturn::~StmtReturn()
 {
@@ -15,7 +17,11 @@ Expression *StmtReturn::getExpr() const
 }
 
 string StmtReturn::buildIR(CFG* cfg)const{
-    expr->buildIR(cfg);
+    string res = expr->buildIR(cfg);
+
+    IRInstrAssignment* inst = new IRInstrAssignment(cfg->current_bb , scope->getFunctionScope()->getType(),"",res); // "" -> move dans le registre ax
+    cfg->current_bb->add_IRInstr(inst);
+
     cfg->current_bb->exit_true = nullptr;// PAS DE SUIS APRES LE BLOCK
     cfg->current_bb->exit_false = nullptr;
 

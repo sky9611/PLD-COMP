@@ -28,7 +28,7 @@ definitionParameter : type VarName (LeftBracket Value? RightBracket)?;
 block: LeftBrace statement* RightBrace;
 brace: LeftParen expr RightParen;
 fctBlock : LeftBrace varDeclarationList* statement* RightBrace;
-fctBrace: LeftParen (definitionParameter (Comma definitionParameter)*)? RightParen;
+fctBrace: LeftParen ((definitionParameter (Comma definitionParameter)*)|Void)? RightParen;
 
 fctDefinition :
     (Void|type) VarName fctBrace fctBlock;

@@ -5,6 +5,7 @@
 #include <iomanip>
 #include "CFG.h"
 #include "../structure/Function.h"
+#include "ir.h"
 
 CFG::CFG(Function *ast):ast(ast) {
     current_bb = new BasicBlock(this, "STARTED_BLOCK");
@@ -47,6 +48,32 @@ void CFG::gen_asm_prologue(ostream &o) {
     o <<    "\tmov\t%rsp,%rbp" << endl;
     o <<    "\tsub\t$0x"<< hex << -nextFreeSymbolIndex;
                       o <<",%rsp" << endl << endl;
+    auto params = ast->getParams();
+
+    int nbParmsToSave = params.size() > 6 ? 6 : params.size();
+
+    switch (nbParmsToSave){
+        case 6:
+            o << "    mov    %r9, %rax" << endl;
+            ir::move(o,1,string("var_") + params[5]->getName(), this);
+        case 5:
+            o << "    mov    %r8, %rax" << endl;
+            ir::move(o,1,string("var_") + params[4]->getName(), this);
+        case 4:
+            o << "    mov    %rcx, %rax" << endl;
+            ir::move(o,1,string("var_") + params[3]->getName(), this);
+        case 3:
+            o << "    mov    %rdx, %rax" << endl;
+            ir::move(o,1,string("var_") + params[2]->getName(), this);
+        case 2:
+            o << "    mov    %rsi, %rax" << endl;
+            ir::move(o,1,string("var_") + params[1]->getName(), this);
+        case 1:
+            o << "    mov    %rdi, %rax" << endl;
+            ir::move(o,1,string("var_") + params[0]->getName(), this);
+
+    }
+
 }
 
 void CFG::gen_asm_epilogue(ostream &o) {
@@ -62,6 +89,11 @@ void CFG::add_to_symbol_table(string name, Type t) {
     SymbolIndex[name] = nextFreeSymbolIndex -= type::getSize(t)/8;
 
 
+}
+void CFG::add_to_symbol_table_params(string name, Type t) {
+    SymbolType[name] = t;
+    SymbolIndex[name] = nextFreeSymbolParamsIndex;
+    nextFreeSymbolParamsIndex += 8;
 }
 
 string CFG::create_new_tempvar(Type t) {
@@ -92,3 +124,4 @@ int CFG::getNextBBnumber(){
     static int nb = 0;
     return ++nb;
 }
+

@@ -4,20 +4,24 @@
 
 #include "IRInstrAssignment.h"
 #include "../BasicBlock.h"
+#include "../ir.h"
 
 IRInstrAssignment::IRInstrAssignment(BasicBlock* bb_, Type t, string dest, string from)
     :IRInstr(bb_,t),dest(dest),from(from){}
 
 void IRInstrAssignment::gen_asm(ostream &o){
 
-    int sizeFrom = bb->cfg->get_var_size(from);
-    int sizeDest = bb->cfg->get_var_size(dest);
+    ir::move(o, from, 1, bb->cfg);
 
-    move(o, from, 1);
+    if(!dest.empty()) {
 
-    if( sizeDest == 64 && sizeFrom != 64){
-        o << "\tcltq" << endl;
+        int sizeFrom = bb->cfg->get_var_size(from);
+        int sizeDest = bb->cfg->get_var_size(dest);
+
+        if (sizeDest == 64 && sizeFrom != 64) {
+            o << "\tcltq" << endl;
+        }
+        ir::move(o, 1, dest, bb->cfg);
     }
-    move(o,1, dest);
 
 }

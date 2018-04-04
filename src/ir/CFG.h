@@ -53,10 +53,13 @@ public:
     string new_BB_name(string basicString);
     BasicBlock* current_bb;
 
+    void add_to_symbol_table_params(basic_string<char, char_traits<char>, allocator<char>> basic_string, Type type);
+
 protected:
     map <string, Type> SymbolType; /**< part of the symbol table  */
     map <string, int> SymbolIndex; /**< part of the symbol table  */
     int nextFreeSymbolIndex = 0; /**< to allocate new symbols in the symbol table */
+    int nextFreeSymbolParamsIndex = 16;/**< to find pos of params new symbols in the symbol table */
     static int getNextBBnumber(); /**< just for naming */
 
     vector <BasicBlock*> bbs; /**< all the basic blocks of this CFG*/

@@ -31,9 +31,9 @@ string ExprFuncCall::buildIR(CFG* cfg)const{
         paramsVar.push_back(paramExpr->buildIR(cfg));
     }
 
-    string returnVar  = cfg->create_new_tempvar(getType());
+    string returnVar  = (getType() == VOID ? "" : cfg->create_new_tempvar(getType()));
 
-    IRInstrCall * inst = new IRInstrCall(cfg->current_bb, getType(),function->getName(), returnVar, paramsVar);
+    IRInstrCall * inst = new IRInstrCall(cfg->current_bb, getType(), returnVar, function->getName(), paramsVar);
     cfg->current_bb->add_IRInstr(inst);
 
     return returnVar;

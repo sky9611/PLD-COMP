@@ -223,6 +223,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *LeftParen();
     antlr4::tree::TerminalNode *RightParen();
+    antlr4::tree::TerminalNode *Void();
     std::vector<DefinitionParameterContext *> definitionParameter();
     DefinitionParameterContext* definitionParameter(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Comma();

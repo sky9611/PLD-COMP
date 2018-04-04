@@ -34,7 +34,7 @@ Type ExprAssignment::getType()const{
 string ExprAssignment::buildIR(CFG* cfg)const{
 
     string tmpVarExpr = expr->buildIR(cfg);
-    IRInstr* instr = new IRInstrAssignment(cfg->current_bb,getType(), var->getName(), tmpVarExpr);
+    IRInstr* instr = new IRInstrAssignment(cfg->current_bb,getType(), string("var_")+ var->getName(), tmpVarExpr);
     cfg->current_bb->add_IRInstr(instr);
 
     return tmpVarExpr;

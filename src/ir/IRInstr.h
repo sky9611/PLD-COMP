@@ -42,12 +42,6 @@ public:
     virtual void gen_asm(ostream &o) =0; /**< x86 assembly code generation for this IR instruction */
 
 protected:
-    string getAsmReg(int regNumber, Type t);
-    string getAsmReg(int regNumber, int size);
-
-    void move(ostream &o, int regNumber, string var);
-    void move(ostream &o, string var, int regNumber);
-    static char getSufixAsmSize(int size);
 
     BasicBlock* bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
     Type t;
