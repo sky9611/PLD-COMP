@@ -3,6 +3,7 @@
 //
 
 #include "StmtIf.h"
+#include "../../ir/irInstr/IRInstrTest.h"
 
 StmtIf::~StmtIf()
 {
@@ -29,7 +30,9 @@ Statement *StmtIf::getElseBlock() const
 string StmtIf::buildIR(CFG* cfg)const{
 
     //Ajout au block precedant(le if) l'instruction de test (blockInit)
-    this->test->buildIR(cfg);
+    string varTest = this->test->buildIR(cfg);
+    IRInstrTest* testIR = new IRInstrTest(cfg->current_bb, test->getType(), varTest);
+    cfg->current_bb->add_IRInstr(testIR);
 
     BasicBlock* blockInit = cfg->current_bb;
     BasicBlock* blockThen = new BasicBlock(cfg, "blockThen");

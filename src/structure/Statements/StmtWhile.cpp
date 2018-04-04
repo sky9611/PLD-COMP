@@ -4,6 +4,8 @@
 
 #include "StmtWhile.h"
 
+#include "../../ir/irInstr/IRInstrTest.h"
+
 StmtWhile::~StmtWhile()
 {
     delete test;
@@ -30,7 +32,9 @@ string StmtWhile::buildIR(CFG* cfg)const{
     whileBlock->exit_true = whileBlock->exit_false = testBlock;
 
     cfg->current_bb = testBlock;
-    this->test->buildIR(cfg);
+    string varTest = this->test->buildIR(cfg);
+    IRInstrTest* testIR = new IRInstrTest(cfg->current_bb, test->getType(), varTest);
+    cfg->current_bb->add_IRInstr(testIR);
 
     cfg->current_bb = whileBlock;
     this->block->buildIR(cfg);
