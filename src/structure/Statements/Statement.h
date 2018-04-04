@@ -26,6 +26,9 @@ public:
 
     virtual string buildIR(CFG* cfg)const =  0;
 
+    virtual vector<cmmVar*> CheckVariablesAffectes(vector<cmmVar*> varAffectPrec) = 0;
+
+
 };
 
 

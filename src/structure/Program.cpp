@@ -65,3 +65,14 @@ const vector<Function *> &Program::getFunctions() const {
 const vector<cmmVar *> &Program::getVars() const {
     return vars;
 }
+
+void Program::performAnalysis() {
+    vector<cmmVar*> initVars = vars;
+    vector<cmmVar*> globalVars = vars;
+    for(Statement* s : initStatments){
+        initVars = s->CheckVariablesAffectes(initVars);
+    }
+    for(Function* f : functions){
+        f->performAnalysis(globalVars);
+    }
+}

@@ -8,6 +8,31 @@
 
 using namespace antlr4;
 
+
+void error(string msg) {
+    cerr << msg <<endl;
+}
+
+void info(){
+    cout<<"cmm Compilation tool"<<endl;
+    cout<<"arguments :"<<endl;
+    cout<<"Please specify a file name in the input arguments."<<endl;
+    cout<<"     -c           Compilation into a specified file."<<endl;
+    cout<<"     -a           Perform a static analysis of the program."<<endl;
+    cout<<"     -o           Perform a simple optimization of the program."<<endl;
+    cout<<"     -h           Display the help page."<<endl;
+}
+
+string parseArgs(vector<string> args){
+    args.erase(args.begin());
+    for(string a : args){
+        if(a != "-a" && a!="-c" && a!="-o" && a!="-h"){
+            return a;
+        }
+    }
+    return string();
+}
+
 int main(int argc, const char* argv[]) {
 
     string testName;
@@ -22,11 +47,31 @@ int main(int argc, const char* argv[]) {
 
     if(argc > 1){
         testName = argv[1];
+    }else{
+        error("Error : not enough arguments");
+        return 1;
     }
 
+    vector<string> args(argv,argv+argc);
+    if(find(args.begin(),args.end(),"-h") != args.end()) {
+        info();
+        return 0;
+    }
+    bool staticAnalysis = find(args.begin(),args.end(),"-a") != args.end();
+    bool compilationToFile = find(args.begin(),args.end(),"-c") != args.end();
+    bool opmitization = find(args.begin(),args.end(),"-o") != args.end();
+
+    string fileName = parseArgs(args);
+    if(fileName == string()){
+        error("Error : no file name in arguments");
+        return 1;
+    }
+    fileName.pop_back();
+    fileName.pop_back();
+    //string fileIn = fileName+string(".c");
+    //string fileOut = fileName+string(".c");
     string fileIn = string("../Test/Back/") + testName + string(".c");
     string fileOut =string("../Test/Back/") + testName + string(".s");
-
     ANTLRFileStream input(fileIn);
     cmmLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
@@ -43,6 +88,8 @@ int main(int argc, const char* argv[]) {
 
     Program* b = tree->accept(interpreter);
 
+    //partie analyse
+    if(staticAnalysis) b->performAnalysis();
     b->builIR();
 
     ofstream outFile;
@@ -55,3 +102,4 @@ int main(int argc, const char* argv[]) {
     std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;
 }
+

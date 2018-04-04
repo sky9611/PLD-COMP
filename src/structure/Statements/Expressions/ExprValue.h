@@ -29,6 +29,8 @@ public:
 
     string getStringValue() const;
 
+    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+
 };
 
 

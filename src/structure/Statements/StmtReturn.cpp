@@ -29,3 +29,7 @@ string StmtReturn::buildIR(CFG* cfg)const{
 
     return string();
 }
+
+vector<cmmVar *> StmtReturn::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    return varAffectPrec;
+}

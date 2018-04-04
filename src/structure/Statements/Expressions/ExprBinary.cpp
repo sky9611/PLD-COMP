@@ -166,3 +166,9 @@ string ExprBinary::buildIROrOr(CFG* cfg)const{
 
 
 }
+
+vector<cmmVar *> ExprBinary::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    varAffectPrec = expr1->CheckVariablesAffectes(varAffectPrec);
+    varAffectPrec = expr2->CheckVariablesAffectes(varAffectPrec);
+    return varAffectPrec;
+}

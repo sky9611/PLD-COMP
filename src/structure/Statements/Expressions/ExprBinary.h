@@ -40,6 +40,8 @@ public:
     virtual string buildIROrOr(CFG* cfg)const;
     virtual string buildIRAndAnd(CFG* cfg)const;
 
+    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+
 };
 
 

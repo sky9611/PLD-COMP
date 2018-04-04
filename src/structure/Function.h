@@ -14,6 +14,7 @@ class Function;
 #include "Statements/StmtBlock.h"
 #include "cmmDef.h"
 #include "Program.h"
+#include "cmmVar.h"
 
 using namespace std;
 using namespace antlrcpp;
@@ -58,6 +59,7 @@ public:
     std::string toString();
 
     void builIR();
+    void performAnalysis(vector<cmmVar*> vars);
 };
 
 

@@ -33,6 +33,8 @@ public:
 
     IRInstr::Operation getIRInstOperation()const;
 
+    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+
 };
 
 

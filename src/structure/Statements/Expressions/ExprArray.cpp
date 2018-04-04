@@ -27,3 +27,8 @@ string ExprArray::buildIR(CFG* cfg)const{ // only for Read ( write in assignment
     string tmpVar = cfg->create_new_tempvar(getType());
     cfg->current_bb->add_IRInstr(IRInstr::rmem,getType(), tmp,)*/
 }
+
+vector<cmmVar *> ExprArray::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    varAffectPrec = expression->CheckVariablesAffectes(varAffectPrec);
+    return varAffectPrec;
+}

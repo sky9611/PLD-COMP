@@ -27,3 +27,8 @@ void ExprVariable::setVar(cmmVar *var)
 string ExprVariable::buildIR(CFG* cfg)const{
     return string("var_") + var->getName();
 }
+
+vector<cmmVar *> ExprVariable::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    if(find(varAffectPrec.begin(),varAffectPrec.end(),var) != varAffectPrec.end()) return varAffectPrec;
+    else throw cmmRuntimeException("Error : variable " + var->getName() + " has no given value.");
+}

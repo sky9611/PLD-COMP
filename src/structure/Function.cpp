@@ -93,3 +93,8 @@ CFG *Function::getCfg() const {
 void Function::builIR() {
     content->buildIR(cfg);
 }
+
+void Function::performAnalysis(vector<cmmVar *> vars) {
+    vars.insert(vars.end(),params.begin(),params.end());
+        vars = content->CheckVariablesAffectes(vars);
+}

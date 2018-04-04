@@ -79,3 +79,20 @@ string StmtIf::buildIR(CFG* cfg)const{
 
     return string();
 }
+
+vector<cmmVar *> StmtIf::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    varAffectPrec = test->CheckVariablesAffectes(varAffectPrec);
+    if(elseBlock){
+        vector<cmmVar*> varAffectation1 = block->CheckVariablesAffectes(varAffectPrec);
+        vector<cmmVar*> varAffectation2 = elseBlock->CheckVariablesAffectes(varAffectPrec);
+        //calcul de l'intersection
+        sort(varAffectation1.begin(),varAffectation1.end());
+        sort(varAffectation2.begin(),varAffectation2.end());
+        vector<cmmVar*> intersection;
+        set_intersection(varAffectation1.begin(),varAffectation1.end(),varAffectation2.begin(),varAffectation2.end(),back_inserter(intersection));
+        return intersection;
+    }else{
+        block->CheckVariablesAffectes(varAffectPrec);
+        return varAffectPrec;
+    }
+}

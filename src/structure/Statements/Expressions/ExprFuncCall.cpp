@@ -39,3 +39,10 @@ string ExprFuncCall::buildIR(CFG* cfg)const{
     return returnVar;
 
 }
+
+vector<cmmVar *> ExprFuncCall::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    for(Expression* e: params){
+        varAffectPrec = e->CheckVariablesAffectes(varAffectPrec);
+    }
+    return varAffectPrec;
+}

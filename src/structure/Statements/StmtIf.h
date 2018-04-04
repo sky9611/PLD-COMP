@@ -13,9 +13,9 @@
 class StmtIf : public Statement
 {
 private:
-    Expression * test;
+    Expression* test;
     Statement* block;
-    Statement * elseBlock;
+    Statement* elseBlock;
 
 public:
     StmtIf(cmmScope * scope, Expression * test, Statement * block): StmtIf(scope,test,block,nullptr){}
@@ -35,6 +35,8 @@ public:
     void setElseStatement(Statement * _elseStmt){elseStmt = _elseStmt;}*/
 
     virtual string buildIR(CFG* cfg)const override;
+
+    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 };
 
 

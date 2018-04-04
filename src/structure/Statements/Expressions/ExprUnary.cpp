@@ -58,3 +58,8 @@ IRInstr::Operation ExprUnary::getIRInstOperation()const{
         default: throw cmmRuntimeException("[ExprBinary::getIRInstOperation]" );
     }
 }
+
+vector<cmmVar *> ExprUnary::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    varAffectPrec = expr->CheckVariablesAffectes(varAffectPrec);
+    return varAffectPrec;
+}

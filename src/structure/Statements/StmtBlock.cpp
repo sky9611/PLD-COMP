@@ -29,3 +29,10 @@ string StmtBlock::buildIR(CFG* cfg)const{
     }
     return "";
 }
+
+vector<cmmVar *> StmtBlock::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    for(Statement* s : statements){
+        varAffectPrec = s->CheckVariablesAffectes(varAffectPrec);
+    }
+    return varAffectPrec;
+}

@@ -50,3 +50,7 @@ string ExprValue::buildIR(CFG* cfg)const{
 
     return tmpVar;
 }
+
+vector<cmmVar *> ExprValue::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    return varAffectPrec;
+}

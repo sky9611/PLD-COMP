@@ -41,3 +41,10 @@ string ExprAssignment::buildIR(CFG* cfg)const{
 
 
 }
+
+vector<cmmVar *> ExprAssignment::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    vector<cmmVar*> newVariablesAffectes = varAffectPrec;
+    vector<cmmVar*> exprVariablesAffectes = expr->CheckVariablesAffectes(varAffectPrec);
+    newVariablesAffectes.push_back(var);
+    return newVariablesAffectes;
+}

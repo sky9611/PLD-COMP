@@ -28,6 +28,8 @@ public:
 
     virtual string buildIR(CFG* cfg)const;
 
+    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+
 };
 
 

@@ -33,6 +33,8 @@ public:
 
     void builIR();
 
+    void performAnalysis();
+
 protected:
 public:
     const vector<Function *> &getFunctions() const;

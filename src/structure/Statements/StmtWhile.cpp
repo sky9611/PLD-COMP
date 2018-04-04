@@ -44,3 +44,9 @@ string StmtWhile::buildIR(CFG* cfg)const{
     return string();
 }
 
+vector<cmmVar *> StmtWhile::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+    varAffectPrec = test->CheckVariablesAffectes(varAffectPrec);
+    block->CheckVariablesAffectes(varAffectPrec);
+    return varAffectPrec;
+}
+
