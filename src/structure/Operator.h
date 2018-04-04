@@ -30,7 +30,9 @@ enum AssignmentOperator
 enum UnaryOperator
 {
     NOT,
-    MINUS
+    MINUS,
+    DIV,
+    MOD
 };
 
 enum BinaryOperator

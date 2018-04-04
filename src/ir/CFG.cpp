@@ -125,3 +125,19 @@ int CFG::getNextBBnumber(){
     return ++nb;
 }
 
+string CFG::IR_regArray_to_asm(string reg) {
+    stringstream stream;
+    int index = get_var_index(reg);
+    int size = get_var_size(reg);
+    if( index < 0){
+        stream << '-';
+        index = -index;
+    }
+    stream << "0x" << hex << index;
+    stream << "(%rbp,%rax," << to_string(size/8) << ")";
+
+    string result( stream.str() );
+
+    return result;
+}
+

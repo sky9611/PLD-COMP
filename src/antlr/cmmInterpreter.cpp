@@ -619,7 +619,30 @@ antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
         cout << "[cmmInterpreter] + visitExprChar : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    char c = ctx->getText()[1];
+    char c;
+    if(ctx->getText().length()==3)
+        c = ctx->getText()[1];
+    else if(ctx->getText().length()==4) {
+        char c2 = ctx->getText()[2];
+        if (ctx->getText()[1] == '\\') {
+            switch (c2) {
+                case 'a' : c = '\a';break;
+                case 'b' : c = '\b';break;
+                case 'f' : c = '\f';break;
+                case 'n' : c = '\n';break;
+                case 'r' : c = '\r';break;
+                case 't' : c = '\t';break;
+                case 'v' : c = '\v';break;
+                case '\\' : c = '\\';break;
+                case '\'' : c = '\'';break;
+                case '\"' : c = '\"';break;
+                case '?' : c = '\?';break;
+                case '0' : c = '\0';break;
+                default: throw cmmRuntimeException("[cmmInterpreter:visitExprChar()] Wrong escape character :" + c2 + getScopeList() + string(" )"));
+            }
+        }
+    }
+
     ExprValue* res = new ExprValue(currentScope, CHAR, c);
 
     #ifdef  VIEW_VISITOR_COUT
@@ -642,12 +665,43 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
     ExprAssignment * res = nullptr;
 
     if(type::isBasicType(gauche->getType())) {
-        if (gauche->getType() == droite->getType())
+        //if (gauche->getType() == droite->getType())
+        if(ctx->DivAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Div);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->MinusAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Minus);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->StarAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Star);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->ModAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Mod);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->PlusAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Plus);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->LeftShiftAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,LeftShift);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->RightShiftAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,RightShift);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->AndAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,And);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->XorAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Caret);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else if(ctx->OrAssign()!= nullptr){
+            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Or);
+            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+        } else
             res = new ExprAssignment(currentScope, gauche->getVar(), droite);
-        else
+        /*else
             throw cmmRuntimeException("[cmmInterpreter:visitStatementAssiggnment()] Error cast from " +
                                       type::toString(droite->getType()) + "to " + type::toString(gauche->getType()) +
-                                      getScopeList() + string(" )"));
+                                      getScopeList() + string(" )"));*/
     } else {
         throw cmmRuntimeException("[cmmInterpreter:visitExprIncPost()] Array is not assignable " + getScopeList() + string(" )"));
     }
@@ -697,7 +751,28 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
 
     Expression * expr0 = visit(ctx->expr(0));
     Expression * expr1 = visit(ctx->expr(1));
-    BinaryOperator oB = visit(ctx->operatorBinaire());
+    BinaryOperator oB;
+    if(ctx->exprMultiDivMod()!=nullptr ){
+        oB = visit(ctx->exprMultiDivMod());
+    }else if(ctx->exprPlusMinus()!=nullptr ){
+        oB = visit(ctx->exprPlusMinus());
+    }else if(ctx->exprShift()!=nullptr ){
+        oB = visit(ctx->exprShift());
+    }else if(ctx->exprComparative()!=nullptr ){
+        oB = visit(ctx->exprComparative());
+    }else if(ctx->exprEqualNotEqual()!=nullptr ){
+        oB = visit(ctx->exprEqualNotEqual());
+    }else if(ctx->exprAnd()!=nullptr ){
+        oB = visit(ctx->exprAnd());
+    }else if(ctx->exprCaret()!=nullptr ){
+        oB = visit(ctx->exprCaret());
+    }else if(ctx->exprOr()!=nullptr ){
+        oB = visit(ctx->exprOr());
+    }else if(ctx->exprAndAnd()!=nullptr ){
+        oB = visit(ctx->exprAndAnd());
+    }else if(ctx->exprOrOr()!=nullptr ){
+        oB = visit(ctx->exprOrOr());
+    }
 
     Type t0 = expr0->getType();
     Type t1 = expr1->getType();

@@ -9,3 +9,5 @@ cmake-build-debug/**
 libraries/macOS/**
 
 *.s
+
+\.idea/inspectionProfiles/Project_Default\.xml

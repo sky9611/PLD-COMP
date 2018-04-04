@@ -30,7 +30,10 @@ public:
     RuleFile = 0, RuleProgramme = 1, RuleVarDeclarationList = 2, RuleDeclarationVar = 3, 
     RuleDefinitionParameter = 4, RuleBlock = 5, RuleBrace = 6, RuleFctBlock = 7, 
     RuleFctBrace = 8, RuleFctDefinition = 9, RuleStatement = 10, RuleVarCall = 11, 
-    RuleExpr = 12, RuleOperatorBinaire = 13, RuleExprList = 14, RuleType = 15
+    RuleExpr = 12, RuleExprMultiDivMod = 13, RuleExprPlusMinus = 14, RuleExprShift = 15, 
+    RuleExprComparative = 16, RuleExprEqualNotEqual = 17, RuleExprAnd = 18, 
+    RuleExprCaret = 19, RuleExprOr = 20, RuleExprAndAnd = 21, RuleExprOrOr = 22, 
+    RuleExprList = 23, RuleType = 24
   };
 
   cmmParser(antlr4::TokenStream *input);
@@ -56,7 +59,16 @@ public:
   class StatementContext;
   class VarCallContext;
   class ExprContext;
-  class OperatorBinaireContext;
+  class ExprMultiDivModContext;
+  class ExprPlusMinusContext;
+  class ExprShiftContext;
+  class ExprComparativeContext;
+  class ExprEqualNotEqualContext;
+  class ExprAndContext;
+  class ExprCaretContext;
+  class ExprOrContext;
+  class ExprAndAndContext;
+  class ExprOrOrContext;
   class ExprListContext;
   class TypeContext; 
 
@@ -460,114 +472,148 @@ public:
 
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
-    OperatorBinaireContext *operatorBinaire();
+    ExprMultiDivModContext *exprMultiDivMod();
+    ExprPlusMinusContext *exprPlusMinus();
+    ExprShiftContext *exprShift();
+    ExprComparativeContext *exprComparative();
+    ExprEqualNotEqualContext *exprEqualNotEqual();
+    ExprAndContext *exprAnd();
+    ExprCaretContext *exprCaret();
+    ExprOrContext *exprOr();
+    ExprAndAndContext *exprAndAnd();
+    ExprOrOrContext *exprOrOr();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   ExprContext* expr();
   ExprContext* expr(int precedence);
-  class  OperatorBinaireContext : public antlr4::ParserRuleContext {
+  class  ExprMultiDivModContext : public antlr4::ParserRuleContext {
   public:
-    OperatorBinaireContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    OperatorBinaireContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(OperatorBinaireContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
+    ExprMultiDivModContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Star();
+    antlr4::tree::TerminalNode *Div();
+    antlr4::tree::TerminalNode *Mod();
 
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
    
   };
 
-  class  ExprPlusMinusContext : public OperatorBinaireContext {
-  public:
-    ExprPlusMinusContext(OperatorBinaireContext *ctx);
+  ExprMultiDivModContext* exprMultiDivMod();
 
+  class  ExprPlusMinusContext : public antlr4::ParserRuleContext {
+  public:
+    ExprPlusMinusContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *Plus();
     antlr4::tree::TerminalNode *Minus();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
-  class  ExprComparativeContext : public OperatorBinaireContext {
-  public:
-    ExprComparativeContext(OperatorBinaireContext *ctx);
+  ExprPlusMinusContext* exprPlusMinus();
 
+  class  ExprShiftContext : public antlr4::ParserRuleContext {
+  public:
+    ExprShiftContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *LeftShift();
+    antlr4::tree::TerminalNode *RightShift();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ExprShiftContext* exprShift();
+
+  class  ExprComparativeContext : public antlr4::ParserRuleContext {
+  public:
+    ExprComparativeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *Less();
     antlr4::tree::TerminalNode *LessEqual();
     antlr4::tree::TerminalNode *Greater();
     antlr4::tree::TerminalNode *GreaterEqual();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
-  class  ExprOrContext : public OperatorBinaireContext {
+  ExprComparativeContext* exprComparative();
+
+  class  ExprEqualNotEqualContext : public antlr4::ParserRuleContext {
   public:
-    ExprOrContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *Or();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprCaretContext : public OperatorBinaireContext {
-  public:
-    ExprCaretContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *Caret();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprOrOrContext : public OperatorBinaireContext {
-  public:
-    ExprOrOrContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *OrOr();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprMultiDivModContext : public OperatorBinaireContext {
-  public:
-    ExprMultiDivModContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *Star();
-    antlr4::tree::TerminalNode *Div();
-    antlr4::tree::TerminalNode *Mod();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprAndContext : public OperatorBinaireContext {
-  public:
-    ExprAndContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *And();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprAndAndContext : public OperatorBinaireContext {
-  public:
-    ExprAndAndContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *AndAnd();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprShiftContext : public OperatorBinaireContext {
-  public:
-    ExprShiftContext(OperatorBinaireContext *ctx);
-
-    antlr4::tree::TerminalNode *LeftShift();
-    antlr4::tree::TerminalNode *RightShift();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprEqualNotEqualContext : public OperatorBinaireContext {
-  public:
-    ExprEqualNotEqualContext(OperatorBinaireContext *ctx);
-
+    ExprEqualNotEqualContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *Equal();
     antlr4::tree::TerminalNode *NotEqual();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
-  OperatorBinaireContext* operatorBinaire();
+  ExprEqualNotEqualContext* exprEqualNotEqual();
+
+  class  ExprAndContext : public antlr4::ParserRuleContext {
+  public:
+    ExprAndContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *And();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ExprAndContext* exprAnd();
+
+  class  ExprCaretContext : public antlr4::ParserRuleContext {
+  public:
+    ExprCaretContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Caret();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ExprCaretContext* exprCaret();
+
+  class  ExprOrContext : public antlr4::ParserRuleContext {
+  public:
+    ExprOrContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Or();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ExprOrContext* exprOr();
+
+  class  ExprAndAndContext : public antlr4::ParserRuleContext {
+  public:
+    ExprAndAndContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *AndAnd();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ExprAndAndContext* exprAndAnd();
+
+  class  ExprOrOrContext : public antlr4::ParserRuleContext {
+  public:
+    ExprOrOrContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *OrOr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ExprOrOrContext* exprOrOr();
 
   class  ExprListContext : public antlr4::ParserRuleContext {
   public:

@@ -11,7 +11,7 @@
 class IRInstrBasicOperator : public IRInstr{
 private:
     enum OperatorType{
-        UNKNOWN, EQUATION, COMPARATOR
+        UNKNOWN, EQUATION, COMPARATOR, DIV, MOD
     };
     struct OperatorInfo{
         OperatorType type;

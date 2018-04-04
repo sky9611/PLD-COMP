@@ -39,7 +39,6 @@ string StmtIf::buildIR(CFG* cfg)const{
     BasicBlock* blockOut = new BasicBlock(cfg, "blockEndIf");
 
     cfg->add_bb(blockThen);
-    cfg->add_bb(blockOut);
 
 
     //Copy les sorti du blockInit dans le nouveau block de de sortie blockOut
@@ -67,7 +66,7 @@ string StmtIf::buildIR(CFG* cfg)const{
         blockInit->exit_false = blockElse;
 
         //Parcour le code du else
-        cfg->current_bb = blockThen;
+        cfg->current_bb = blockElse;
         this->elseBlock->buildIR(cfg);
 
         blockElse->exit_true = blockOut;
@@ -76,6 +75,7 @@ string StmtIf::buildIR(CFG* cfg)const{
     }
 
     cfg->current_bb = blockOut; //La suit du code est a ajouter aux plock blockOut
+    cfg->add_bb(blockOut);
 
     return string();
 }
