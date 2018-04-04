@@ -26,4 +26,6 @@ string StmtReturn::buildIR(CFG* cfg)const{
     cfg->current_bb->exit_false = nullptr;
 
     cfg->current_bb = nullptr;
+
+    return string();
 }

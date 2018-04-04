@@ -41,5 +41,6 @@ string StmtWhile::buildIR(CFG* cfg)const{
 
     cfg->current_bb = outBlock;
 
+    return string();
 }
 

@@ -23,7 +23,7 @@ public:
 
     Expression *getExpr() const;
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 };
 
 
