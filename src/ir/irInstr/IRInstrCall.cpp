@@ -20,22 +20,22 @@ void IRInstrCall::gen_asm(ostream &o){
     switch (vars.size()-nbInStack){
         case 6:
             ir::move(o, vars[5], 1, bb->cfg);
-            o << "    movl    %rax, %r9" << endl;
+            o << "    mov    %rax, %r9" << endl;
         case 5:
             ir::move(o, vars[4], 1, bb->cfg);
-            o << "    movl    %rax, %r8" << endl;
+            o << "    mov    %rax, %r8" << endl;
         case 4:
             ir::move(o, vars[3], 1, bb->cfg);
-            o << "    movl    %rax, %rcx" << endl;
+            o << "    mov    %rax, %rcx" << endl;
         case 3:
             ir::move(o, vars[2], 1, bb->cfg);
-            o << "    movl    %rax, %rdx" << endl;
+            o << "    mov    %rax, %rdx" << endl;
         case 2:
             ir::move(o, vars[1], 1, bb->cfg);
-            o << "    movl    %rax, %rsi" << endl;
+            o << "    mov    %rax, %rsi" << endl;
         case 1:
             ir::move(o, vars[0], 1, bb->cfg);
-            o << "    movl    %rax, %rdi" << endl;
+            o << "    mov    %rax, %rdi" << endl;
     }
 
     o << "    call    " << fctName << endl;

@@ -10,7 +10,7 @@ BasicBlock::BasicBlock(CFG *cfg, string entry_label):cfg(cfg), label(cfg->new_BB
 }
 
 void BasicBlock::gen_asm(ostream &o) {
-    o << label << ":" << endl;
+    o << '.'<< label << ':' << endl;
 
     for(IRInstr* inst : instrs)
         inst->gen_asm(o);

@@ -58,7 +58,7 @@ public:
 protected:
     map <string, Type> SymbolType; /**< part of the symbol table  */
     map <string, int> SymbolIndex; /**< part of the symbol table  */
-    int nextFreeSymbolIndex = -8; /**< to allocate new symbols in the symbol table */
+    int nextFreeSymbolIndex = 0; /**< to allocate new symbols in the symbol table */
     int nextFreeSymbolParamsIndex = 16;/**< to find pos of params new symbols in the symbol table */
     static int getNextBBnumber(); /**< just for naming */
 

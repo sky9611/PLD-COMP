@@ -54,22 +54,22 @@ void CFG::gen_asm_prologue(ostream &o) {
 
     switch (nbParmsToSave){
         case 6:
-            o << "    movl    %r9, %rax" << endl;
+            o << "    mov    %r9, %rax" << endl;
             ir::move(o,1,string("var_") + params[5]->getName(), this);
         case 5:
-            o << "    movl    %r8, %rax" << endl;
+            o << "    mov    %r8, %rax" << endl;
             ir::move(o,1,string("var_") + params[4]->getName(), this);
         case 4:
-            o << "    movl    %rcx, %rax" << endl;
+            o << "    mov    %rcx, %rax" << endl;
             ir::move(o,1,string("var_") + params[3]->getName(), this);
         case 3:
-            o << "    movl    %rdx, %rax" << endl;
+            o << "    mov    %rdx, %rax" << endl;
             ir::move(o,1,string("var_") + params[2]->getName(), this);
         case 2:
-            o << "    movl    %rsi, %rax" << endl;
+            o << "    mov    %rsi, %rax" << endl;
             ir::move(o,1,string("var_") + params[1]->getName(), this);
         case 1:
-            o << "    movl    %rdi, %rax" << endl;
+            o << "    mov    %rdi, %rax" << endl;
             ir::move(o,1,string("var_") + params[0]->getName(), this);
 
     }
