@@ -62,6 +62,7 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
         case COMPARATOR : ;
             o << "\tcmp" << (sizeRes == 64 ? 'q' : 'l') << " " <<  reg2 << ", " << reg1 << endl;
             o << "\t" << asmOpInfo.asmOp << " %al" << endl;
+            break;
         default:
             o << "UNKNOWOP" << endl;
     }
