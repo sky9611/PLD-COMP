@@ -2,6 +2,7 @@
 // Created by hvogel on 28/03/18.
 //
 
+#include <src/ir/irInstr/IRInstrArray.h>
 #include "ExprArray.h"
 
 
@@ -23,7 +24,10 @@ Type ExprArray::getType() const {
 }
 
 string ExprArray::buildIR(CFG* cfg)const{ // only for Read ( write in assignment)
-    /*string arrayAccessValue = expression->buildIR(cfg);
+    string arrayAccessValue = expression->buildIR(cfg);
     string tmpVar = cfg->create_new_tempvar(getType());
-    cfg->current_bb->add_IRInstr(IRInstr::rmem,getType(), tmp,)*/
+    IRInstrArray * instr = new IRInstrArray(cfg->current_bb,getType(),tmpVar,string("var_") + var->getName(),arrayAccessValue);
+    cfg->current_bb->add_IRInstr(instr);
+
+    return tmpVar;
 }
