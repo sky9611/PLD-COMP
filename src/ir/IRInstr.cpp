@@ -62,18 +62,14 @@ void IRInstr::move(ostream &o, int regNumber, string var){
     int sizeVar = bb->cfg->get_var_size(var);
     string asmVar = bb->cfg->IR_reg_to_asm(var);
     string reg = getAsmReg(regNumber, sizeVar);
-    switch(sizeVar){
-        case 8: // move 8 bits to reg 32 byte (movzbl)
-            o << "    movb  " << reg << ", " << asmVar  << endl;
-            break;
-        case 16: // move 16 bit to reg 32 byte (movswl)
-            o << "    movw  " << reg << ", " << asmVar  << endl;
-            break;
-        case 32: // move 32 bit to reg 32 byte (mov)
-            o << "    movl  " << reg << ", " << asmVar  << endl;
-            break;
-        case 64: // move 64 bit to reg 64 byte (mov)
-            o << "    movq  " << reg << ", " << asmVar  << endl;
-            break;
+    o << "    mov" << getSufixAsmSize(sizeVar) << "  " << reg << ", " << asmVar  << endl;
+}
+
+char IRInstr::getSufixAsmSize(int size){
+    switch (size){
+        case 8: return 'b';
+        case 16: return 'w';
+        case 32: return 'l';
+        case 64: return 'q';
     }
 }

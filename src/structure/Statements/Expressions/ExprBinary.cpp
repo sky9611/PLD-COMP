@@ -4,6 +4,9 @@
 
 #include "ExprBinary.h"
 #include "../../../ir/irInstr/IRInstrBasicOperator.h"
+#include "../../../ir/irInstr/IRInstrAssignment.h"
+#include "../../../ir/irInstr/IRInstrValue.h"
+#include "../../../ir/irInstr/IRInstrTest.h"
 
 ExprBinary::ExprBinary(cmmScope *scope, Expression *expr1, Expression *expr2, BinaryOperator op)
         : Expression(scope), expr1(expr1), expr2(expr2), op(op)
@@ -51,6 +54,15 @@ Type ExprBinary::getType()const{
 
 
 string ExprBinary::buildIR(CFG* cfg)const{
+    switch (op){
+        case OrOr: return buildIROrOr(cfg);
+        case AndAnd: return buildIRAndAnd(cfg);
+        default:return buildIRDefault(cfg);
+    }
+
+
+}
+string ExprBinary::buildIRDefault(CFG* cfg)const{
     string tmpVar1 = expr1->buildIR(cfg);
     string tmpVar2 = expr2->buildIR(cfg);
     string tmpVarRES = cfg->create_new_tempvar(getType());
@@ -58,6 +70,97 @@ string ExprBinary::buildIR(CFG* cfg)const{
     IRInstrBasicOperator* instruction = new IRInstrBasicOperator(cfg->current_bb, getType(), tmpVarRES, tmpVar1, tmpVar2, op);
 
     cfg->current_bb->add_IRInstr(instruction);
+
+    return tmpVarRES;
+
+
+}
+string ExprBinary::buildIRAndAnd(CFG* cfg)const{
+
+    // RES = C&&B => {TMP1 = eval(C); (TMP1 ? {TMP2 = eval(B); RES = TMP2} : {RES = 0})}
+
+    string tmpVarRES = cfg->create_new_tempvar(getType());
+
+    string tmpVar1 = expr1->buildIR(cfg);
+    IRInstrTest* testIR = new IRInstrTest(cfg->current_bb, expr1->getType(), tmpVar1);
+    cfg->current_bb->add_IRInstr(testIR);
+
+    BasicBlock* blockInit = cfg->current_bb;
+    BasicBlock* blockExp1OK = new BasicBlock(cfg, "blockExp1OK");
+    BasicBlock* blockExp1KO = new BasicBlock(cfg, "blockExp1KO");
+    BasicBlock* blockOut = new BasicBlock(cfg, "blockEndAndAnd");
+
+    blockOut->exit_true = blockInit->exit_true;
+    blockOut->exit_false = blockInit->exit_false;
+
+    blockInit->exit_true = blockExp1OK;
+    blockInit->exit_false = blockExp1KO;
+
+    blockExp1OK->exit_true = blockExp1OK->exit_false = blockOut;
+    blockExp1KO->exit_true = blockExp1KO->exit_false = blockOut;
+
+    cfg->add_bb(blockExp1OK);
+    cfg->add_bb(blockExp1KO);
+    cfg->add_bb(blockOut);
+
+    cfg->current_bb = blockExp1OK;
+    string tmpVar2 = expr2->buildIR(cfg);
+    IRInstrAssignment* asigne = new IRInstrAssignment(cfg->current_bb,getType(),tmpVarRES,tmpVar2);
+    blockExp1OK -> add_IRInstr(asigne);
+
+    cfg->current_bb = blockExp1KO;
+    IRInstrValue* loadFalse = new IRInstrValue(cfg->current_bb,getType(),tmpVarRES,0);
+    blockExp1KO -> add_IRInstr(loadFalse);
+
+
+    cfg->current_bb = blockOut;
+
+    return tmpVarRES;
+
+
+}
+
+string ExprBinary::buildIROrOr(CFG* cfg)const{
+
+    // RES = C||B => {TMP1 = eval(C); (TMP1 ? {RES = TMP1} : {TMP2 = eval(B); RES = TMP2})}
+
+    string tmpVarRES = cfg->create_new_tempvar(getType());
+
+    //TMP1 = eval(C);
+    string tmpVar1 = expr1->buildIR(cfg);
+
+    IRInstrTest* testIR = new IRInstrTest(cfg->current_bb, expr1->getType(), tmpVar1);
+    cfg->current_bb->add_IRInstr(testIR);
+
+    BasicBlock* blockInit = cfg->current_bb;
+    BasicBlock* blockExp1OK = new BasicBlock(cfg, "blockExp1OK");
+    BasicBlock* blockExp1KO = new BasicBlock(cfg, "blockExp1KO");
+    BasicBlock* blockOut = new BasicBlock(cfg, "blockEndAndAnd");
+
+    blockOut->exit_true = blockInit->exit_true;
+    blockOut->exit_false = blockInit->exit_false;
+
+    blockInit->exit_true = blockExp1OK;
+    blockInit->exit_false = blockExp1KO;
+
+    blockExp1OK->exit_true = blockExp1OK->exit_false = blockOut;
+    blockExp1KO->exit_true = blockExp1KO->exit_false = blockOut;
+
+    cfg->add_bb(blockExp1OK);
+    cfg->add_bb(blockExp1KO);
+    cfg->add_bb(blockOut);
+
+    cfg->current_bb = blockExp1OK;
+    IRInstrAssignment* asigne = new IRInstrAssignment(cfg->current_bb,getType(),tmpVarRES,tmpVar1);
+    blockExp1OK -> add_IRInstr(asigne);
+
+    cfg->current_bb = blockExp1KO;
+    string tmpVar2 = expr2->buildIR(cfg);
+    IRInstrAssignment* asigne2 = new IRInstrAssignment(cfg->current_bb,getType(),tmpVarRES,tmpVar2);
+    blockExp1KO -> add_IRInstr(asigne2);
+
+
+    cfg->current_bb = blockOut;
 
     return tmpVarRES;
 

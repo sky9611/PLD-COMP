@@ -36,6 +36,9 @@ public:
     virtual Type getType()const;
 
     virtual string buildIR(CFG* cfg)const;
+    virtual string buildIRDefault(CFG* cfg)const;
+    virtual string buildIROrOr(CFG* cfg)const;
+    virtual string buildIRAndAnd(CFG* cfg)const;
 
 };
 

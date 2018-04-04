@@ -9,6 +9,14 @@
 #include "../../structure/Operator.h"
 
 class IRInstrBasicOperator : public IRInstr{
+private:
+    enum OperatorType{
+        UNKNOWN, EQUATION, COMPARATOR
+    };
+    struct OperatorInfo{
+        OperatorType type;
+        string asmOp;
+    };
 protected:
     BinaryOperator op;
     string dest, v1, v2;
@@ -17,8 +25,7 @@ public:
 
     virtual void gen_asm(ostream &o);
 
-    static string IROperatorToAsmOperator(IRInstr::Operation op);
-    static string OperatorToAsmOperator(BinaryOperator op);
+    static OperatorInfo OperatorToAsmOperator(BinaryOperator op);
 
 };
 

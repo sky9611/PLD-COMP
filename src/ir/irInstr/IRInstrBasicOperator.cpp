@@ -10,16 +10,19 @@ IRInstrBasicOperator::IRInstrBasicOperator(BasicBlock* bb, Type t, string dest, 
 
 void IRInstrBasicOperator::gen_asm(ostream &o){
 
-    string asmOp = OperatorToAsmOperator(op);
+    auto asmOpInfo = OperatorToAsmOperator(op);
+
+    int sizeV1 = bb->cfg->get_var_size(v1);
+    int sizeV2 = bb->cfg->get_var_size(v2);
+    int sizeRes = type::getSize(t);
 
     string reg1;
     string reg2;
 
+    //ETAP 1 CHARGER VAR dans des reg 32 ou 64 byte
+
     if(type::getSize(t) == 64) { //utilisation des registre en 64 byte
 
-
-        int sizeV1 = bb->cfg->get_var_size(v1);
-        int sizeV2 = bb->cfg->get_var_size(v2);
 
         reg1 = getAsmReg(1, 64);
         reg2 = getAsmReg(2, 64);
@@ -49,32 +52,35 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
         move(o,v2,2); // var2 => reg2
     }
 
-    o << "\t"<< asmOp << " " <<  reg1 << ", " << reg2 << endl; //reg1 = reg1 <OPERATOR> reg2
+    //ETAP 2 Appliquer l'operateur et metre le resultat dans le 1er registre (reg a)
+
+    switch (asmOpInfo.type){
+        case EQUATION:
+            o << "\t"<< asmOpInfo.asmOp << " " <<  reg2 << ", " << reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
+            break;
+        case COMPARATOR : ;
+            o << "\tcmp" << getSufixAsmSize(sizeRes) << " " <<  reg2 << ", " << reg1 << endl;
+            o << "\t" << asmOpInfo.asmOp << " %al" << endl;
+        default:
+            o << "UNKNOWOP" << endl;
+    }
+
+    //ETAP 3 enregister le resutlat
 
     move(o,1,dest);
 }
 
-string IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
+IRInstrBasicOperator::OperatorInfo IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
     switch (op){
-        case Star: return "mul" ;
-//        case Div: return IRInstr::Operation::div ;
-            //case Mod: return IRInstr::Operation:: ;
-        case Plus: return "add" ;
-        case Minus: return "sub" ;
-            //case LeftShift: return IRInstr::Operation:: ;
-            //case RightShift: return IRInstr::Operation:: ;
-  //      case Less: return IRInstr::Operation::cmp_le ;
-            //case LessEqual: return "" ;
-        case Greater: return "" ;
-            //case GreaterEqual: return "" ;
-        //  case Equal: return "" ;
-            //case NotEqual: return "" ;
-        case And: return "and";
-            //case Caret: return "" ;
-        case Or: return "or" ;
-            //case AndAnd: return "" ;
-            //case OrOr: return "" ;
+        case BinaryOperator::Star: return {EQUATION ,"mul"};
+        case BinaryOperator::Plus: return {EQUATION ,"add"};
+        case BinaryOperator::Minus: return {EQUATION ,"sub"};
+        case BinaryOperator::And: return {EQUATION ,"and"};
+        case BinaryOperator::Less : return {COMPARATOR ,"setl"} ;
+        case BinaryOperator::LessEqual : return {COMPARATOR ,"setle"};
+        case BinaryOperator::Greater : return {COMPARATOR ,"setg"} ;
+        case BinaryOperator::GreaterEqual : return {COMPARATOR ,"setge"};
+        case BinaryOperator::Equal : return {COMPARATOR ,"sete"} ;
+        default: return {UNKNOWN ,"UNKNOWN"};
     }
-
-    return "UNKNOW";
 }
