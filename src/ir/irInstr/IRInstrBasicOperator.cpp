@@ -56,20 +56,29 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
     //ETAP 2 Appliquer l'operateur et metre le resultat dans le 1er registre (reg a)
 
     switch (asmOpInfo.type){
-        case EQUATION:
+        case OperatorType::EQUATION:
             o << "\t"<< asmOpInfo.asmOp << " " <<  reg2 << ", " << reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
+            ir::move(o,1,dest, bb->cfg);
             break;
-        case COMPARATOR : ;
+        case OperatorType::COMPARATOR : ;
             o << "\tcmp" << (sizeRes == 64 ? 'q' : 'l') << " " <<  reg2 << ", " << reg1 << endl;
             o << "\t" << asmOpInfo.asmOp << " %al" << endl;
+            ir::move(o,1,dest, bb->cfg);
+            break;
+        case OperatorType::DIV:
+            o << "\t" << (sizeRes == 64 ? "cqto" : "cltd") << endl;
+            o << "\tidiv" << (sizeRes == 64 ? "q " : "l ") << reg2 << endl;
+            ir::move(o,1,dest, bb->cfg);
+            break;
+        case OperatorType::MOD:
+            o << "\t" << (sizeRes == 64 ? "cqto" : "cltd") << endl;
+            o << "\tidiv" << (sizeRes == 64 ? "q " : "l ") << reg2 << endl;
+            ir::move(o,2,dest, bb->cfg);
             break;
         default:
             o << "UNKNOWOP" << endl;
     }
 
-    //ETAP 3 enregister le resutlat
-
-    ir::move(o,1,dest, bb->cfg);
 }
 
 IRInstrBasicOperator::OperatorInfo IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
@@ -83,6 +92,8 @@ IRInstrBasicOperator::OperatorInfo IRInstrBasicOperator::OperatorToAsmOperator(B
         case BinaryOperator::Greater : return {COMPARATOR ,"setg"} ;
         case BinaryOperator::GreaterEqual : return {COMPARATOR ,"setge"};
         case BinaryOperator::Equal : return {COMPARATOR ,"sete"} ;
+        case BinaryOperator::Div : return {OperatorType::DIV ,""} ;
+        case BinaryOperator::Mod : return {OperatorType::MOD ,""} ;
         default: return {UNKNOWN ,"UNKNOWN"};
     }
 }
