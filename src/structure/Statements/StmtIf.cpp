@@ -74,4 +74,5 @@ string StmtIf::buildIR(CFG* cfg)const{
 
     cfg->current_bb = blockOut; //La suit du code est a ajouter aux plock blockOut
 
+    return string();
 }

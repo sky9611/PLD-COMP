@@ -13,7 +13,7 @@ class StmtBlock;
 class StmtBlock : public Statement, public cmmBasicScope{
 public:
     StmtBlock(cmmScope * scope): Statement(scope),cmmBasicScope("StmtBlock", scope){}
-    virtual void addStatement(Statement* statement){statements.push_back(statement);}
+    virtual void addStatement(Statement* statement) override {statements.push_back(statement);}
 
     ~StmtBlock() override;
 
@@ -21,7 +21,7 @@ public:
 
     const vector<Statement *> &getStatements() const;
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 
 private:
     vector<Statement *> statements;

@@ -28,14 +28,14 @@ endforeach( src_file ${PROJECT_CPP} )
 if(APPLE)
     # MAC ========================================================================================================= MAC
     message("Detect : MAC")
-    include_directories(
+#[[    include_directories(
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/misc
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/atn
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/dfa
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/tree
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/support
-    )
+    )]]
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/lib/libantlr4-runtime.a)
 elseif(CYGWIN)
     # WINDOWS ================================================================================================= WINDOWS
@@ -46,7 +46,7 @@ elseif(CYGWIN)
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/atn
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/dfa
             ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/tree
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/support
+    *        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/support
     )
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/windows/libantlr4-runtime.dll.a)
     #target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
@@ -91,7 +91,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     target_compile_options(cmm PRIVATE "/MT$<$<CONFIG:Debug>:d>")
 endif()
 
-#target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(cmm PUBLIC antlr4-runtime ${CMAKE_CURRENT_SOURCE_DIR})
 if(DEFINED LIBANTLR4)
     message("Detect : Lib Antlr4 Runtime : ${LIBANTLR4}")
     target_link_libraries(cmm ${LIBANTLR4}) # For linkEditor

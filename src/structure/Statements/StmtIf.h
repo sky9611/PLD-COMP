@@ -34,7 +34,7 @@ public:
 
     void setElseStatement(Statement * _elseStmt){elseStmt = _elseStmt;}*/
 
-    virtual string buildIR(CFG* cfg)const;
+    virtual string buildIR(CFG* cfg)const override;
 };
 
 
