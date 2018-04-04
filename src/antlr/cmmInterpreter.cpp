@@ -619,7 +619,7 @@ antlrcpp::Any cmmInterpreter::visitExprChar(cmmParser::ExprCharContext *ctx) {
         cout << "[cmmInterpreter] + visitExprChar : scope( "<< getScopeList() <<" )" << endl;
     #endif
 
-    char c = '';
+    char c;
     if(ctx->getText().length()==3)
         c = ctx->getText()[1];
     else if(ctx->getText().length()==4) {
