@@ -52,25 +52,42 @@ expr:
     |(PlusPlus|MinusMinus) varCall                                      #exprIncPre
     |Not expr                                                           #exprNot
     |Minus expr                                                         #exprMinus
-    |expr operatorBinaire expr                                          #exprBinaire
+    |expr exprMultiDivMod expr                                          #exprBinaire
+    |expr exprPlusMinus expr                                            #exprBinaire
+    |expr exprShift expr                                                #exprBinaire
+    |expr exprComparative expr                                          #exprBinaire
+    |expr exprEqualNotEqual expr                                        #exprBinaire
+    |expr exprAnd expr                                                  #exprBinaire
+    |expr exprCaret expr                                                #exprBinaire
+    |expr exprOr expr                                                   #exprBinaire
+    |expr exprAndAnd expr                                               #exprBinaire
+    |expr exprOrOr expr                                                 #exprBinaire
     |varCall (Assign|StarAssign|DivAssign|ModAssign|PlusAssign|MinusAssign|LeftShiftAssign|RightShiftAssign|AndAssign|XorAssign|OrAssign) expr     #statementAssiggnment
     |LeftParen expr RightParen                                          #exprParen
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar
     ;
 
-operatorBinaire:
-    (Star|Div|Mod)                                            #exprMultiDivMod
-    |(Plus|Minus)                                             #exprPlusMinus
-    |(LeftShift|RightShift)                                   #exprShift
-    |(Less|LessEqual|Greater|GreaterEqual)                    #exprComparative
-    |(Equal|NotEqual)                                         #exprEqualNotEqual
-    |And                                                      #exprAnd
-    |Caret                                                    #exprCaret
-    |Or                                                       #exprOr
-    |AndAnd                                                   #exprAndAnd
-    |OrOr                                                     #exprOrOr
-    ;
+exprMultiDivMod:
+    (Star|Div|Mod);
+exprPlusMinus:
+    (Plus|Minus);
+exprShift:
+    (LeftShift|RightShift);
+exprComparative:
+    (Less|LessEqual|Greater|GreaterEqual);
+exprEqualNotEqual:
+    (Equal|NotEqual);
+exprAnd:
+    And;
+exprCaret:
+    Caret;
+exprOr:
+    Or;
+exprAndAnd:
+    AndAnd;
+exprOrOr:
+    OrOr;
 
 exprList : expr (Comma expr)*;
 

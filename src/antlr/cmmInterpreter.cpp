@@ -751,7 +751,28 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire(cmmParser::ExprBinaireContext *ct
 
     Expression * expr0 = visit(ctx->expr(0));
     Expression * expr1 = visit(ctx->expr(1));
-    BinaryOperator oB = visit(ctx->operatorBinaire());
+    BinaryOperator oB;
+    if(ctx->exprMultiDivMod()!=nullptr ){
+        oB = visit(ctx->exprMultiDivMod());
+    }else if(ctx->exprPlusMinus()!=nullptr ){
+        oB = visit(ctx->exprPlusMinus());
+    }else if(ctx->exprShift()!=nullptr ){
+        oB = visit(ctx->exprShift());
+    }else if(ctx->exprComparative()!=nullptr ){
+        oB = visit(ctx->exprComparative());
+    }else if(ctx->exprEqualNotEqual()!=nullptr ){
+        oB = visit(ctx->exprEqualNotEqual());
+    }else if(ctx->exprAnd()!=nullptr ){
+        oB = visit(ctx->exprAnd());
+    }else if(ctx->exprCaret()!=nullptr ){
+        oB = visit(ctx->exprCaret());
+    }else if(ctx->exprOr()!=nullptr ){
+        oB = visit(ctx->exprOr());
+    }else if(ctx->exprAndAnd()!=nullptr ){
+        oB = visit(ctx->exprAndAnd());
+    }else if(ctx->exprOrOr()!=nullptr ){
+        oB = visit(ctx->exprOrOr());
+    }
 
     Type t0 = expr0->getType();
     Type t1 = expr1->getType();
