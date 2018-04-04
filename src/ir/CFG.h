@@ -45,6 +45,7 @@ public:
 
     // symbol table methods
     void add_to_symbol_table(string name, Type t);
+    void addArray_to_symbol_table(string name, Type t, int size);
     string create_new_tempvar(Type t);
     int get_var_index(string name);
     int get_var_size(string name);

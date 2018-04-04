@@ -141,3 +141,9 @@ string CFG::IR_regArray_to_asm(string reg) {
     return result;
 }
 
+void CFG::addArray_to_symbol_table(string name, Type t, int size)
+{
+    SymbolType[name] = t;
+    SymbolIndex[name] = nextFreeSymbolIndex -= (type::getSize(t)/8*size);
+}
+

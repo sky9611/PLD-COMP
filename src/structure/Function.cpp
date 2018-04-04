@@ -4,6 +4,7 @@
 
 #include "Function.h"
 #include "Statements/StmtBlock.h"
+#include "cmmArray.h"
 
 Function::Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params):cmmScope("Function"), cmmDef(type,name), program(program), params(params)
 {
@@ -65,8 +66,10 @@ const cmmContext &Function::getLocalContext() const {
 
 void Function::addVar(cmmVar *var) {
     localContext[var->getName()] = var;
-
-    cfg->add_to_symbol_table(string("var_") + var->getName(), var->getType());
+    if(type::isBasicType(var->getType()))
+        cfg->add_to_symbol_table(string("var_") + var->getName(), var->getType());
+    else
+        cfg->addArray_to_symbol_table(string("var_") + var->getName(), var->getType(), dynamic_cast<cmmArray*>(var)->getSize());
 }
 
 void Function::addStatement(Statement *statment) {
