@@ -268,7 +268,8 @@ antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext
     visit(ctx->fctBlock());
     unScope();
 
-
+    if((!function->getContent()->hasStmtReturn())&&(function->getType()!=VOID))
+        throw cmmRuntimeException(string("[cmmInterpreter::visitFctDefinition] Function \"") + function->getName() +"\" doesn\'t have return statement");
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitFctDefinition" << endl;

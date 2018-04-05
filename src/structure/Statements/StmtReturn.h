@@ -26,6 +26,8 @@ public:
     virtual string buildIR(CFG* cfg)const override;
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+
+    virtual bool hasStmtReturn();
 };
 
 

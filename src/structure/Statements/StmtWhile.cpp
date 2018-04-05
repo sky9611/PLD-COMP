@@ -50,3 +50,8 @@ vector<cmmVar *> StmtWhile::CheckVariablesAffectes(vector<cmmVar *> varAffectPre
     return varAffectPrec;
 }
 
+bool StmtWhile::hasStmtReturn()
+{
+    return false;
+}
+

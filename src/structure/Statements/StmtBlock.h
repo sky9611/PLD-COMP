@@ -25,6 +25,8 @@ public:
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 
+    virtual bool hasStmtReturn();
+
 private:
     vector<Statement *> statements;
 };

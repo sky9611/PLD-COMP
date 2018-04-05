@@ -28,6 +28,8 @@ public:
 
     virtual vector<cmmVar*> CheckVariablesAffectes(vector<cmmVar*> varAffectPrec) = 0;
 
+    virtual bool hasStmtReturn() = 0;
+
 
 };
 

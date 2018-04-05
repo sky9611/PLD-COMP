@@ -96,3 +96,8 @@ vector<cmmVar *> StmtIf::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) 
         return varAffectPrec;
     }
 }
+
+bool StmtIf::hasStmtReturn()
+{
+    return elseBlock->hasStmtReturn() && block->hasStmtReturn();
+}

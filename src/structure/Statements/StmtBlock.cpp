@@ -36,3 +36,12 @@ vector<cmmVar *> StmtBlock::CheckVariablesAffectes(vector<cmmVar *> varAffectPre
     }
     return varAffectPrec;
 }
+
+bool StmtBlock::hasStmtReturn()
+{
+    for(Statement *stmt :  statements){
+        if(stmt->hasStmtReturn())
+            return true;
+    }
+    return false;
+}

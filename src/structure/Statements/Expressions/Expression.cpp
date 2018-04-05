@@ -7,6 +7,11 @@
 Expression::Expression(cmmScope *scope) : Statement(scope)
 {}
 
+bool Expression::hasStmtReturn()
+{
+    return false;
+}
+
 Expression::~Expression()
 = default;
 
