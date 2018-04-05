@@ -64,6 +64,7 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
     Type t = visit(ctx->type());
 
 
+
     for(cmmParser::DeclarationVarContext* varCtx :  ctx->declarationVar()){
         cmmVar* var = visit(varCtx);
 
@@ -99,7 +100,7 @@ antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *
 
     if(ctx->expr() != nullptr){
         Expression* exp = visit(ctx->expr());
-        program->addStatement(new ExprAssignment(currentScope,res,exp));
+        currentScope->addStatement(new ExprAssignment(currentScope,res,exp));
     }
 
     #ifdef  VIEW_VISITOR_COUT
@@ -267,7 +268,8 @@ antlrcpp::Any cmmInterpreter::visitFctDefinition(cmmParser::FctDefinitionContext
     visit(ctx->fctBlock());
     unScope();
 
-
+    if((!function->getContent()->hasStmtReturn())&&(function->getType()!=VOID))
+        throw cmmRuntimeException(string("[cmmInterpreter::visitFctDefinition] Function \"") + function->getName() +"\" doesn\'t have return statement");
 
     #ifdef  VIEW_VISITOR_COUT
         cout << "[cmmInterpreter] - visitFctDefinition" << endl;
@@ -667,41 +669,36 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment(cmmParser::StatementAssi
     if(type::isBasicType(gauche->getType())) {
         //if (gauche->getType() == droite->getType())
         if(ctx->DivAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Div);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,Div);
         } else if(ctx->MinusAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Minus);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,Minus);
         } else if(ctx->StarAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Star);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,Star);
         } else if(ctx->ModAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Mod);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,Mod);
         } else if(ctx->PlusAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Plus);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,Plus);
         } else if(ctx->LeftShiftAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,LeftShift);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,LeftShift);
         } else if(ctx->RightShiftAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,RightShift);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,RightShift);
         } else if(ctx->AndAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,And);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,And);
         } else if(ctx->XorAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Caret);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
+            droite = new ExprBinary(currentScope,gauche,droite,Caret);
         } else if(ctx->OrAssign()!= nullptr){
-            Expression * newExpr = new ExprBinary(currentScope,gauche,droite,Or);
-            res = new ExprAssignment(currentScope, gauche->getVar(), newExpr);
-        } else
+            droite = new ExprBinary(currentScope,gauche,droite,Or);
+        }
+
+        if(typeid(*gauche) == typeid(ExprArray)){
+            ExprArray* array1 = dynamic_cast<ExprArray *>(gauche);
+            res = new ExprAssignment(currentScope, gauche->getVar(), droite,array1->getExpression());
+        } else {
             res = new ExprAssignment(currentScope, gauche->getVar(), droite);
-        /*else
-            throw cmmRuntimeException("[cmmInterpreter:visitStatementAssiggnment()] Error cast from " +
-                                      type::toString(droite->getType()) + "to " + type::toString(gauche->getType()) +
-                                      getScopeList() + string(" )"));*/
+        }
+
+
+
     } else {
         throw cmmRuntimeException("[cmmInterpreter:visitExprIncPost()] Array is not assignable " + getScopeList() + string(" )"));
     }

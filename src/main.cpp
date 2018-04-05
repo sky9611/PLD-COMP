@@ -67,9 +67,9 @@ int main(int argc, const char* argv[]) {
     }
     fileName.pop_back();
     fileName.pop_back();
-    string fileIn = fileName+string(".c");
+    string fileIn = fileName+string(".cmm");
     string fileOut = fileName+string(".s");
-    //string fileIn = string("../Test/Back/") + testName + string(".c");
+    //string fileIn = string("../Test/Back/") + testName + string(".cmm");
     //string fileOut =string("../Test/Back/") + testName + string(".s");
     ANTLRFileStream input(fileIn);
     cmmLexer lexer(&input);
@@ -96,10 +96,11 @@ int main(int argc, const char* argv[]) {
 
     ofstream outFile;
     outFile.open(fileOut);
-    //génération ASM
-    ir::gen_asm(cout,testName + string(".c"), b);
-    ir::gen_asm(outFile,testName + string(".c"), b);
-    //affichage de l'arbre AST sur sortie standard ;
+
+
+    ir::gen_asm(cout,testName + string(".cmm"), b);
+    ir::gen_asm(outFile,testName + string(".cmm"), b);
+
     std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;
 }

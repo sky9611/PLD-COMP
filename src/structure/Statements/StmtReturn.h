@@ -27,6 +27,8 @@ public:
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 
+    virtual bool hasStmtReturn();
+
     void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override {};
 };
 

@@ -1,4 +1,14 @@
 char fonct1(char var1, char var2, char var3, char var4, char var5, char var6, char var7, char var8){
+    putchar(var1);
+    putchar(var2);
+    putchar(var3);
+    putchar(var4);
+    putchar(var5);
+    putchar(var6);
+    putchar(var7);
+    putchar(var8);
+    putchar('\n');
+
     if(var1>var2)
         return 'A';
     if (var3>var4)
@@ -7,6 +17,7 @@ char fonct1(char var1, char var2, char var3, char var4, char var5, char var6, ch
         return 'C';
     if(var7>var8)
         return 'D';
+    var8 = 'T';
 }
 
 void main(){
@@ -19,5 +30,6 @@ void main(){
     char a7 = getchar();
     char a8 = getchar();
     putchar(fonct1(a1,a2,a3,a4,a5,a6,a7,a8));
-    main();
+
+    putchar('\n');
 }

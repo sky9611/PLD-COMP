@@ -50,6 +50,9 @@ namespace type{
             case INT32_T : return 32;
             case INT64_T : return 64;
             case CHAR : return 8;
+            case INT32_T_ARRAY : return 32;
+            case INT64_T_ARRAY : return 64;
+            case CHAR_ARRAY : return 8;
             default: return 0;
         }
     }

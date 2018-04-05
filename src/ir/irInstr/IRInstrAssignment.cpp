@@ -30,7 +30,7 @@ void IRInstrAssignment::gen_asm(ostream &o){
     }else{
         ir::move(o, from, 2, bb->cfg);
         ir::move(o, destAddr, 1, bb->cfg);
-        o << "\tmov " << bb->cfg->IR_regArray_to_asm(dest) << ", " << ir::getAsmReg(2,bb->cfg->get_var_size(dest)) << endl;
+        o << "\tmov " << ir::getAsmReg(2,bb->cfg->get_var_size(dest)) << ", " << bb->cfg->IR_regArray_to_asm(dest) << endl;
     }
 
 }

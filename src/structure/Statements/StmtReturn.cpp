@@ -33,3 +33,8 @@ string StmtReturn::buildIR(CFG* cfg)const{
 vector<cmmVar *> StmtReturn::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
     return varAffectPrec;
 }
+
+bool StmtReturn::hasStmtReturn()
+{
+    return true;
+}

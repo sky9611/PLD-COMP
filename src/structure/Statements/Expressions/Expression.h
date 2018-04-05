@@ -15,6 +15,8 @@ public:
 
     virtual Type getType() const =0;
 
+    virtual bool hasStmtReturn();
+
 public:
     Expression(cmmScope *scope);
 

@@ -15,7 +15,7 @@ void IRInstrCall::gen_asm(ostream &o){
 
     for (int i = vars.size() - 1; i >= 6; i--) {
         ir::move(o, vars[i], 1, bb->cfg);
-        o << "    pushl    %rax" << endl;
+        o << "    push    %rax" << endl;
     }
     switch (vars.size()-nbInStack){
         case 6:

@@ -11,3 +11,5 @@ libraries/macOS/**
 *.s
 
 \.idea/inspectionProfiles/Project_Default\.xml
+
+Test/Back/out
