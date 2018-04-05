@@ -66,8 +66,6 @@ int main( int argc, const char *argv[] ) {
         error( "Error : no file name in arguments" );
         return 1;
     }
-    fileName.pop_back( );
-    fileName.pop_back( );
     string fileIn = fileName + string( ".cmm" );
     string fileOut = fileName + string( ".s" );
     //string fileIn = string("../Test/Back/") + testName + string(".cmm");
