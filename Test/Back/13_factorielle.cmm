@@ -1,14 +1,25 @@
 #include<inttypes.h>
 int64_t getInt(){
-	char c;
+	char c,t;
+    int32_t test = 0;
+
 	int64_t res = 0;
 	c = getchar();
-	while(c >= '0' && c <= '9'){
+    test = (c >= '0' && c <= '9');
+	while(test){
+        putchar(c);
+        putchar(':');
+        putchar('0'+test);
+        putchar(' ');
 		res *= 10;
 		res += c - '0';
 		c = getchar();
+        test = (c >= '0' && c <= '9');
+        putchar('0'+test);
+        putchar('\n');
+        res = res;
 	}
-	return res;
+    return res;
 	
 }
 void putInt(int64_t value){
