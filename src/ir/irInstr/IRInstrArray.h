@@ -9,15 +9,14 @@
 #include <src/ir/IRInstr.h>
 #include "../IRInstr.h"
 
-class IRInstrArray : public IRInstr
-{
+class IRInstrArray : public IRInstr {
 public:
-    IRInstrArray(BasicBlock *bb_, Type t, const string &dest, const string &arrayName, const string &var);
+    IRInstrArray( BasicBlock *bb_, Type t, const string &dest, const string &arrayName, const string &var );
 
-    void gen_asm(ostream &o) override;
+    void gen_asm( ostream &o ) override;
 
 private:
-    string dest,arrayName,var;
+    string dest, arrayName, var;
 
 };
 

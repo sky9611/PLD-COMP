@@ -18,12 +18,14 @@ class cmmVar;
 using namespace antlrcpp;
 using namespace std;
 
-class cmmVar : public cmmDef{
+class cmmVar : public cmmDef {
+
 private:
     std::map<int, antlrcpp::Any> stack;
 
 public:
-    cmmVar(Type type, string name);
+    cmmVar( Type type, string name );
+
     /*
     void setValue(Any value);
     void setValue(Any value, int index);
@@ -32,7 +34,7 @@ public:
      */
     virtual std::string toString();
 
-    virtual void setType(Type type);
+    virtual void setType( Type type );
 };
 
 

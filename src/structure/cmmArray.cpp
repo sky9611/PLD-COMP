@@ -4,14 +4,17 @@
 
 #include "cmmArray.h"
 
-cmmArray::cmmArray(Type type, const string &name) : cmmArray(type, name, -1) {}
-cmmArray::cmmArray(Type type, const string &name, int size) : cmmVar(type, name), size(size) {}
-cmmArray::~cmmArray(){}
+cmmArray::cmmArray( Type type, const string &name ) : cmmArray( type, name, -1 ) {}
 
-int cmmArray::getSize ( ) {
-    return size ;
+cmmArray::cmmArray( Type type, const string &name, int size ) : cmmVar( type, name ), size( size ) {}
+
+cmmArray::~cmmArray() {}
+
+int cmmArray::getSize() {
+    return size;
 }
-bool cmmArray::hasSize(){
+
+bool cmmArray::hasSize() {
     return size == -1;
 }
 
@@ -20,10 +23,12 @@ string cmmArray::toString() {
     if ( this->type == INT32_T ) {
         stringOfType = "int";
         //stringOfVal = std::to_string ( this->value.as<int>() );
-    } else if ( this->type == INT64_T ) {
+    }
+    else if ( this->type == INT64_T ) {
         stringOfType = "long";
         //stringOfVal = this->value.as<long>();
-    } else if ( this->type == CHAR ) {
+    }
+    else if ( this->type == CHAR ) {
         stringOfType = "char";
         //stringOfVal = std::to_string(this->value.as<char>());
 

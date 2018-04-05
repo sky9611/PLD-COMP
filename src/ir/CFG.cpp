@@ -7,34 +7,34 @@
 #include "../structure/Function.h"
 #include "ir.h"
 
-CFG::CFG(Function *ast):ast(ast) {
-    current_bb = new BasicBlock(this, "STARTED_BLOCK");
-    bbs.push_back(current_bb);
+CFG::CFG( Function *ast ) : ast( ast ) {
+    current_bb = new BasicBlock( this, "STARTED_BLOCK" );
+    bbs.push_back( current_bb );
 }
 
-void CFG::add_bb(BasicBlock *bb) {
-    bbs.push_back(bb);
+void CFG::add_bb( BasicBlock *bb ) {
+    bbs.push_back( bb );
 }
 
-void CFG::gen_asm(ostream &o) {
-    gen_asm_prologue(o);
-    for(BasicBlock* bb : bbs){
-        bb->gen_asm(o);
+void CFG::gen_asm( ostream &o ) {
+    gen_asm_prologue( o );
+    for ( BasicBlock *bb : bbs ) {
+        bb->gen_asm( o );
     }
-    gen_asm_epilogue(o);
+    gen_asm_epilogue( o );
 }
 
-string CFG::IR_reg_to_asm(string reg) {
+string CFG::IR_reg_to_asm( string reg ) {
     stringstream stream;
-    int index = get_var_index(reg);
-    if( index < 0){
+    int index = get_var_index( reg );
+    if ( index < 0 ) {
         stream << '-';
         index = -index;
     }
     stream << "0x" << hex << index;
     stream << "(%rbp)";
 
-    string result( stream.str() );
+    string result( stream.str( ));
 
     return result;
 }
@@ -50,33 +50,33 @@ void CFG::gen_asm_prologue(ostream &o) {
                       o <<",%rsp" << endl << endl;
     auto params = ast->getParams();
 
-    int nbParmsToSave = params.size() > 6 ? 6 : params.size();
+    int nbParmsToSave = params.size( ) > 6 ? 6 : params.size( );
 
-    switch (nbParmsToSave){
+    switch ( nbParmsToSave ) {
         case 6:
             o << "    mov    %r9, %rax" << endl;
-            ir::move(o,1,string("var_") + params[5]->getName(), this);
+            ir::move( o, 1, string( "var_" ) + params[5]->getName( ), this );
         case 5:
             o << "    mov    %r8, %rax" << endl;
-            ir::move(o,1,string("var_") + params[4]->getName(), this);
+            ir::move( o, 1, string( "var_" ) + params[4]->getName( ), this );
         case 4:
             o << "    mov    %rcx, %rax" << endl;
-            ir::move(o,1,string("var_") + params[3]->getName(), this);
+            ir::move( o, 1, string( "var_" ) + params[3]->getName( ), this );
         case 3:
             o << "    mov    %rdx, %rax" << endl;
-            ir::move(o,1,string("var_") + params[2]->getName(), this);
+            ir::move( o, 1, string( "var_" ) + params[2]->getName( ), this );
         case 2:
             o << "    mov    %rsi, %rax" << endl;
-            ir::move(o,1,string("var_") + params[1]->getName(), this);
+            ir::move( o, 1, string( "var_" ) + params[1]->getName( ), this );
         case 1:
             o << "    mov    %rdi, %rax" << endl;
-            ir::move(o,1,string("var_") + params[0]->getName(), this);
+            ir::move( o, 1, string( "var_" ) + params[0]->getName( ), this );
 
     }
 
 }
 
-void CFG::gen_asm_epilogue(ostream &o) {
+void CFG::gen_asm_epilogue( ostream &o ) {
     o << endl;
     o <<    ".END_" << ast->getName() << ": " << endl;
     o <<    "\tleaveq" << endl;
@@ -85,66 +85,66 @@ void CFG::gen_asm_epilogue(ostream &o) {
     o << endl<< endl;
 }
 
-void CFG::add_to_symbol_table(string name, Type t) {
+void CFG::add_to_symbol_table( string name, Type t ) {
     SymbolType[name] = t;
-    SymbolIndex[name] = nextFreeSymbolIndex -= type::getSize(t)/8;
+    SymbolIndex[name] = nextFreeSymbolIndex -= type::getSize( t ) / 8;
 
 
 }
-void CFG::add_to_symbol_table_params(string name, Type t) {
+
+void CFG::add_to_symbol_table_params( string name, Type t ) {
     SymbolType[name] = t;
     SymbolIndex[name] = nextFreeSymbolParamsIndex;
     nextFreeSymbolParamsIndex += 8;
 }
 
-string CFG::create_new_tempvar(Type t) {
-    nextFreeSymbolIndex -= type::getSize(t)/8;
-    string name = string("tmp_")+to_string(-nextFreeSymbolIndex);
+string CFG::create_new_tempvar( Type t ) {
+    nextFreeSymbolIndex -= type::getSize( t ) / 8;
+    string name = string( "tmp_" ) + to_string( -nextFreeSymbolIndex );
     SymbolType[name] = t;
     SymbolIndex[name] = nextFreeSymbolIndex;
     return name;
 }
 
-int CFG::get_var_index(string name) {
+int CFG::get_var_index( string name ) {
     return SymbolIndex[name];
 }
 
-int CFG::get_var_size(string name) {
-    return type::getSize(get_var_type(name));
+int CFG::get_var_size( string name ) {
+    return type::getSize( get_var_type( name ));
 }
 
-Type CFG::get_var_type(string name) {
+Type CFG::get_var_type( string name ) {
     return SymbolType[name];
 }
 
-string CFG::new_BB_name(string basicString) {
-    return string("B") + to_string(getNextBBnumber()) + string("_") + basicString;
+string CFG::new_BB_name( string basicString ) {
+    return string( "B" ) + to_string( getNextBBnumber( )) + string( "_" ) + basicString;
 }
 
-int CFG::getNextBBnumber(){
+int CFG::getNextBBnumber() {
     static int nb = 0;
     return ++nb;
 }
 
-string CFG::IR_regArray_to_asm(string reg) {
+string CFG::IR_regArray_to_asm( string reg ) {
     stringstream stream;
-    int index = get_var_index(reg);
-    int size = get_var_size(reg);
-    if( index < 0){
+    int index = get_var_index( reg );
+    int size = get_var_size( reg );
+    if ( index < 0 ) {
         stream << '-';
         index = -index;
     }
     stream << "0x" << hex << index;
-    stream << "(%rbp,%rax," << to_string(size/8) << ")";
+    stream << "(%rbp,%rax," << to_string( size / 8 ) << ")";
 
-    string result( stream.str() );
+    string result( stream.str( ));
 
     return result;
 }
 
-void CFG::addArray_to_symbol_table(string name, Type t, int size)
-{
+void CFG::addArray_to_symbol_table( string name, Type t, int size ) {
     SymbolType[name] = t;
-    SymbolIndex[name] = nextFreeSymbolIndex -= (type::getSize(t)/8*size);
+    SymbolIndex[name] = nextFreeSymbolIndex -= (type::getSize( t ) / 8 * size);
 }
 

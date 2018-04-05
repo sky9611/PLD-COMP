@@ -7,16 +7,16 @@
 
 #include "../IRInstr.h"
 
-class IRInstrCall : public IRInstr{
+class IRInstrCall : public IRInstr {
 protected:
     string fctName;
     string dest;
     vector<string> vars;
 
 public:
-    IRInstrCall(BasicBlock* bb, Type t, string dest, string fctName, vector<string> vars);
+    IRInstrCall( BasicBlock *bb, Type t, string dest, string fctName, vector<string> vars );
 
-    virtual void gen_asm(ostream &o);
+    virtual void gen_asm( ostream &o );
 
 };
 

@@ -10,26 +10,26 @@ class Statement;
 #include "../cmmScope.h"
 #include "../../ir/CFG.h"
 
-class Statement
-{
+class Statement {
 protected:
-    cmmScope * scope;
+    cmmScope *scope;
 
 public:
-    Statement(cmmScope * scope);
+    Statement( cmmScope *scope );
 
     virtual ~Statement() = 0;
 
-    void setParent(cmmScope * _scope){scope = _scope;};
+    void setParent( cmmScope *_scope ) { scope = _scope; };
 
-    cmmScope * getParent(cmmScope *){return scope;}
+    cmmScope *getParent( cmmScope * ) { return scope; }
 
-    virtual string buildIR(CFG* cfg)const =  0;
+    virtual string buildIR( CFG *cfg ) const =  0;
 
-    virtual vector<cmmVar*> CheckVariablesAffectes(vector<cmmVar*> varAffectPrec) = 0;
+    virtual vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) = 0;
 
     virtual bool hasStmtReturn() = 0;
 
+    virtual void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) = 0;
 
 };
 

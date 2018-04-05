@@ -10,22 +10,25 @@ class StmtBlock;
 #include "Statement.h"
 #include "../cmmScope.h"
 
-class StmtBlock : public Statement, public cmmBasicScope{
+class StmtBlock : public Statement, public cmmBasicScope {
 public:
-    StmtBlock(cmmScope * scope): Statement(scope),cmmBasicScope("StmtBlock", scope){}
-    virtual void addStatement(Statement* statement) override {statements.push_back(statement);}
+    StmtBlock( cmmScope *scope ) : Statement( scope ), cmmBasicScope( "StmtBlock", scope ) {}
+
+    virtual void addStatement( Statement *statement ) override { statements.push_back( statement ); }
 
     ~StmtBlock() override;
 
-    void setStatements(const vector<Statement *> &statements);
+    void setStatements( const vector<Statement *> &statements );
 
     const vector<Statement *> &getStatements() const;
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
 
-    virtual bool hasStmtReturn();
+    virtual bool hasStmtReturn() override;
+
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override;
 
 private:
     vector<Statement *> statements;

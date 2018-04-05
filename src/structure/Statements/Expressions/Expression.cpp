@@ -4,11 +4,9 @@
 
 #include "Expression.h"
 
-Expression::Expression(cmmScope *scope) : Statement(scope)
-{}
+Expression::Expression( cmmScope *scope ) : Statement( scope ) {}
 
-bool Expression::hasStmtReturn()
-{
+bool Expression::hasStmtReturn() {
     return false;
 }
 

@@ -7,13 +7,14 @@
 
 #include "../IRInstr.h"
 
-class IRInstrTest : public IRInstr{
+class IRInstrTest : public IRInstr {
 protected:
     string testVar;
 
 public:
-    IRInstrTest(BasicBlock* bb_, Type t, string testVa);
-    virtual void gen_asm(ostream &o);
+    IRInstrTest( BasicBlock *bb_, Type t, string testVa );
+
+    virtual void gen_asm( ostream &o );
 };
 
 

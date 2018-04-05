@@ -4,9 +4,8 @@
 
 #include "Statement.h"
 
-Statement::Statement(cmmScope * _scope):scope(_scope){}
+Statement::Statement( cmmScope *_scope ) : scope( _scope ) {}
 
-Statement::~Statement()
-{
+Statement::~Statement() {
 
 }

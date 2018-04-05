@@ -8,20 +8,20 @@
 #include "../../structure/Operator.h"
 #include "../IRInstr.h"
 
-class IRInstrUnaryOperator : public IRInstr{
+class IRInstrUnaryOperator : public IRInstr {
 protected:
     UnaryOperator op;
     string dest, var;
 public:
-    IRInstrUnaryOperator(BasicBlock* bb_, Type t, string dest, string var, UnaryOperator op);
+    IRInstrUnaryOperator( BasicBlock *bb_, Type t, string dest, string var, UnaryOperator op );
 
-    virtual void gen_asm(ostream &o);
+    virtual void gen_asm( ostream &o );
 
-    void gen_asm_not(ostream &o);
+    void gen_asm_not( ostream &o );
 
-    void gen_asm_minus(ostream &o);
+    void gen_asm_minus( ostream &o );
 
-    static string OperatorToAsmOperator(UnaryOperator op);
+    static string OperatorToAsmOperator( UnaryOperator op );
 };
 
 

@@ -12,19 +12,18 @@
 
 using namespace std;
 
-namespace cmmOperator
-{
-    bool isIntString(string s);
+namespace cmmOperator {
+    bool isIntString( string s );
 
-    antlrcpp::Any operate(antlrcpp::Any val1, antlrcpp::Any val2, string op);
+    antlrcpp::Any operate( antlrcpp::Any val1, antlrcpp::Any val2, string op );
 
-    bool cOperate(antlrcpp::Any val1, antlrcpp::Any val2, string op);
+    bool cOperate( antlrcpp::Any val1, antlrcpp::Any val2, string op );
 
-    Type getType(antlrcpp::Any v);
+    Type getType( antlrcpp::Any v );
 
-    bool getBool(antlrcpp::Any v);
+    bool getBool( antlrcpp::Any v );
 
-    void trimStr(string &s);
+    void trimStr( string &s );
 };
 
 

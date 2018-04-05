@@ -10,22 +10,24 @@
 #include "Expressions/Expression.h"
 #include "StmtBlock.h"
 
-class StmtWhile : public Statement
-{
+class StmtWhile : public Statement {
 private:
-    Expression * test;
-    Statement * block;
+    Expression *test;
+    Statement *block;
 
 public:
-    StmtWhile(cmmScope * _scope, Expression *_test, Statement *_block):Statement(_scope),test(_test), block(_block){}
+    StmtWhile( cmmScope *_scope, Expression *_test, Statement *_block ) : Statement( _scope ), test( _test ),
+                                                                          block( _block ) {}
 
     virtual ~StmtWhile();
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
 
-    virtual bool hasStmtReturn();
+    virtual bool hasStmtReturn() override;
+
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override;
 };
 
 

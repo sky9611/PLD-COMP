@@ -7,50 +7,52 @@
 
 ExprValue::~ExprValue() = default;
 
-ExprValue::ExprValue(cmmScope *scope, Type type, Any value) : Expression(scope), type(type), value(value)
-{
+ExprValue::ExprValue( cmmScope *scope, Type type, Any value ) : Expression( scope ), type( type ), value( value ) {
 
 }
 
-Type ExprValue::getType()const{
+Type ExprValue::getType() const {
     return type;
 }
 
-Any ExprValue::getValue()const{
+Any ExprValue::getValue() const {
     return value;
 }
-string ExprValue::getStringValue() const{
+
+string ExprValue::getStringValue() const {
     Any cpValue = value;
-    switch (getType()){
+    switch ( getType( )) {
         case CHAR:
-            return to_string((short)cpValue.as<char>());
+            return to_string((short) cpValue.as<char>( ));
         case INT32_T:
-            return to_string(cpValue.as<int32_t>());
+            return to_string( cpValue.as<int32_t>( ));
         case INT64_T:
-            return to_string(cpValue.as<int64_t>());
+            return to_string( cpValue.as<int64_t>( ));
     }
 }
-string ExprValue::buildIR(CFG* cfg)const{
-    string tmpVar = cfg->create_new_tempvar(getType());
+
+string ExprValue::buildIR( CFG *cfg ) const {
+    string tmpVar = cfg->create_new_tempvar( getType( ));
     IRInstrValue *instruction;
     Any cp = value;
 
-    switch(type){
+    switch ( type ) {
         case INT32_T:
-            instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, (int)cp);
+            instruction = new IRInstrValue( cfg->current_bb, getType( ), tmpVar, (int) cp );
             break;
         case INT64_T:
-            instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, (long)cp);
+            instruction = new IRInstrValue( cfg->current_bb, getType( ), tmpVar, (long) cp );
             break;
         case CHAR:
-            instruction = new IRInstrValue(cfg->current_bb, getType(), tmpVar, (char)cp);
+            instruction = new IRInstrValue( cfg->current_bb, getType( ), tmpVar, (char) cp );
             break;
     }
-    cfg->current_bb->add_IRInstr(instruction);
+    cfg->current_bb->add_IRInstr( instruction );
 
     return tmpVar;
 }
 
-vector<cmmVar *> ExprValue::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+vector<cmmVar *> ExprValue::CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) {
     return varAffectPrec;
 }
+

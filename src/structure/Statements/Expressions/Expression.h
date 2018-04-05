@@ -8,8 +8,7 @@
 
 #include "../Statement.h"
 
-class Expression : public Statement
-{
+class Expression : public Statement {
 public:
     virtual ~Expression();
 
@@ -18,7 +17,7 @@ public:
     virtual bool hasStmtReturn();
 
 public:
-    Expression(cmmScope *scope);
+    Expression( cmmScope *scope );
 
 };
 

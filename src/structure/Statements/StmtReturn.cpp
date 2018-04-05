@@ -6,35 +6,33 @@
 #include "../../ir/irInstr/IRInstrAssignment.h"
 #include "../Function.h"
 
-StmtReturn::~StmtReturn()
-{
+StmtReturn::~StmtReturn() {
     delete expr;
 }
 
-Expression *StmtReturn::getExpr() const
-{
+Expression *StmtReturn::getExpr() const {
     return expr;
 }
 
-string StmtReturn::buildIR(CFG* cfg)const{
-    string res = expr->buildIR(cfg);
+string StmtReturn::buildIR( CFG *cfg ) const {
+    string res = expr->buildIR( cfg );
 
-    IRInstrAssignment* inst = new IRInstrAssignment(cfg->current_bb , scope->getFunctionScope()->getType(),"",res); // "" -> move dans le registre ax
-    cfg->current_bb->add_IRInstr(inst);
+    IRInstrAssignment *inst = new IRInstrAssignment( cfg->current_bb, scope->getFunctionScope( )->getType( ), "",
+                                                     res ); // "" -> move dans le registre ax
+    cfg->current_bb->add_IRInstr( inst );
 
     cfg->current_bb->exit_true = nullptr;// PAS DE SUIS APRES LE BLOCK
     cfg->current_bb->exit_false = nullptr;
 
     cfg->current_bb = nullptr;
 
-    return string();
+    return string( );
 }
 
-vector<cmmVar *> StmtReturn::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
+vector<cmmVar *> StmtReturn::CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) {
     return varAffectPrec;
 }
 
-bool StmtReturn::hasStmtReturn()
-{
+bool StmtReturn::hasStmtReturn() {
     return true;
 }

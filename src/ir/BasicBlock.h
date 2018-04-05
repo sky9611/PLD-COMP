@@ -31,22 +31,22 @@ using namespace std;
 
 class BasicBlock {
 public:
-    BasicBlock(CFG* cfg, string entry_label);
-    void gen_asm(ostream &o); /**< x86 assembly code generation for this basic block (very simple) */
+    BasicBlock( CFG *cfg, string entry_label );
 
-    void add_IRInstr(IRInstr* instruction);
+    void gen_asm( ostream &o ); /**< x86 assembly code generation for this basic block (very simple) */
+
+    void add_IRInstr( IRInstr *instruction );
 
     // No encapsulation whatsoever here. Feel free to do better.
-    BasicBlock* exit_true = nullptr;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
-    BasicBlock* exit_false = nullptr; /**< pointer to the next basic block, false branch. If null_ptr, the basic block ends with an unconditional jump */
+    BasicBlock *exit_true = nullptr;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
+    BasicBlock *exit_false = nullptr; /**< pointer to the next basic block, false branch. If null_ptr, the basic block ends with an unconditional jump */
     string label; /**< label of the BB, also will be the label in the generated code */
-    CFG* cfg; /** < the CFG where this block belongs */
-    vector<IRInstr*> instrs; /** < the instructions themselves. */
+    CFG *cfg; /** < the CFG where this block belongs */
+    vector<IRInstr *> instrs; /** < the instructions themselves. */
 protected:
 
 
 };
-
 
 
 #endif //PLD_COMP_BASICBLOCK_H

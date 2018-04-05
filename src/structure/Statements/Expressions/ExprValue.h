@@ -11,25 +11,27 @@ class ExprValue;
 
 using namespace antlrcpp;
 
-class ExprValue : public Expression{
+class ExprValue : public Expression {
 protected:
     Any value;
     Type type;
 public:
 
-    ExprValue(cmmScope *scope, Type type, Any value);
+    ExprValue( cmmScope *scope, Type type, Any value );
 
     virtual ~ExprValue();
 
-    virtual Type getType()const override;
+    virtual Type getType() const override;
 
-    virtual Any getValue()const;
+    virtual Any getValue() const;
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
     string getStringValue() const;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
+
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override {};
 
 };
 

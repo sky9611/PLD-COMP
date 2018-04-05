@@ -10,20 +10,17 @@
 
 using namespace std;
 
-class cmmRuntimeException : public std::runtime_error
-{
+class cmmRuntimeException : public std::runtime_error {
 
 private:
     string msg;
 
 public:
-    cmmRuntimeException(string msg):runtime_error(msg)
-    {
+    cmmRuntimeException( string msg ) : runtime_error( msg ) {
         this->msg = msg;
     }
 
-    string getMsg()
-    {
+    string getMsg() {
         return this->msg;
     }
 
