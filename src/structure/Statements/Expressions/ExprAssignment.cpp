@@ -34,7 +34,13 @@ Type ExprAssignment::getType()const{
 string ExprAssignment::buildIR(CFG* cfg)const{
 
     string tmpVarExpr = expr->buildIR(cfg);
-    IRInstr* instr = new IRInstrAssignment(cfg->current_bb,getType(), string("var_")+ var->getName(), tmpVarExpr);
+    IRInstr* instr;
+    if(arrayIndex == nullptr)
+        instr = new IRInstrAssignment(cfg->current_bb,getType(), string("var_")+ var->getName(), tmpVarExpr);
+    else{
+        string arrayAccessValue = arrayIndex->buildIR(cfg);
+        instr = new IRInstrAssignment(cfg->current_bb,getType(), string("var_")+ var->getName(), arrayAccessValue, tmpVarExpr);
+    }
     cfg->current_bb->add_IRInstr(instr);
 
     return tmpVarExpr;
@@ -48,3 +54,8 @@ vector<cmmVar *> ExprAssignment::CheckVariablesAffectes(vector<cmmVar *> varAffe
     newVariablesAffectes.push_back(var);
     return newVariablesAffectes;
 }
+
+ExprAssignment::ExprAssignment(cmmScope *scope, cmmVar *var, Expression *expr, Expression *arrayIndex) : Expression(
+        scope), var(var), expr(expr), arrayIndex(arrayIndex)
+{}
+
