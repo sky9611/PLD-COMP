@@ -64,6 +64,7 @@ antlrcpp::Any cmmInterpreter::visitVarDeclarationList(cmmParser::VarDeclarationL
     Type t = visit(ctx->type());
 
 
+
     for(cmmParser::DeclarationVarContext* varCtx :  ctx->declarationVar()){
         cmmVar* var = visit(varCtx);
 
@@ -99,7 +100,7 @@ antlrcpp::Any cmmInterpreter::visitDecVarSimple(cmmParser::DecVarSimpleContext *
 
     if(ctx->expr() != nullptr){
         Expression* exp = visit(ctx->expr());
-        program->addStatement(new ExprAssignment(currentScope,res,exp));
+        currentScope->addStatement(new ExprAssignment(currentScope,res,exp));
     }
 
     #ifdef  VIEW_VISITOR_COUT
