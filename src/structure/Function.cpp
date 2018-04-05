@@ -107,9 +107,10 @@ void Function::performMisuseAnalysis( vector<cmmVar *> vars ) {
 void Function::performUnuseAnalysis( map<cmmVar *, bool> &vars ) {
     for ( pair<string, cmmDef *> x : localContext ) {
         cout << x.first << endl;
-        if ( !vars[(cmmVar *) x.second] ) {
+        if (x.second != nullptr && !vars[(cmmVar *) x.second] ) {
             vars[(cmmVar *) x.second] = false;
         }
     }
+    content->CheckVariablesDeclares(vars);
 }
 
