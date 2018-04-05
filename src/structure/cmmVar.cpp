@@ -4,8 +4,7 @@
 
 #include "cmmVar.h"
 
-cmmVar::cmmVar(Type type, string name ):cmmDef(type, name)
-{
+cmmVar::cmmVar( Type type, string name ) : cmmDef( type, name ) {
 
 }
 
@@ -65,10 +64,12 @@ std::string cmmVar::toString() {
     if ( this->type == INT32_T ) {
         stringOfType = "int";
         //stringOfVal = std::to_string ( this->value.as<int>() );
-    } else if ( this->type == INT64_T ) {
+    }
+    else if ( this->type == INT64_T ) {
         stringOfType = "long";
         //stringOfVal = this->value.as<long>();
-    } else if ( this->type == CHAR ) {
+    }
+    else if ( this->type == CHAR ) {
         stringOfType = "char";
         //stringOfVal = std::to_string(this->value.as<char>());
 
@@ -76,6 +77,6 @@ std::string cmmVar::toString() {
     return "cmmVar[ name=" + this->name + ", type=" + stringOfType + ", value=" + stringOfVal + "]";
 }
 
-void cmmVar::setType(Type type) {
+void cmmVar::setType( Type type ) {
     this->type = type;
 }

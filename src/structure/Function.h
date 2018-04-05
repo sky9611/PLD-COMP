@@ -19,48 +19,56 @@ class Function;
 using namespace std;
 using namespace antlrcpp;
 
-class Function : public cmmDef, public cmmScope
-{
+class Function : public cmmDef, public cmmScope {
 private:
 
-    CFG* cfg;
-    Program* program;
+    CFG *cfg;
+    Program *program;
     bool hasReturnValue;
 
     cmmContext localContext;
-    vector<cmmVar*> params;
-    StmtBlock* content;
+    vector<cmmVar *> params;
+    StmtBlock *content;
 public:
     const cmmContext &getLocalContext() const;
 
 public:
 
-    Function(Program* program, Type type, const string &name,const vector<cmmVar*> &params);
+    Function( Program *program, Type type, const string &name, const vector<cmmVar *> &params );
+
     virtual ~Function();
 
     Any getReturnValue();
 
     CFG *getCfg() const;
 
-    void setReturnValue ( Any returnValue );
+    void setReturnValue( Any returnValue );
+
     bool getHasReturnValue();
-    void setHasReturnValue ( bool hasReturnValue );
-    vector<cmmVar*> getParams();
 
-    virtual void addVar(cmmVar* var);
-    virtual void addStatement(Statement* statment);
-    virtual cmmDef* getDefLocal(string varName);
+    void setHasReturnValue( bool hasReturnValue );
 
-    virtual StmtBlock* getContent();
+    vector<cmmVar *> getParams();
 
-    virtual Program* getParent();
-    virtual Function* getFunctionScope();
+    virtual void addVar( cmmVar *var );
+
+    virtual void addStatement( Statement *statment );
+
+    virtual cmmDef *getDefLocal( string varName );
+
+    virtual StmtBlock *getContent();
+
+    virtual Program *getParent();
+
+    virtual Function *getFunctionScope();
 
     std::string toString();
 
     void builIR();
-    void performMisuseAnalysis(vector<cmmVar *> vars);
-    void performUnuseAnalysis(map<cmmVar*,bool> &vars);
+
+    void performMisuseAnalysis( vector<cmmVar *> vars );
+
+    void performUnuseAnalysis( map<cmmVar *, bool> &vars );
 };
 
 

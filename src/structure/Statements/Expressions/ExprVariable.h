@@ -10,26 +10,26 @@ class ExprVariable;
 #include "Expression.h"
 #include <map>
 
-class ExprVariable : public Expression
-{
+class ExprVariable : public Expression {
 protected:
-    cmmVar * var;
+    cmmVar *var;
 public:
 
-    ExprVariable(cmmScope *scope, cmmVar *var);
+    ExprVariable( cmmScope *scope, cmmVar *var );
+
     virtual ~ExprVariable();
 
-    virtual Type getType()const override;
+    virtual Type getType() const override;
 
     cmmVar *getVar() const;
 
-    void setVar(cmmVar *var);
+    void setVar( cmmVar *var );
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
 
-    void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override;
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override;
 };
 
 

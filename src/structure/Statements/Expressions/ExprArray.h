@@ -13,24 +13,25 @@ class ExprArray;
 #include "../../cmmScope.h"
 #include "../../Type.h"
 
-class ExprArray :public ExprVariable{
+class ExprArray : public ExprVariable {
 protected:
-    Expression* expression;
+    Expression *expression;
 
 public:
 
-    ExprArray(cmmScope *scope, cmmArray *array, Expression* expression );
+    ExprArray( cmmScope *scope, cmmArray *array, Expression *expression );
+
     virtual ~ExprArray();
 
-    Expression* getExpression() const;
+    Expression *getExpression() const;
 
-    virtual Type getType()const override;
+    virtual Type getType() const override;
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
 
-    void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override;
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override;
 
 };
 

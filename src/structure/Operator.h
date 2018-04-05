@@ -6,14 +6,12 @@
 #define PLD_COMP_OPERATOR_H
 
 
-enum UnaryAssignmentOperator
-{
+enum UnaryAssignmentOperator {
     PLUSPLUS,
     MINUSMINUS
 };
 
-enum AssignmentOperator
-{
+enum AssignmentOperator {
     ASSIGN,
     STARASSIGN,
     DIVASSIGN,
@@ -27,17 +25,32 @@ enum AssignmentOperator
     ORASSIGN
 };
 
-enum UnaryOperator
-{
+enum UnaryOperator {
     NOT,
     MINUS,
     DIV,
     MOD
 };
 
-enum BinaryOperator
-{
-    Star,Div,Mod,Plus,Minus,LeftShift,RightShift,Less,LessEqual,Greater,GreaterEqual,Equal,NotEqual,And,Caret,Or,AndAnd,OrOr
+enum BinaryOperator {
+    Star,
+    Div,
+    Mod,
+    Plus,
+    Minus,
+    LeftShift,
+    RightShift,
+    Less,
+    LessEqual,
+    Greater,
+    GreaterEqual,
+    Equal,
+    NotEqual,
+    And,
+    Caret,
+    Or,
+    AndAnd,
+    OrOr
 };
 
 #endif //PLD_COMP_OPERATOR_H

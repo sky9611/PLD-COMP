@@ -7,14 +7,15 @@
 
 #include "../IRInstr.h"
 
-class IRInstrAssignment : public IRInstr{
+class IRInstrAssignment : public IRInstr {
 protected:
     string dest, from, destAddr;
 public:
-    IRInstrAssignment(BasicBlock* bb_, Type t, string dest, string from);
-    IRInstrAssignment(BasicBlock* bb_, Type t, string dest, string destAddr, string from);
+    IRInstrAssignment( BasicBlock *bb_, Type t, string dest, string from );
 
-    virtual void gen_asm(ostream &o);
+    IRInstrAssignment( BasicBlock *bb_, Type t, string dest, string destAddr, string from );
+
+    virtual void gen_asm( ostream &o );
 };
 
 

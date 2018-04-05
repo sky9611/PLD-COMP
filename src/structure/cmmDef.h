@@ -13,35 +13,35 @@ class cmmDef;
 
 using namespace std;
 
-class cmmDef
-{
+class cmmDef {
 protected:
     string name;
     Type type;
 
 public:
-    cmmDef(Type type, string name);
+    cmmDef( Type type, string name );
+
     cmmDef();
+
     virtual ~cmmDef();
 
-    virtual string getName(){return name;}
-    virtual Type getType(){return type;}
+    virtual string getName() { return name; }
+
+    virtual Type getType() { return type; }
 
 };
 
 
-
-
-class cmmContext: public map<string,cmmDef*> {
+class cmmContext : public map<string, cmmDef *> {
 public:
-    cmmContext(){};
-    virtual ~cmmContext(){
-        for(auto def : *this){
+    cmmContext() {};
+
+    virtual ~cmmContext() {
+        for ( auto def : *this ) {
             //delete def.second;
         }
     }
 };
-
 
 
 #endif //PLD_COMP_CMMDEF_H

@@ -8,12 +8,12 @@
 #include "../IRInstr.h"
 #include "../../structure/Operator.h"
 
-class IRInstrBasicOperator : public IRInstr{
+class IRInstrBasicOperator : public IRInstr {
 private:
-    enum OperatorType{
+    enum OperatorType {
         UNKNOWN, EQUATION, COMPARATOR, DIV, MOD
     };
-    struct OperatorInfo{
+    struct OperatorInfo {
         OperatorType type;
         string asmOp;
     };
@@ -21,11 +21,11 @@ protected:
     BinaryOperator op;
     string dest, v1, v2;
 public:
-    IRInstrBasicOperator(BasicBlock* bb_, Type t, string dest, string v1, string v2, BinaryOperator op);
+    IRInstrBasicOperator( BasicBlock *bb_, Type t, string dest, string v1, string v2, BinaryOperator op );
 
-    virtual void gen_asm(ostream &o);
+    virtual void gen_asm( ostream &o );
 
-    static OperatorInfo OperatorToAsmOperator(BinaryOperator op);
+    static OperatorInfo OperatorToAsmOperator( BinaryOperator op );
 
 };
 

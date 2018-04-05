@@ -10,32 +10,32 @@ class ExprUnary;
 #include "Expression.h"
 #include "../../Operator.h"
 
-class ExprUnary : public Expression
-{
+class ExprUnary : public Expression {
 private:
     Expression *expr;
     UnaryOperator op;
 public:
-    ExprUnary(cmmScope *scope, Expression *expr, UnaryOperator op);
+    ExprUnary( cmmScope *scope, Expression *expr, UnaryOperator op );
+
     virtual ~ExprUnary();
 
     Expression *getExpr() const;
 
-    void setExpr(Expression *expr);
+    void setExpr( Expression *expr );
 
     UnaryOperator getOp() const;
 
-    void setOp(UnaryOperator op);
+    void setOp( UnaryOperator op );
 
-    virtual Type getType()const override;
+    virtual Type getType() const override;
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
-    IRInstr::Operation getIRInstOperation()const;
+    IRInstr::Operation getIRInstOperation() const;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
 
-    void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override;
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override;
 
 };
 

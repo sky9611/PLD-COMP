@@ -10,26 +10,26 @@ class ExprFuncCall;
 #include "Expression.h"
 #include "../../Function.h"
 
-class ExprFuncCall: public Expression
-{
+class ExprFuncCall : public Expression {
 private:
-    Function * function;
-    vector<Expression*> params;
+    Function *function;
+    vector<Expression *> params;
 public:
-    ExprFuncCall(cmmScope* scope, Function *function, const vector<Expression*> &params );
+    ExprFuncCall( cmmScope *scope, Function *function, const vector<Expression *> &params );
+
     virtual ~ExprFuncCall();
 
     Function *getFunction() const;
 
-    vector<Expression*> getParams()const;
+    vector<Expression *> getParams() const;
 
-    virtual Type getType()const override;
+    virtual Type getType() const override;
 
-    virtual string buildIR(CFG* cfg)const override;
+    virtual string buildIR( CFG *cfg ) const override;
 
-    vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+    vector<cmmVar *> CheckVariablesAffectes( vector<cmmVar *> varAffectPrec ) override;
 
-    void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override;
+    void CheckVariablesDeclares( map<cmmVar *, bool> &varDeclares ) override;
 
 };
 
