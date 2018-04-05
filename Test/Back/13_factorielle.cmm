@@ -1,0 +1,50 @@
+#include<inttypes.h>
+int64_t getInt(){
+	char c;
+	int64_t res = 0;
+	c = getchar();
+	while(c >= '0' && c <= '9'){
+		res *= 10;
+		res += c - '0';
+		c = getchar();
+	}
+	return res;
+	
+}
+void putInt(int64_t value){
+    char c;
+    int64_t i=1;
+    while(i<value){
+        i*=10;
+    }
+    i/=10;
+    while(i>0){
+        c = value/i + '0';
+        putchar(c);
+        i/=10;
+    }
+}
+
+int64_t factorielle (int64_t nombre)
+{
+    int64_t x;
+    x = 0;
+    if (nombre == 1)
+    {
+        x = 1;
+        return(x);
+    }
+    else
+    {
+        x = nombre * factorielle(nombre - 1);
+        return(x);
+    }
+}
+ 
+void main(void){
+{
+    putInt(getInt());
+   
+ 
+    return 0;
+}

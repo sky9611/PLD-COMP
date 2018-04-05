@@ -139,8 +139,15 @@ antlrcpp::Any cmmInterpreter::visitArrayDef( cmmParser::ArrayDefContext *ctx ) {
     cout << "[cmmInterpreter] + visitArrayDef : scope( " << getScopeList( ) << " )" << endl;
 #endif
 
-    throw cmmRuntimeException(
-            "[cmmInterpreter::visitArrayDef] not implemented" ); // TODO cmmInterpreter::visitArrayDef
+
+
+    throw cmmRuntimeException("[cmmInterpreter::visitArrayDef] not implemented"); // TODO cmmInterpreter::visitArrayDef
+    vector<Expression*> exprs = visit(ctx->exprList());
+    /*for()
+    if(ctx->expr() != nullptr){
+        Expression* exp = visit(ctx->expr());
+        currentScope->addStatement(new ExprAssignment(currentScope,res,exp));
+    }*/
 
     auto res = cmmBaseVisitor::visitArrayDef( ctx );
 

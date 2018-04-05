@@ -84,31 +84,19 @@ void IRInstrBasicOperator::gen_asm( ostream &o ) {
 
 }
 
-IRInstrBasicOperator::OperatorInfo IRInstrBasicOperator::OperatorToAsmOperator( BinaryOperator op ) {
-    switch ( op ) {
-        case BinaryOperator::Star:
-            return {EQUATION, "mul"};
-        case BinaryOperator::Plus:
-            return {EQUATION, "add"};
-        case BinaryOperator::Minus:
-            return {EQUATION, "sub"};
-        case BinaryOperator::And:
-            return {EQUATION, "and"};
-        case BinaryOperator::Less :
-            return {COMPARATOR, "setl"};
-        case BinaryOperator::LessEqual :
-            return {COMPARATOR, "setle"};
-        case BinaryOperator::Greater :
-            return {COMPARATOR, "setg"};
-        case BinaryOperator::GreaterEqual :
-            return {COMPARATOR, "setge"};
-        case BinaryOperator::Equal :
-            return {COMPARATOR, "sete"};
-        case BinaryOperator::Div :
-            return {OperatorType::DIV, ""};
-        case BinaryOperator::Mod :
-            return {OperatorType::MOD, ""};
-        default:
-            return {UNKNOWN, "UNKNOWN"};
+IRInstrBasicOperator::OperatorInfo IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
+    switch (op){
+        case BinaryOperator::Star: return {EQUATION ,"imul"};
+        case BinaryOperator::Plus: return {EQUATION ,"add"};
+        case BinaryOperator::Minus: return {EQUATION ,"sub"};
+        case BinaryOperator::And: return {EQUATION ,"and"};
+        case BinaryOperator::Less : return {COMPARATOR ,"setl"} ;
+        case BinaryOperator::LessEqual : return {COMPARATOR ,"setle"};
+        case BinaryOperator::Greater : return {COMPARATOR ,"setg"} ;
+        case BinaryOperator::GreaterEqual : return {COMPARATOR ,"setge"};
+        case BinaryOperator::Equal : return {COMPARATOR ,"sete"} ;
+        case BinaryOperator::Div : return {OperatorType::DIV ,""} ;
+        case BinaryOperator::Mod : return {OperatorType::MOD ,""} ;
+        default: return {UNKNOWN ,"UNKNOWN"};
     }
 }
