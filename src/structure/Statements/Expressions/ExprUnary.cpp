@@ -63,3 +63,7 @@ vector<cmmVar *> ExprUnary::CheckVariablesAffectes(vector<cmmVar *> varAffectPre
     varAffectPrec = expr->CheckVariablesAffectes(varAffectPrec);
     return varAffectPrec;
 }
+
+void ExprUnary::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    expr->CheckVariablesDeclares(varDeclares);
+}

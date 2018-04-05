@@ -28,6 +28,7 @@ public:
 
     virtual vector<cmmVar*> CheckVariablesAffectes(vector<cmmVar*> varAffectPrec) = 0;
 
+    virtual void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) = 0;
 
 };
 

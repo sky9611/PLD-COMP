@@ -96,3 +96,9 @@ vector<cmmVar *> StmtIf::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) 
         return varAffectPrec;
     }
 }
+
+void StmtIf::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    block->CheckVariablesDeclares(varDeclares);
+    if(elseBlock) elseBlock->CheckVariablesDeclares(varDeclares);
+
+}

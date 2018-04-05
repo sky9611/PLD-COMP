@@ -8,11 +8,12 @@
 class ExprVariable;
 
 #include "Expression.h"
+#include <map>
 
 class ExprVariable : public Expression
 {
 protected:
-    cmmVar *var;
+    cmmVar * var;
 public:
 
     ExprVariable(cmmScope *scope, cmmVar *var);
@@ -27,6 +28,8 @@ public:
     virtual string buildIR(CFG* cfg)const override;
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
+
+    void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override;
 };
 
 

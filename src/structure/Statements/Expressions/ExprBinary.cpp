@@ -172,3 +172,8 @@ vector<cmmVar *> ExprBinary::CheckVariablesAffectes(vector<cmmVar *> varAffectPr
     varAffectPrec = expr2->CheckVariablesAffectes(varAffectPrec);
     return varAffectPrec;
 }
+
+void ExprBinary::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    expr1->CheckVariablesDeclares(varDeclares);
+    expr2->CheckVariablesDeclares(varDeclares);
+}

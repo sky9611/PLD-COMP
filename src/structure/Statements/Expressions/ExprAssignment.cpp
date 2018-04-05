@@ -45,6 +45,11 @@ string ExprAssignment::buildIR(CFG* cfg)const{
 vector<cmmVar *> ExprAssignment::CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) {
     vector<cmmVar*> newVariablesAffectes = varAffectPrec;
     vector<cmmVar*> exprVariablesAffectes = expr->CheckVariablesAffectes(varAffectPrec);
-    newVariablesAffectes.push_back(var);
+    if(find(varAffectPrec.begin(),varAffectPrec.end(),var)== varAffectPrec.end()) newVariablesAffectes.push_back(var);
     return newVariablesAffectes;
+}
+
+void ExprAssignment::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    expr->CheckVariablesDeclares(varDeclares);
+    varDeclares[var] = true;
 }

@@ -50,3 +50,8 @@ vector<cmmVar *> StmtWhile::CheckVariablesAffectes(vector<cmmVar *> varAffectPre
     return varAffectPrec;
 }
 
+void StmtWhile::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    test->CheckVariablesDeclares(varDeclares);
+    block->CheckVariablesDeclares(varDeclares);
+}
+

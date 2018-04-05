@@ -32,3 +32,7 @@ vector<cmmVar *> ExprVariable::CheckVariablesAffectes(vector<cmmVar *> varAffect
     if(find(varAffectPrec.begin(),varAffectPrec.end(),var) != varAffectPrec.end()) return varAffectPrec;
     else throw cmmRuntimeException("Error : variable " + var->getName() + " has no given value.");
 }
+
+void ExprVariable::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    varDeclares[var] = true;
+}

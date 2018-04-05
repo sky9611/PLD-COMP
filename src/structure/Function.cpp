@@ -94,7 +94,16 @@ void Function::builIR() {
     content->buildIR(cfg);
 }
 
-void Function::performAnalysis(vector<cmmVar *> vars) {
+void Function::performMisuseAnalysis(vector<cmmVar *> vars) {
     vars.insert(vars.end(),params.begin(),params.end());
         vars = content->CheckVariablesAffectes(vars);
 }
+
+void Function::performUnuseAnalysis(map<cmmVar*,bool> &vars) {
+    for(pair<string,cmmDef*> x : localContext ){
+        cout<<x.first<<endl;
+        if(!vars[(cmmVar*) x.second])
+        vars[(cmmVar*) x.second] = false;
+    }
+}
+

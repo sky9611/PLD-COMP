@@ -59,7 +59,8 @@ public:
     std::string toString();
 
     void builIR();
-    void performAnalysis(vector<cmmVar*> vars);
+    void performMisuseAnalysis(vector<cmmVar *> vars);
+    void performUnuseAnalysis(map<cmmVar*,bool> &vars);
 };
 
 

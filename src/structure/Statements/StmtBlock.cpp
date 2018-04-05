@@ -36,3 +36,9 @@ vector<cmmVar *> StmtBlock::CheckVariablesAffectes(vector<cmmVar *> varAffectPre
     }
     return varAffectPrec;
 }
+
+void StmtBlock::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    for(Statement* s : statements){
+        s->CheckVariablesDeclares(varDeclares);
+    }
+}

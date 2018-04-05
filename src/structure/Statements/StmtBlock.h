@@ -25,6 +25,8 @@ public:
 
     vector<cmmVar *> CheckVariablesAffectes(vector<cmmVar *> varAffectPrec) override;
 
+    void CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) override;
+
 private:
     vector<Statement *> statements;
 };

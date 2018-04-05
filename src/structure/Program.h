@@ -33,7 +33,9 @@ public:
 
     void builIR();
 
-    void performAnalysis();
+    void performMisuseAnalysis();
+
+    void performUnuseAnalysis();
 
 protected:
 public:

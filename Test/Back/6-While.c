@@ -1,4 +1,5 @@
 #include<inttypes.h>
+int64_t a =4;
 void main(void){
   int64_t i;
   i=0;

@@ -19,6 +19,7 @@ using namespace antlrcpp;
 using namespace std;
 
 class cmmVar : public cmmDef{
+
 private:
     std::map<int, antlrcpp::Any> stack;
 

@@ -8,7 +8,6 @@
 
 using namespace antlr4;
 
-
 void error(string msg) {
     cerr << msg <<endl;
 }
@@ -68,10 +67,10 @@ int main(int argc, const char* argv[]) {
     }
     fileName.pop_back();
     fileName.pop_back();
-    //string fileIn = fileName+string(".c");
-    //string fileOut = fileName+string(".c");
-    string fileIn = string("../Test/Back/") + testName + string(".c");
-    string fileOut =string("../Test/Back/") + testName + string(".s");
+    string fileIn = fileName+string(".c");
+    string fileOut = fileName+string(".s");
+    //string fileIn = string("../Test/Back/") + testName + string(".c");
+    //string fileOut =string("../Test/Back/") + testName + string(".s");
     ANTLRFileStream input(fileIn);
     cmmLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
@@ -81,24 +80,26 @@ int main(int argc, const char* argv[]) {
     }
     cmmParser parser(&tokens);
     tree::ParseTree *tree = parser.file();
-    auto a = parser.file();
+    //auto a = parser.file();
 
     cmmInterpreter* interpreter = new cmmInterpreter();
-
 
     Program* b = tree->accept(interpreter);
 
     //partie analyse
-    if(staticAnalysis) b->performAnalysis();
+    if(staticAnalysis){
+        b->performMisuseAnalysis();
+        b->performUnuseAnalysis();
+    }
+    //partie construction de la RI
     b->builIR();
 
     ofstream outFile;
     outFile.open(fileOut);
-
-
+    //génération ASM
     ir::gen_asm(cout,testName + string(".c"), b);
     ir::gen_asm(outFile,testName + string(".c"), b);
-
+    //affichage de l'arbre AST sur sortie standard ;
     std::cout << tree->toStringTree(&parser) << std::endl;
     return 0;
 }

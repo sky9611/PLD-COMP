@@ -4,6 +4,7 @@
 
 #include "Program.h"
 #include "Function.h"
+#include <set>
 
 
 
@@ -66,13 +67,30 @@ const vector<cmmVar *> &Program::getVars() const {
     return vars;
 }
 
-void Program::performAnalysis() {
-    vector<cmmVar*> initVars = vars;
-    vector<cmmVar*> globalVars = vars;
+void Program::performMisuseAnalysis() {
+    vector<cmmVar*> initVars;
     for(Statement* s : initStatments){
         initVars = s->CheckVariablesAffectes(initVars);
     }
+    vector<cmmVar*> globalVars = initVars;
     for(Function* f : functions){
-        f->performAnalysis(globalVars);
+        f->performMisuseAnalysis(globalVars);
+    }
+}
+
+void Program::performUnuseAnalysis() {
+    map<cmmVar*,bool> listVar;
+    for(Statement* s : initStatments){
+        s->CheckVariablesDeclares(listVar);
+    }
+    for(Function* f : functions){
+        f->performUnuseAnalysis(listVar);
+    }
+    //parcours et warning
+    map<cmmVar*,bool>::iterator it;
+    for(it = listVar.begin();it != listVar.end();++it){
+        if(it->second == false){
+            cerr<<"Warning : Variable "<<it->first->toString()<<" is never used. Consider removing it."<<endl;
+        }
     }
 }

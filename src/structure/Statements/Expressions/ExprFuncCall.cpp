@@ -46,3 +46,9 @@ vector<cmmVar *> ExprFuncCall::CheckVariablesAffectes(vector<cmmVar *> varAffect
     }
     return varAffectPrec;
 }
+
+void ExprFuncCall::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    for(Expression* e: params){
+         e->CheckVariablesDeclares(varDeclares);
+    }
+}

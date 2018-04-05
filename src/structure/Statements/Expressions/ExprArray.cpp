@@ -37,3 +37,7 @@ vector<cmmVar *> ExprArray::CheckVariablesAffectes(vector<cmmVar *> varAffectPre
     varAffectPrec = expression->CheckVariablesAffectes(varAffectPrec);
     return varAffectPrec;
 }
+
+void ExprArray::CheckVariablesDeclares(map<cmmVar*,bool> &varDeclares) {
+    expression->CheckVariablesDeclares(varDeclares);
+}
