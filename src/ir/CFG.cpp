@@ -41,7 +41,7 @@ string CFG::IR_reg_to_asm(string reg) {
 
 void CFG::gen_asm_prologue(ostream &o) {
     o <<    " \t.globl	" <<  ast->getName() << endl;
-    o <<    "\t.type	" <<  ast->getName() << ", @function" << endl;
+    //o <<    "\t.type	" <<  ast->getName() << ", @function" << endl;
     o << "" << ast->getName() << ":"<< endl;
     o <<    ".START_" << ast->getName() << ": " << endl;
     o <<    "\tpush\t%rbp" << endl;
@@ -81,7 +81,8 @@ void CFG::gen_asm_epilogue(ostream &o) {
     o <<    ".END_" << ast->getName() << ": " << endl;
     o <<    "\tleaveq" << endl;
     o <<    "\tret" << endl;
-    o <<    "\t.size\t" << ast->getName() << ", .-" << ast->getName() << endl << endl<< endl;
+    //o <<    "\t.size\t" << ast->getName() << ", .-" << ast->getName() << endl ;
+    o << endl<< endl;
 }
 
 void CFG::add_to_symbol_table(string name, Type t) {

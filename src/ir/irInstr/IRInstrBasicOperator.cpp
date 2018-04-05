@@ -83,7 +83,7 @@ void IRInstrBasicOperator::gen_asm(ostream &o){
 
 IRInstrBasicOperator::OperatorInfo IRInstrBasicOperator::OperatorToAsmOperator(BinaryOperator op){
     switch (op){
-        case BinaryOperator::Star: return {EQUATION ,"mul"};
+        case BinaryOperator::Star: return {EQUATION ,"imul"};
         case BinaryOperator::Plus: return {EQUATION ,"add"};
         case BinaryOperator::Minus: return {EQUATION ,"sub"};
         case BinaryOperator::And: return {EQUATION ,"and"};
