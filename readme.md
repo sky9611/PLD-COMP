@@ -43,11 +43,13 @@ Type: `char` `int32_t` `int64_t`
 ---------
 
 Value:
+
 | Type | Ecriture | Exemple |
 |--|--|--|
 |Char | `'<char>'` | `'a'` |
 |int32_t | `<value>` | `125` |
 |int64_t | `<value>L` | `125689L` |
+
 > **Note:** une valeur négative n'est pas considéré comme une valeur mais comme une expression(Exmple : `a=1+-6` correspond a `a = 1+(-(6))`)
 > On ne peut donc pas écrire `int a[-2];` car `-2` n'est pas considéré comme une valeur(cf: Définition) 
 ------
@@ -60,6 +62,7 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 | >0 | =0 | 0 | A* |
 | =0 | >0 | 0* | B |
 | >0 | >0 | B | A* |
+
 \* = ellement B n'est pas evaluer
 
 ### 2. Définitions:  
