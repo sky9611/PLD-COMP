@@ -2,7 +2,7 @@
   
 ## Guide d'installation  
 **A ce jour, la compilation sous Windows ne fonctionne pas. Veuillez compiler sous macOS ou une distribution Linux.
-Nous préconisons l'utilisation de Linux pour l'exécution **
+Nous préconisons l'utilisation de Linux pour l'exécution**
   
 L'ensemble des librairies sont incluses dans ce projet. Veuillez utiliser le répertoire du projet comme répertoire courant d'exécution.  
   
@@ -45,21 +45,23 @@ Type: `char` `int32_t` `int64_t`
 Value:
 | Type | Ecriture | Exemple |
 |--|--|--|
-|Char | `'<char>'` | `'a'`|
-|int32_t | `<value>` | `125`|
-|int64_t | `<value>L` | `125689L`|
+|Char | `'<char>'` | `'a'` |
+|int32_t | `<value>` | `125` |
+|int64_t | `<value>L` | `125689L` |
 > **Note:** une valeur négative n'est pas considéré comme une valeur mais comme une expression(Exmple : `a=1+-6` correspond a `a = 1+(-(6))`)
 > On ne peut donc pas écrire `int a[-2];` car `-2` n'est pas considéré comme une valeur(cf: Définition) 
 ------
 Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `!`
 > **Note:** opperator `||` et `&&` sont légèrements différents du C (ne retourne pas forcement 1 si la condition est vraie mais la valeur de l'expression d'une des 2 expressions):
-> | A | B | A&&B | A\|\|B | 
-> |--|--|--|--|
-> | =0 | =0 | 0* | 0 |
-> | >0 | =0 | 0 | A* |
-> | =0 | >0 | 0* | B |
-> | >0 | >0 | B | A* |
-> \* = ellement B n'est pas evaluer
+
+| A | B | A&&B | A\|\|B | 
+|--|--|--|--|
+| =0 | =0 | 0* | 0 |
+| >0 | =0 | 0 | A* |
+| =0 | >0 | 0* | B |
+| >0 | >0 | B | A* |
+\* = ellement B n'est pas evaluer
+
 ### 2. Définitions:  
 #### 2.1. Variables
 ```
@@ -91,10 +93,15 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 	void FunctionName(void){...}
 ```
 > **Note:** Les définitions doivent obligatoirement se faire avant tout statement.
+
 > **Note** Les paramètres ne peuvent pas étre des tableaux.
+
 > **Note** Un Return est obligatoire si la méthode n'est pas void (cf Expression Return).
+
 > **Note** Le nommage de fonctions identiques n'est pas permis même si leurs signatures sont uniques.
+
 > **Note:** Les 6 premiers paramètres sont passés par les registres et les autres paramètres sont passés dans le stack selon la convention de l'ABI.
+
 > **Note:** La valeur de retour est stocké dans le registres `%rax`
 
 *Exemple*
@@ -181,7 +188,9 @@ while
     return <Expression>;
 ```
 > **Note:** Un Return est obligatoire pour les fonctions typés et un return doit être forcémment accessible afin que la fonction soit considéré comme ayant un return.
+
 > **Note:** Les instructions aprés un return seront ignorés
+
 > **Note:** La valeur de retour est stoker dans le registr `%rax`
 
 Exemple
@@ -254,7 +263,9 @@ Exemples D'expression:
 > cf: Eléments
 
 > **Note:** Le type d'un operator correspond au plus gros type (en taille mémoire) de ses expressions
+
 > **Note:** Le code assembleur stocke les résutats  des registre 32 ou 64 bits selon le type et utilise des opérateurs 32 ou 64 bit (un char est stocké dans un registre 32 bit )
+
 > **Note:** Les operation sur des tableau ne sont pas autoriser
 > exemple : ~~`array1 = array2`~~ ~~`array1 + array2`~~
 
