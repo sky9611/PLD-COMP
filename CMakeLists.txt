@@ -28,14 +28,6 @@ endforeach( src_file ${PROJECT_CPP} )
 if(APPLE)
     # MAC ========================================================================================================= MAC
     message("Detect : MAC")
-#[[    include_directories(
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/misc
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/atn
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/dfa
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/tree
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/antlr4-runtime/support
-    )]]
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/macOS/antlr4-cpp-runtime-4/lib/libantlr4-runtime.a)
 elseif(CYGWIN)
     # WINDOWS ================================================================================================= WINDOWS
@@ -56,15 +48,6 @@ elseif(CYGWIN)
 elseif(UNIX)
     # LINUX ===================================================================================================== LINUX
     message("Detect : LINUX")
-    #[[
-    include_directories(
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/misc
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/atn
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/dfa
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/tree
-            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/antlr4-runtime/support
-    )]]
     SET(LIBANTLR4 ${CMAKE_CURRENT_SOURCE_DIR}/libraries/linux/libantlr4-runtime.a)
 
 endif()
