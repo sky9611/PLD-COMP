@@ -13,3 +13,5 @@ libraries/macOS/**
 \.idea/inspectionProfiles/Project_Default\.xml
 
 Test/Back/out
+
+grammaire/c\.g4

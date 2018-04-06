@@ -45,9 +45,7 @@ varCall: VarName (LeftBracket expr RightBracket)?;
 
 
 expr:
-    Value                                                               #exprValue
-    |LongValue                                                          #exprLongValue
-    |varCall                                                            #exprVariable
+    varCall                                                            #exprVariable
     |varCall (PlusPlus|MinusMinus)                                      #exprIncPost
     |(PlusPlus|MinusMinus) varCall                                      #exprIncPre
     |Not expr                                                           #exprNot
@@ -66,6 +64,8 @@ expr:
     |LeftParen expr RightParen                                          #exprParen
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar
+    |Value                                                              #exprValue
+    |LongValue                                                          #exprLongValue
     ;
 
 exprMultiDivMod:
@@ -172,7 +172,7 @@ NotEqual : '!=';
 
 Character: '\'' ((~'\'')|'\\'~'\'') '\'';
 VarName: Nondigit (Digit|Nondigit)*;
-Value: Minus? Digit+;
+Value: Digit+;
 LongValue: Value'L';
 
 fragment Digit:[0-9];
