@@ -1,0 +1,103 @@
+void putint(int32_t value){
+    int32_t p10 = 10;
+    char c;
+
+    if(value<0){
+        value = -value;
+        putchar('-');
+    }
+    while(value >= p10) p10 *= 10;
+    p10 /= 10;
+
+    while(p10>=1){
+        c = '0' + value/p10;
+        putchar(c);
+        value %= p10;
+        p10/=10;
+    }
+
+}
+void asset(char c1,char c2, int32_t value, int32_t test){
+    putchar(c1);
+    putchar(c2);
+    putchar(':');
+    putchar(' ');
+    if(value == test){
+        putchar('O');
+        putchar('K');
+    }else{
+        putchar('K');
+        putchar('O');
+        putchar('!');
+        putchar(' ');
+        putint(value);
+        putchar(' ');
+        putchar('i');
+        putchar('s');
+        putchar(' ');
+        putchar('n');
+        putchar('o');
+        putchar('t');
+        putchar(' ');
+        putint(test);
+    }
+    putchar('\n');
+}
+void testPutInt(){
+    putchar('t');
+    putchar('e');
+    putchar('s');
+    putchar('t');
+    putchar(' ');
+    putchar('p');
+    putchar('u');
+    putchar('t');
+    putchar(' ');
+    putchar('i');
+    putchar('n');
+    putchar('t');
+    putchar(':');
+    putchar(' ');
+    putint(123);
+    putint(-123);
+    putchar('\n');
+}
+
+void main(){
+    int32_t a = 5;
+    testPutInt();
+
+    asset('=','=',5 == 3, 0);
+    asset('=','=',5 == 5, 1);
+    asset('!','=',5 != 3, 1);
+    asset('!','=',5 != 5, 0);
+    asset('>',' ',5 > 5, 0);
+    asset('>',' ',5 > 4, 1);
+    asset('>','=',5 >= 5, 1);
+    asset('>','=',5 >= 6, 0);
+    asset('<','=',6 <= 6, 1);
+    asset('<','=',7 <= 6, 0);
+    asset('<',' ',5 < 6, 1);
+    asset('<',' ',6 < 6, 0);
+    asset('+',' ',5 + 6, 11);
+    asset('-',' ',6 - 5, 1);
+    asset('-',' ',5 - 6, -1);
+    asset('*',' ',3 * -2, -6);
+    asset('/',' ',11 / 3, 3);
+    asset('%',' ',11 % 3, 2);
+    asset('&','&',12 && 15, 15);
+    asset('&','&',0 && 15, 0);
+    asset('&','&',0 && 0, 0);
+    asset('&','&',0 && a++, 0);asset('a','5',a, 5);
+    asset('&','&',6 && a++, 5);asset('a','6',a, 6);
+    asset('|','|',12 || 16, 12);
+    asset('|','|',0 || 16, 16);
+    asset('|','|',0 || 0, 0);
+    asset('|','|',12 || 0, 12);
+    asset('|','|',12 || a++, 12);asset('a','6',a, 6);
+    asset('|','|',0 || a++, 6);asset('a','7',a, 7);
+    asset('|',' ',12 | 10 , 14);
+    asset('&',' ',12 & 10 , 8);
+
+
+}
