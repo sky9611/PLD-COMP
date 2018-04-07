@@ -24,4 +24,27 @@ void main(void){
     a = b & c;
     putchar('0'+a);
 
+	a = 0;
+	a += b;
+	putchar('0'+a);
+
+	a = 0;
+	a -= a;
+	putchar('0'+a);
+
+	a = 1;
+	a *= b;
+	putchar('0'+a);
+
+	a = 2;
+	a /= b;
+	putchar('0'+a);
+
+	a = 3;
+	a /= b;
+	putchar('0'+a);
+
+	a++;
+	putchar('0'+a);
+
 }
