@@ -15,32 +15,32 @@ void IRInstrCall::gen_asm( ostream &o ) {
 
     for ( int i = vars.size( ) - 1; i >= 6; i-- ) {
         ir::move( o, vars[i], 1, bb->cfg );
-        o << "    push    %rax" << endl;
+        o << "\tpush    %rax" << endl;
     }
     switch ( vars.size( ) - nbInStack ) {
         case 6:
             ir::move( o, vars[5], 1, bb->cfg );
-            o << "    mov    %rax, %r9" << endl;
+            o << "\tmov    %rax, %r9" << endl;
         case 5:
             ir::move( o, vars[4], 1, bb->cfg );
-            o << "    mov    %rax, %r8" << endl;
+            o << "\tmov    %rax, %r8" << endl;
         case 4:
             ir::move( o, vars[3], 1, bb->cfg );
-            o << "    mov    %rax, %rcx" << endl;
+            o << "\tmov    %rax, %rcx" << endl;
         case 3:
             ir::move( o, vars[2], 1, bb->cfg );
-            o << "    mov    %rax, %rdx" << endl;
+            o << "\tmov    %rax, %rdx" << endl;
         case 2:
             ir::move( o, vars[1], 1, bb->cfg );
-            o << "    mov    %rax, %rsi" << endl;
+            o << "\tmov    %rax, %rsi" << endl;
         case 1:
             ir::move( o, vars[0], 1, bb->cfg );
-            o << "    mov    %rax, %rdi" << endl;
+            o << "\tmov    %rax, %rdi" << endl;
     }
 
-    o << "    call    " << fctName << endl;
+    o << "\tcall    " << fctName << endl;
     if ( nbInStack > 0 ) {
-        o << "    add     $" << (nbInStack * 8) << ",%rsp" << endl;
+        o << "\tadd     $" << (nbInStack * 8) << ",%rsp" << endl;
     }
     if ( t != VOID ) {
         ir::move( o, 1, dest, bb->cfg );

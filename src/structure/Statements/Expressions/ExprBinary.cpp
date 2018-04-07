@@ -41,7 +41,9 @@ void ExprBinary::setOp( BinaryOperator op ) {
 }
 
 Type ExprBinary::getType() const {
-    return expr1->getType( ); // TODO Verifier les 2 expr pour conaitre le vrais type
+    Type t1 = expr1->getType( );
+    Type t2 = expr2->getType( );
+    return type::getSize(t2) > type::getSize(t1) ? t2 : t1 ; // TODO Verifier les 2 expr pour conaitre le vrais type
 }
 
 

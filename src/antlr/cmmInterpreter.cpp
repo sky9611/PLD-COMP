@@ -629,7 +629,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost( cmmParser::ExprIncPostContext *c
     Type t = var->getType( );
 
     if ( type::isBasicType( t )) {
-        ExprValue *one = new ExprValue( currentScope, var->getType( ), 1 );
+        ExprValue *one = new ExprValue( currentScope, INT32_T, (int)1 );
         if ( ctx->MinusMinus( ) != nullptr ) {
             exprBi = new ExprBinary( currentScope, var, one, Minus );
         }

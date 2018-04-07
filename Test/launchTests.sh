@@ -6,7 +6,7 @@ else
     echo "executable cmm not found. Please compile the source code first."
     exit
 fi
-for file in ./Files2/*.cmm
+for file in ./Files/*.cmm
 do
     filename="${file##*/}"
     basename="${filename%.cmm}"
@@ -25,11 +25,14 @@ do
 done
 echo "========================================="
 echo "END OF TESTS"
+
 echo "Do you wish to delete all generated files (.s & .o) ? (y/n)"
 read input
 if [ ${input} = "y" ]
 then
-    find ./Files2 -name "*.s" -type f -print0 | xargs -0 /bin/rm -f
-    find ./Files2 -name "*.o" -type f -print0 | xargs -0 /bin/rm -f
+    find ./Files -name "*.s" -type f -print0 | xargs -0 /bin/rm -f
+    find ./Files -name "*.o" -type f -print0 | xargs -0 /bin/rm -f
+    find ./FilesGetChar -name "*.s" -type f -print0 | xargs -0 /bin/rm -f
+    find ./FilesGetChar -name "*.o" -type f -print0 | xargs -0 /bin/rm -f
 fi
 exit

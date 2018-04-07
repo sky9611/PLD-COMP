@@ -35,15 +35,15 @@ void IRInstrUnaryOperator::gen_asm_not( ostream &o ) {
     int size = bb->cfg->get_var_size( var );
 
      if ( size != 64 ) {
-        o << "    " << "cmpl" << " " << "$0, %eax"<< endl;
+        o << "\tcmpl $0, %eax"<< endl;
     }
     else{
-        o << "    " << "cmpq" << " " << "$0, %rax"<< endl;
+        o << "\tcmpq $0, %rax"<< endl;
     }
 
-    o << "    " << "sete %al" << endl;
+    o << "\tsete %al" << endl;
 
-    o << "    " << "movzbl %al, %eax" << endl;
+    o << "\tmovzbl %al, %eax" << endl;
 
     ir::move( o, 1, dest, bb->cfg );
 
@@ -56,7 +56,7 @@ void IRInstrUnaryOperator::gen_asm_minus( ostream &o ) {
 
     string reg1 = ir::getAsmReg( 1, size );
 
-    o << "    " << "neg" << " " << reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
+    o << "	neg " << reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
 
     ir::move( o, 1, dest, bb->cfg );
 }

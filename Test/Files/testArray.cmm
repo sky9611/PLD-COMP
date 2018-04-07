@@ -1,0 +1,84 @@
+void putint(int32_t value){
+    int32_t p10 = 10;
+    char c;
+
+    if(value<0){
+        value = -value;
+        putchar('-');
+    }
+    while(value >= p10) p10 *= 10;
+    p10 /= 10;
+
+    while(p10>=1){
+        c = '0' + value/p10;
+        putchar(c);
+        value %= p10;
+        p10/=10;
+    }
+
+}
+void asset(char c1,char c2, int32_t value, int32_t test){
+    putchar(c1);
+    putchar(c2);
+    putchar(':');
+    putchar(' ');
+    if(value == test){
+        putchar('O');
+        putchar('K');
+    }else{
+        putchar('K');
+        putchar('O');
+        putchar('!');
+        putchar(' ');
+        putint(value);
+        putchar(' ');
+        putchar('i');
+        putchar('s');
+        putchar(' ');
+        putchar('n');
+        putchar('o');
+        putchar('t');
+        putchar(' ');
+        putint(test);
+    }
+    putchar('\n');
+}
+
+
+void main(void) {
+    int32_t original[12];
+    char partie1[12], partie2[12], partie3[12], partie4[12];
+    int32_t final[12];
+    int32_t i = 10;
+    int32_t bigNumber = 2094967296;
+    char c1,c2;
+
+    original[11] = bigNumber;
+    while(i>=0){
+        original[i] = original[i+1]/10;
+        i--;
+    }
+    i=0;
+    while(i<12){
+        partie1[i] = original[i];
+        partie2[i] = original[i]/256;
+        partie3[i] = original[i]/256/256;
+        partie4[i] = original[i]/256/256/256;
+        i++;
+    }
+    i=0;
+    while(i<12){
+        final[i] = partie1[i] + partie2[i]*256 + partie3[i]*256*256 + partie4[i]*256*256*256;
+        i++;
+    }
+
+
+    i=0;
+    while(i<12){
+        c1 = ( i>9 && '1' ) || '0';
+        c2 = ( i>9 && '0' + i - 10 ) || '0' + i;
+
+        asset(c1,c2,final[i],original[i]);
+        i++;
+    }
+}

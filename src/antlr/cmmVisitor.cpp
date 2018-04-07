@@ -1,5 +1,5 @@
 
-// Generated from D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/grammaire\cmm.g4 by ANTLR 4.7
+// Generated from cmm.g4 by ANTLR 4.7.1
 
 
 #include "cmmVisitor.h"

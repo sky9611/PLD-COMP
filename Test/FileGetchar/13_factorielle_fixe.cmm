@@ -1,0 +1,66 @@
+#include<inttypes.h>
+void p(char c){
+    putchar(c);
+}
+void p5(char c1,char c2,char c3,char c4,char c5){
+    p(c1);p(c2);p(c3);p(c4);p(c5);
+}
+void p10(char c1,char c2,char c3,char c4,char c5,char c6,char c7,char c8,char c9,char c10){
+    p(c1);p(c2);p(c3);p(c4);p(c5);p(c6);p(c7);p(c8);p(c9);p(c10);
+}
+int32_t getint(){
+    int32_t res = 0;
+    char c;
+    while((c=getchar()) > '0' && c < '9') res = res *10 + c - '0';
+    if(c != '\n'){
+        p10('B','a','d',' ','N','u','m','b','e','r');
+        p5('!','\n','>',' ', '\0');
+        return getint();
+    }else{
+        return res;
+    }
+
+}
+void putint(int32_t value){
+    int32_t p10 = 10;
+    char c;
+
+    if(value<0){
+        value = -value;
+        putchar('-');
+    }
+    while(value >= p10) p10 *= 10;
+    p10 /= 10;
+
+    while(p10>=1){
+        c = '0' + value/p10;
+        putchar(c);
+        value %= p10;
+        p10/=10;
+    }
+
+}
+
+int32_t factorielle (int32_t nombre)
+{
+    int32_t x = 1;
+    while (nombre > 1){
+        putint(nombre);
+        putchar('\t');
+        putint(x);
+        putchar('\n');
+        x *= nombre--;
+    }
+    return x;
+}
+ 
+void main(void){
+    int32_t n , resultat ;
+    putint(128);
+    p10('F','a','c','t','o','r','i','e','l','l'); p10('e','\n','N','o','m','b','r','e',':',' ');
+    n = getint();
+    resultat = factorielle(n);
+    putint(resultat);
+    putchar('\n');
+    return 0;
+}

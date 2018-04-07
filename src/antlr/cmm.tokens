@@ -57,7 +57,6 @@ NotEqual=56
 Character=57
 VarName=58
 Value=59
-LongValue=60
 'char'=5
 'int32_t'=6
 'int64_t'=7

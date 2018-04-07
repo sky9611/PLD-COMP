@@ -65,7 +65,6 @@ expr:
     |VarName LeftParen exprList? RightParen                             #exprAppelFonc //appel de fonction
     |Character                                                          #exprChar
     |Value                                                              #exprValue
-    |LongValue                                                          #exprLongValue
     ;
 
 exprMultiDivMod:
@@ -172,8 +171,7 @@ NotEqual : '!=';
 
 Character: '\'' ((~'\'')|'\\'~'\'') '\'';
 VarName: Nondigit (Digit|Nondigit)*;
-Value: Digit+;
-LongValue: Value'L';
+Value: Digit+'L'?;
 
 fragment Digit:[0-9];
 fragment Nondigit:[a-zA-Z_];

@@ -62,12 +62,13 @@ string StmtIf::buildIR( CFG *cfg ) const {
         cfg->add_bb( blockElse );
         blockInit->exit_false = blockElse;
 
+        blockElse->exit_true = blockOut;
+        blockElse->exit_false = blockOut;
+
         //Parcour le code du else
         cfg->current_bb = blockElse;
         this->elseBlock->buildIR( cfg );
 
-        blockElse->exit_true = blockOut;
-        blockElse->exit_false = blockOut;
 
     }
 

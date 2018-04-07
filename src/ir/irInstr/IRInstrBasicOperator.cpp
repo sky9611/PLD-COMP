@@ -72,6 +72,7 @@ void IRInstrBasicOperator::gen_asm( ostream &o ) {
         case OperatorType::COMPARATOR :;
             o << "\tcmp" << (sizeRes == 64 ? 'q' : 'l') << " " << reg2 << ", " << reg1 << endl;
             o << "\t" << asmOpInfo.asmOp << " %al" << endl;
+            o << "\tmovzbl	%al, %eax" << endl;
             ir::move( o, 1, dest, cfg );
             break;
         case OperatorType::DIV:

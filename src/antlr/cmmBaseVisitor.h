@@ -1,5 +1,5 @@
 
-// Generated from D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/grammaire\cmm.g4 by ANTLR 4.7
+// Generated from cmm.g4 by ANTLR 4.7.1
 
 #pragma once
 
@@ -108,10 +108,6 @@ public:
   }
 
   virtual antlrcpp::Any visitExprMinus(cmmParser::ExprMinusContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitExprLongValue(cmmParser::ExprLongValueContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -3,7 +3,7 @@ void main(void) {
   int64_t longVar;
   int32_t intVar = 8 + -5;
   int32_t longToInt = 16L;
-  char[8] arrayOfChar;
+  char arrayOfChar[8];
   a='O';
   b=a;
   c='K';

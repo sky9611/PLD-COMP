@@ -1,5 +1,5 @@
 
-// Generated from D:/documents/INSA/4IF/PLD COMP/git/PLD-COMP/grammaire\cmm.g4 by ANTLR 4.7
+// Generated from cmm.g4 by ANTLR 4.7.1
 
 #pragma once
 
@@ -22,8 +22,7 @@ public:
     Quote = 40, Colon = 41, Semi = 42, Comma = 43, Assign = 44, StarAssign = 45, 
     DivAssign = 46, ModAssign = 47, PlusAssign = 48, MinusAssign = 49, LeftShiftAssign = 50, 
     RightShiftAssign = 51, AndAssign = 52, XorAssign = 53, OrAssign = 54, 
-    Equal = 55, NotEqual = 56, Character = 57, VarName = 58, Value = 59, 
-    LongValue = 60
+    Equal = 55, NotEqual = 56, Character = 57, VarName = 58, Value = 59
   };
 
   enum {
@@ -407,14 +406,6 @@ public:
 
     antlr4::tree::TerminalNode *Minus();
     ExprContext *expr();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprLongValueContext : public ExprContext {
-  public:
-    ExprLongValueContext(ExprContext *ctx);
-
-    antlr4::tree::TerminalNode *LongValue();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 

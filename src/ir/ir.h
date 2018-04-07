@@ -73,16 +73,16 @@ namespace ir {
         string asmVar = cfg->IR_reg_to_asm( var );
         switch ( sizeVar ) {
             case 8: // move 8 bits to reg 32 byte (movzbl)
-                o << "    movzbl  " << asmVar << ", " << getAsmReg( regNumber, 32 ) << endl;
+                o << "\tmovzbl  " << asmVar << ", " << getAsmReg( regNumber, 32 ) << endl;
                 break;
             case 16: // move 16 bit to reg 32 byte (movswl)
-                o << "    movswl  " << asmVar << ", " << getAsmReg( regNumber, 32 ) << endl;
+                o << "\tmovswl  " << asmVar << ", " << getAsmReg( regNumber, 32 ) << endl;
                 break;
             case 32: // move 32 bit to reg 32 byte (mov)
-                o << "    movl  " << asmVar << ", " << getAsmReg( regNumber, 32 ) << endl;
+                o << "\tmovl  " << asmVar << ", " << getAsmReg( regNumber, 32 ) << endl;
                 break;
             case 64: // move 64 bit to reg 64 byte (mov)
-                o << "    movq  " << asmVar << ", " << getAsmReg( regNumber, 64 ) << endl;
+                o << " \tmovq  " << asmVar << ", " << getAsmReg( regNumber, 64 ) << endl;
                 break;
         }
     }
@@ -91,7 +91,7 @@ namespace ir {
         int sizeVar = cfg->get_var_size( var );
         string asmVar = cfg->IR_reg_to_asm( var );
         string reg = getAsmReg( regNumber, sizeVar );
-        o << "    mov" << ir::getSufixAsmSize( sizeVar ) << "  " << reg << ", " << asmVar << endl;
+        o << "\tmov" << ir::getSufixAsmSize( sizeVar ) << "  " << reg << ", " << asmVar << endl;
     }
 };
 
