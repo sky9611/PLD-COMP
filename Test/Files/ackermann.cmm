@@ -1,25 +1,77 @@
-int32_t Ackermann(int32_t M,int32_t N) {
+int32_t Ackermann3(int32_t M,int32_t N) {
+    int32_t k,l,s,w;
     if(M == 0) {
-        return N+1;
+        N=N+1;
+        return N;
     } else {
         if(N == 0) {
-            return Ackermann(M-1,1);
+            l=M-1;
+            s = Ackermann3(l,1);
+            return s;
         } else {
-            return Ackermann(M-1,(Ackermann(M,N-1)));
+            w=N-1;
+            k = Ackermann3(M,w);
+            l = M-1;
+            s=Ackermann3(l,k);
+            return s;
+        }
+    }
+}
+
+int32_t Ackermann2(int32_t M,int32_t N) {
+    int32_t k,l,s,w;
+    if(M == 0) {
+        N=N+1;
+        return N;
+    } else {
+        if(N == 0) {
+            l=M-1;
+            s = Ackermann3(l,1);
+            return s;
+        } else {
+            w=N-1;
+            k = Ackermann3(M,w);
+            l = M-1;
+            s=Ackermann3(l,k);
+            return s;
+        }
+    }
+}
+
+int32_t Ackermann(int32_t M,int32_t N) {
+    int32_t k,l,s,w;
+    if(M == 0) {
+        N=N+1;
+        return N;
+    } else {
+        if(N == 0) {
+            l=M-1;
+            s = Ackermann2(l,1);
+            return s;
+        } else {
+            w=N-1;
+            k = Ackermann2(M,w);
+            l = M-1;
+            s=Ackermann2(l,k);
+            return s;
         }
     }
 }
  
 void main(void)
 {
-    int32_t I,J;
+    int32_t I;
+    int32_t J;
+    int32_t p;
     I = 1;
     J = 1;
     while(I<=2){
+        J=1;
         while(J<=10){
             putchar('A');putchar('c');putchar('k');putchar('e');putchar('r');putchar('m');putchar('a');putchar('n');putchar('n');
             putchar('(');putchar('0'+I);putchar(',');putchar('0'+J);putchar(')');putchar('=');
-            putchar('0'+Ackermann(I,J));
+            p = Ackermann(I,J);
+            putchar('0'+p);
             putchar('\n');
             J++;
         }
