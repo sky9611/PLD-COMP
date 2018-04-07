@@ -68,7 +68,14 @@ foreach( src_file ${PROJECT_CPP} )
             COMPILE_FLAGS "${COMPILE_FLAGS} ${flags_1}"
     )
 endforeach( src_file ${PROJECT_CPP} )
-
+#testing
+enable_testing()
+add_test(test1 cmm /Test/Back/*.cmm)
+#target
+set(
+        CMAKE_RUNTIME_OUTPUT_DIRECTORY
+        ${CMAKE_HOME_DIRECTORY}/bin
+)
 add_executable(cmm ${PROJECT_CPP})
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     target_compile_options(cmm PRIVATE "/MT$<$<CONFIG:Debug>:d>")
