@@ -312,15 +312,3 @@ Exemple
     a = getchar() - '0';
     putchar(getchar() + a);
 ```
-
-## Bug / Non implementé
-Bug pour la division et modulo:
-```
-    a = 2/4;
-    a = 2%4;
-```
-Bug lors de l'accès à une case d'un tableau en utilisant une expression :
-```
-    array[a+2] = 5;
-```
-
