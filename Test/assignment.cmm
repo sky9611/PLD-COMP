@@ -1,17 +1,36 @@
 
 void main(){
-    int32_t b = 3, c = 0, d = 5;
+    int32_t b = 3, c = 0, d, e, f, g, h, i, j, k;
     b = b+-c;
     c = 1- -2;
-    d += 10;
-    purchar('b');
-    purchar('=');
-    purchar('0'+b);
+    d = e = f = g = h = i = j = k = 1;
+    d += 1;
+    e *= 1;
+    f -= 1;
+    g |= 1;
+    h &= 1;
+    i ^= 1;
+    j++;
+    k--;
+
+    purchar('b');purchar('=');purchar('0'+b);
     purchar('\n');
-    purchar('c');
-    purchar('=');
-    purchar('0'+c);
-    purchar('d');
-    purchar('=');
-    purchar('0'+d);
+    purchar('c');purchar('=');purchar('0'+c);
+    purchar('\n');
+    purchar('d');purchar('=');purchar('0'+d);
+    purchar('\n');
+    purchar('e');purchar('=');purchar('0'+e);
+    purchar('\n');
+    purchar('f');purchar('=');purchar('0'+f);
+    purchar('\n');
+    purchar('g');purchar('=');purchar('0'+g);
+    purchar('\n');
+    purchar('h');purchar('=');purchar('0'+h);
+    purchar('\n');
+    purchar('i');purchar('=');purchar('0'+i);
+    purchar('\n');
+    purchar('j');purchar('=');purchar('0'+j);
+    purchar('\n');
+    purchar('k');purchar('=');purchar('0'+k);
+    purchar('\n');
 }
