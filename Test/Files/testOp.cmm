@@ -1,0 +1,27 @@
+#include<inttypes.h>
+
+void main(void){
+    int_32t a = 0, b = 2, c = 3;
+
+    a = b + c;
+    putchar('0'+a);
+
+    a = b - c;
+    putchar('0'+a+1);
+
+    a = b * c;
+    putchar('0'+a);
+
+    a = b / c;
+    putchar('0'+a);
+
+    a = b % c;
+    putchar('0'+a);
+
+    a = b | c;
+    putchar('0'+a);
+
+    a = b & c;
+    putchar('0'+a);
+
+}
