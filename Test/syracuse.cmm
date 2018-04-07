@@ -1,4 +1,3 @@
-int32_t a = 7;
 int32_t syracuse(int32_t n){
 	if(n == 1){
 		return 0;
@@ -13,6 +12,7 @@ int32_t syracuse(int32_t n){
 	}
 }
 void main(void){
+    int32_t a = 7;
 	int32_t b;
 	b=1;
 	b = syracuse(a);
