@@ -33,19 +33,25 @@ Type ExprAssignment::getType() const {
 
 string ExprAssignment::buildIR( CFG *cfg ) const {
 
-    string tmpVarExpr = expr->buildIR( cfg );
-    IRInstr *instr;
-    if ( arrayIndex == nullptr ) {
-        instr = new IRInstrAssignment( cfg->current_bb, getType( ), string( "var_" ) + var->getName( ), tmpVarExpr );
-    }
-    else {
-        string arrayAccessValue = arrayIndex->buildIR( cfg );
-        instr = new IRInstrAssignment( cfg->current_bb, getType( ), string( "var_" ) + var->getName( ),
-                                       arrayAccessValue, tmpVarExpr );
-    }
-    cfg->current_bb->add_IRInstr( instr );
 
-    return tmpVarExpr;
+    string tmpVarExpr = expr->buildIR(cfg);
+    string returnVar = tmpVarExpr;
+    IRInstr *instr;
+    if(!postReturn){
+        string oldRes = cfg->create_new_tempvar(getType());
+        instr = new IRInstrAssignment(cfg->current_bb, getType(),oldRes , string("var_") + var->getName());
+        cfg->current_bb->add_IRInstr(instr);
+        returnVar = oldRes;
+    }
+    if (arrayIndex == nullptr) {
+        instr = new IRInstrAssignment(cfg->current_bb, getType(), string("var_") + var->getName(), tmpVarExpr);
+    } else {
+        string arrayAccessValue = arrayIndex->buildIR(cfg);
+        instr = new IRInstrAssignment(cfg->current_bb, getType(), string("var_") + var->getName(),
+                                      arrayAccessValue, tmpVarExpr);
+    }
+    cfg->current_bb->add_IRInstr(instr);
+    return returnVar;
 
 
 }

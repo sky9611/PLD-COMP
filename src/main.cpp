@@ -7,6 +7,28 @@
 #include "ir/ir.h"
 
 using namespace antlr4;
+using namespace std;
+
+class ErrorParserListener: public ANTLRErrorListener {
+public:
+    virtual void syntaxError(antlr4::Recognizer* recognizer, antlr4::Token* offendingSymbol, size_t line, size_t charPositionInLine, const string& msg, std::__exception_ptr::exception_ptr e){
+        cerr << to_string(line) << ":" << to_string(charPositionInLine) << " SyntaxError: " << msg << endl;
+        exit(1);
+    }
+    virtual void reportAmbiguity(antlr4::Parser* parser, const antlr4::dfa::DFA& daf, size_t line, size_t charPositionInLine, bool, const antlrcpp::BitSet&, antlr4::atn::ATNConfigSet*){
+        cerr << to_string(line) << ":" << to_string(charPositionInLine) << " ReportAmbiguity"  << endl;
+        exit(1);
+    }
+    virtual void reportAttemptingFullContext(antlr4::Parser*, const antlr4::dfa::DFA&, size_t line, size_t charPositionInLine, const antlrcpp::BitSet&, antlr4::atn::ATNConfigSet*){
+        cout << to_string(line) << ":" << to_string(charPositionInLine) << " ReportAttemptingFullContext"  << endl;
+        //exit(1);
+    }
+    virtual void reportContextSensitivity(antlr4::Parser*, const antlr4::dfa::DFA&, size_t, size_t line, size_t charPositionInLine, antlr4::atn::ATNConfigSet*){
+        cout << to_string(line) << ":" << to_string(charPositionInLine) << " ReportContextSensitivity"  << endl;
+        //exit(1);
+    }
+
+};
 
 void error( string msg ) {
     cerr << msg << endl;
@@ -89,7 +111,12 @@ int main( int argc, const char *argv[] ) {
         std::cout << token->toString( ) << std::endl;
     }
     cmmParser parser( &tokens );
+
+    auto errorParserListener = new ErrorParserListener();
+    parser.addErrorListener(errorParserListener);
+
     tree::ParseTree *tree = parser.file( );
+
     //auto a = parser.file();
 
     cmmInterpreter *interpreter = new cmmInterpreter( );
