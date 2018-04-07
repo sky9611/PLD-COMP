@@ -2,9 +2,11 @@
   
 ## Guide d'installation  
 **A ce jour, la compilation sous Windows ne fonctionne pas. Veuillez compiler sous macOS ou une distribution Linux.
-Nous préconisons l'utilisation de Linux pour l'exécution**
+Nous préconisons l'utilisation de Linux pour l'exécution.**
   
 L'ensemble des librairies sont incluses dans ce projet. Veuillez utiliser le répertoire du projet comme répertoire courant d'exécution.  
+
+Nous vous conseillons d'ouvrir le projet avec CLion.
   
 La compilation du projet utilise CMake. Pour compiler selon les paramètres par défaut du projet, veuillez utiliser la commande  
   
@@ -25,16 +27,16 @@ Voici la liste des options implémentés :
 |-o|Optimisation (non implémentée)|foo -o|
 |-h|Afficher l'aide|-h|
     
-Les fichiers d'entrée doivent avoir l'extension .cmm
-
-Après une option -c, toujours faire suivre un nom de fichier.
+> Les fichiers d'entrée doivent avoir l'extension .cmm
+> 
+> Après une option -c, toujours faire suivre un nom de fichier.
 
 ### Tests
 
 Nous utilisons une panoplie de tests dans le dossier Test.
 Vous pouvez lancer le script de tests launchTests.sh afin de lancer l'ensemble des tests.
 
-Pour ajouter un test, veuillez créer un fichier d'extension .cmm dans le dossier Tests/files
+Pour ajouter un test, veuillez créer un fichier d'extension .cmm dans le dossier Tests/Files
 ## Fonctions implémentées : 
 ### 1. Eléments:  
 Type: `char` `int32_t` `int64_t`
@@ -50,11 +52,11 @@ Value:
 |int32_t | `<value>` | `125` |
 |int64_t | `<value>L` | `125689L` |
 
-> **Note:** une valeur négative n'est pas considéré comme une valeur mais comme une expression(Exmple : `a=1+-6` correspond a `a = 1+(-(6))`)
+> **Note:** une valeur négative n'est pas considéré comme une valeur mais comme une expression(Exmple : `a=1+-6` correspond à `a = 1+(-(6))`)
 > On ne peut donc pas écrire `int a[-2];` car `-2` n'est pas considéré comme une valeur(cf: Définition) 
 ------
 Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `!`
-> **Note:** opperator `||` et `&&` sont légèrements différents du C (ne retourne pas forcement 1 si la condition est vraie mais la valeur de l'expression d'une des 2 expressions):
+> **Note:** opperator `||` et `&&` sont légèrement différents de l'implémentation en C (ils ne retournent pas forcément 1 si la condition est vraie mais la valeur de l'expression d'une des 2 expressions):
 
 | A | B | A&&B | A\|\|B | 
 |--|--|--|--|
@@ -63,7 +65,7 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 | =0 | >0 | 0* | B |
 | >0 | >0 | B | A* |
 
-\* = ellement B n'est pas evaluer
+\* = élément B n'est pas evalué
 
 ### 2. Définitions:  
 #### 2.1. Variables
@@ -79,7 +81,7 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 	int32_t longToInt = 16L;
 	char[8] arrayOfChar;
 ```
-*\/\!\\ Don't work*
+*\/\!\\ Ce qui ne fonctionne pas*
 ```
 	int32_t noExaValue = 0x8F;
 	int32_t[3+3] _3Plus3NesPasUneValue; 
@@ -95,17 +97,18 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 	void FunctionName(){...}
 	void FunctionName(void){...}
 ```
-> **Note:** Les définitions doivent obligatoirement se faire avant tout statement.
 
-> **Note** Les paramètres ne peuvent pas étre des tableaux.
+> **Note:** Les définitions doivent obligatoirement se faire avant tout *statement*.
 
-> **Note** Un Return est obligatoire si la méthode n'est pas void (cf Expression Return).
+> **Note** Les paramètres ne peuvent pas être des tableaux.
+
+> **Note** Un *Return* est obligatoire si la méthode n'est pas void (cf Expression *Return*).
 
 > **Note** Le nommage de fonctions identiques n'est pas permis même si leurs signatures sont uniques.
 
 > **Note:** Les 6 premiers paramètres sont passés par les registres et les autres paramètres sont passés dans le stack selon la convention de l'ABI.
 
-> **Note:** La valeur de retour est stocké dans le registres `%rax`
+> **Note:** La valeur de retour est stockée dans le registre `%rax`
 
 *Exemple*
 ```
@@ -120,7 +123,7 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 		return 15+2;
 	}
 ```
-Fonction existente par défaut:
+Fonctions existantes incluses :
 `void putchar(char);`
 `char getchar();`
 
@@ -128,7 +131,7 @@ Fonction existente par défaut:
 
 ### 3. Statement
 
-#### 3.1. Basic
+#### 3.1. syntaxe basique
 ```
     <Expression>;
     <VarName> = <Expression>; // cf: Expression > affectation
@@ -190,11 +193,12 @@ while
     return;
     return <Expression>;
 ```
-> **Note:** Un Return est obligatoire pour les fonctions typés et un return doit être forcémment accessible afin que la fonction soit considéré comme ayant un return.
 
-> **Note:** Les instructions aprés un return seront ignorés
+> **Note:** Un Return est obligatoire pour les fonctions typées et un return doit être accessible afin que la fonction soit considéré comme correct.
 
-> **Note:** La valeur de retour est stoker dans le registr `%rax`
+> **Note:** Les instructions après un return seront ignorées.
+
+> **Note:** La valeur de retour est stokée dans le registre `%rax`
 
 Exemple
 ```
@@ -214,7 +218,7 @@ Exemple
     }
 ```
 
-*\/\!\\ Don't work*
+*\/\!\\ Ne fonctionne pas*
 ```
     int32_t f1(int32_t var){
         if(var == 2){
@@ -230,7 +234,7 @@ Exemple
 ```
 
 ### 4. Expression
-Exemples D'expression:
+Exemples d'expressions :
 ```
     a++; a--;
     a += 1; a /= 3; // operator : += -= *= /= %=
@@ -252,8 +256,8 @@ Exemples D'expression:
     <VarName>++;
     <ArrayName>[<Expression>]--;
 ```
-> **Note:** L'affectation d'un type vers un autre est autorisée (excepté pour les tableaux)
-> Par exmple pour `var_int32 = var_int64;` la variable `var_int32` va prendre les 32 bits de droite de `var_int64`;
+> **Note:** L'affectation d'un type vers un autre est autorisée (exception pour les tableaux)
+> Par exemple pour `var_int32 = var_int64;` la variable `var_int32` va prendre les 32 bits de droite de `var_int64`;
 
 #### 4.2 Operator
 ```
@@ -261,7 +265,7 @@ Exemples D'expression:
     !<Expression>
     -<Expression>
 ```
-> **Rappel:** 
+> **Rappels:** 
 > Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `!`
 > cf: Eléments
 
@@ -269,7 +273,7 @@ Exemples D'expression:
 
 > **Note:** Le code assembleur stocke les résutats  des registre 32 ou 64 bits selon le type et utilise des opérateurs 32 ou 64 bit (un char est stocké dans un registre 32 bit )
 
-> **Note:** Les operation sur des tableau ne sont pas autoriser
+> **Note:** Les opérations sur des tableaux ne sont pas autorisés
 > exemple : ~~`array1 = array2`~~ ~~`array1 + array2`~~
 
 Exemple
@@ -298,9 +302,9 @@ Exemple
 ```
     <functionName>(<Expression>*);
 ```
-> **Note:** les expression passer en paramétre doivent étre du bon type
+> **Note:** Les expressions passées en paramètres doivent être du bon type
 > **NoteRapel:** Les 6 premiers paramètres sont passés par les registres et les autres paramètres sont passés dans le stack selon la convention de l'ABI.
-> **NoteRapel:** La valeur de retour est stocké dans le registres `%rax`
+> **NoteRapel:** La valeur de retour est stockée dans le registres `%rax`
 ```
     char a = fontion1(1, 2L, 'C', 'A', 'b', 'c', 'd');
     putchar(a);
@@ -309,13 +313,14 @@ Exemple
     putchar(getchar() + a);
 ```
 
-## Bug / Non implementer
-bug pour la division et modulo:
+## Bug / Non implementé
+Bug pour la division et modulo:
 ```
     a = 2/4;
     a = 2%4;
 ```
-bug d'un access array:
+Bug lors de l'accès à une case d'un tableau en utilisant une expression :
 ```
     array[a+2] = 5;
 ```
+

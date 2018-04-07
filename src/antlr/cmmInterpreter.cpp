@@ -402,7 +402,7 @@ antlrcpp::Any cmmInterpreter::visitVarCall( cmmParser::VarCallContext *ctx ) {
 
     if ( def == nullptr ) {
         throw cmmRuntimeException(
-                string( "[cmmInterpreter::visitExprVariable] Unknow var name " ) + varName + string( " scope( " ) +
+                string( "[cmmInterpreter::visitExprVariable] Unknown variable name " ) + varName + string( " in scope( " ) +
                 getScopeList( ) + string( " )" ));
     }
 
@@ -411,7 +411,7 @@ antlrcpp::Any cmmInterpreter::visitVarCall( cmmParser::VarCallContext *ctx ) {
     if ( ctx->expr( ) != nullptr ) { // Array
         if ( typeid( *def ) != typeid( cmmArray )) {
             throw cmmRuntimeException( string( "[cmmInterpreter::visitExprVariable] Var name " ) + varName +
-                                       string( " is not an array scope( " ) + getScopeList( ) + string( " )" ));
+                                       string( " is not an array in scope( " ) + getScopeList( ) + string( " )" ));
         }
 
         cmmArray *array = dynamic_cast<cmmArray *>(def);
@@ -493,7 +493,7 @@ antlrcpp::Any cmmInterpreter::visitExprValue( cmmParser::ExprValueContext *ctx )
 
 antlrcpp::Any cmmInterpreter::visitExprNot( cmmParser::ExprNotContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprNot : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprNot : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     Expression *expr = visit( ctx->expr( ));
@@ -529,7 +529,7 @@ antlrcpp::Any cmmInterpreter::visitExprVariable( cmmParser::ExprVariableContext 
 
 antlrcpp::Any cmmInterpreter::visitExprAppelFonc( cmmParser::ExprAppelFoncContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprAppelFonc : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprAppelFonc : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     string fctName = ctx->VarName( )->getText( );
@@ -537,11 +537,11 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc( cmmParser::ExprAppelFoncContex
     cmmDef *fctDef = currentScope->getProgramScope( )->getDef( fctName );
     if ( fctDef == nullptr ) {
         throw cmmRuntimeException( string( "[cmmInterpreter::visitExprAppelFonc] la fonction " ) + string( fctName ) +
-                                   string( " n'exist pas : scope( " ) + getScopeList( ) + string( " )" ));
+                                   string( " n'existe pas : in scope( " ) + getScopeList( ) + string( " )" ));
     }
     else if ( typeid( *fctDef ) != typeid( Function )) {
         throw cmmRuntimeException( string( "[cmmInterpreter::visitExprAppelFonc] " ) + string( fctName ) +
-                                   string( " n'est pas une fonction : scope( " ) + getScopeList( ) + string( " )" ));
+                                   string( " n'est pas une fonction : in scope( " ) + getScopeList( ) + string( " )" ));
     }
 
     Function *fct = dynamic_cast<Function *>(fctDef);
@@ -560,9 +560,9 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc( cmmParser::ExprAppelFoncContex
                 + string( fctName )
                 + string( " demande " )
                 + to_string( signature.size( ))
-                + string( " paramétre mais " )
+                + string( " paramètre mais " )
                 + to_string( parmsExp.size( ))
-                + string( " sont données: scope( " )
+                + string( " sont donnés : in scope( " )
                 + getScopeList( )
                 + string( " )" ));
     }
@@ -574,11 +574,11 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc( cmmParser::ExprAppelFoncContex
                     + string( fctName )
                     + string( " demande un " )
                     + type::toString( signature[i]->getType( ))
-                    + string( " pour le paramétre" )
+                    + string( " pour le paramètre" )
                     + to_string( i )
                     + string( " mais un " )
                     + type::toString( parmsExp[i]->getType( ))
-                    + string( " est données: scope( " )
+                    + string( " est donné : in scope( " )
                     + getScopeList( )
                     + string( " )" ));
         }
@@ -594,7 +594,7 @@ antlrcpp::Any cmmInterpreter::visitExprAppelFonc( cmmParser::ExprAppelFoncContex
 
 antlrcpp::Any cmmInterpreter::visitExprMinus( cmmParser::ExprMinusContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprMinus : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprMinus : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     ExprUnary *res = nullptr;
@@ -618,7 +618,7 @@ antlrcpp::Any cmmInterpreter::visitExprMinus( cmmParser::ExprMinusContext *ctx )
 
 antlrcpp::Any cmmInterpreter::visitExprIncPost( cmmParser::ExprIncPostContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprIncPost : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprIncPost : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     ExprVariable *var = visit( ctx->varCall( ));
@@ -651,7 +651,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPost( cmmParser::ExprIncPostContext *c
 
 antlrcpp::Any cmmInterpreter::visitExprChar( cmmParser::ExprCharContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprChar : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprChar : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     char c;
@@ -716,7 +716,7 @@ antlrcpp::Any cmmInterpreter::visitExprChar( cmmParser::ExprCharContext *ctx ) {
 
 antlrcpp::Any cmmInterpreter::visitStatementAssiggnment( cmmParser::StatementAssiggnmentContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitStatementAssiggnment : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitStatementAssiggnment : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
 //    auto res = cmmBaseVisitor::visitStatementAssiggnment(ctx);
@@ -783,7 +783,7 @@ antlrcpp::Any cmmInterpreter::visitStatementAssiggnment( cmmParser::StatementAss
 
 antlrcpp::Any cmmInterpreter::visitExprIncPre( cmmParser::ExprIncPreContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprIncPre : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprIncPre : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     ExprVariable *var = visit( ctx->varCall( ));
@@ -817,7 +817,7 @@ antlrcpp::Any cmmInterpreter::visitExprIncPre( cmmParser::ExprIncPreContext *ctx
 //expr op expr
 antlrcpp::Any cmmInterpreter::visitExprBinaire( cmmParser::ExprBinaireContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprBinaire : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprBinaire : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     /*auto res = cmmBaseVisitor::visitExprBinaire(ctx);*/
@@ -880,7 +880,7 @@ antlrcpp::Any cmmInterpreter::visitExprBinaire( cmmParser::ExprBinaireContext *c
 //expr *|% expr
 antlrcpp::Any cmmInterpreter::visitExprMultiDivMod( cmmParser::ExprMultiDivModContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprMultiDivMod : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprMultiDivMod : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     BinaryOperator res = Div;
@@ -904,7 +904,7 @@ antlrcpp::Any cmmInterpreter::visitExprMultiDivMod( cmmParser::ExprMultiDivModCo
 //expr +- expr
 antlrcpp::Any cmmInterpreter::visitExprPlusMinus( cmmParser::ExprPlusMinusContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprPlusMinus : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprPlusMinus : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     BinaryOperator res = Plus;
@@ -926,7 +926,7 @@ antlrcpp::Any cmmInterpreter::visitExprPlusMinus( cmmParser::ExprPlusMinusContex
 //expr >><< expr
 antlrcpp::Any cmmInterpreter::visitExprShift( cmmParser::ExprShiftContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprShift : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprShift : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     BinaryOperator res = LeftShift;
@@ -947,7 +947,7 @@ antlrcpp::Any cmmInterpreter::visitExprShift( cmmParser::ExprShiftContext *ctx )
 
 antlrcpp::Any cmmInterpreter::visitExprComparative( cmmParser::ExprComparativeContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprComparative : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprComparative : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     BinaryOperator res = Less;
@@ -973,7 +973,7 @@ antlrcpp::Any cmmInterpreter::visitExprComparative( cmmParser::ExprComparativeCo
 
 antlrcpp::Any cmmInterpreter::visitExprEqualNotEqual( cmmParser::ExprEqualNotEqualContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprEqualNotEqual : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprEqualNotEqual : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     BinaryOperator res = Equal;
@@ -993,7 +993,7 @@ antlrcpp::Any cmmInterpreter::visitExprEqualNotEqual( cmmParser::ExprEqualNotEqu
 
 antlrcpp::Any cmmInterpreter::visitExprAnd( cmmParser::ExprAndContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprAnd : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprAnd : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     auto res = And;
@@ -1006,7 +1006,7 @@ antlrcpp::Any cmmInterpreter::visitExprAnd( cmmParser::ExprAndContext *ctx ) {
 
 antlrcpp::Any cmmInterpreter::visitExprCaret( cmmParser::ExprCaretContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprCaret : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprCaret : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     auto res = Caret;
@@ -1019,7 +1019,7 @@ antlrcpp::Any cmmInterpreter::visitExprCaret( cmmParser::ExprCaretContext *ctx )
 
 antlrcpp::Any cmmInterpreter::visitExprOr( cmmParser::ExprOrContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprOr : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprOr : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     auto res = Or;
@@ -1032,7 +1032,7 @@ antlrcpp::Any cmmInterpreter::visitExprOr( cmmParser::ExprOrContext *ctx ) {
 
 antlrcpp::Any cmmInterpreter::visitExprAndAnd( cmmParser::ExprAndAndContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprAndAnd : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprAndAnd : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     auto res = AndAnd;
@@ -1045,7 +1045,7 @@ antlrcpp::Any cmmInterpreter::visitExprAndAnd( cmmParser::ExprAndAndContext *ctx
 
 antlrcpp::Any cmmInterpreter::visitExprOrOr( cmmParser::ExprOrOrContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprOrOr : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprOrOr : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     auto res = OrOr;
@@ -1058,7 +1058,7 @@ antlrcpp::Any cmmInterpreter::visitExprOrOr( cmmParser::ExprOrOrContext *ctx ) {
 
 antlrcpp::Any cmmInterpreter::visitExprList( cmmParser::ExprListContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitExprList : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitExprList : in scope( " << getScopeList( ) << " )" << endl;
 #endif
 
     vector<Expression *> res;
@@ -1076,7 +1076,7 @@ antlrcpp::Any cmmInterpreter::visitExprList( cmmParser::ExprListContext *ctx ) {
 
 antlrcpp::Any cmmInterpreter::visitType( cmmParser::TypeContext *ctx ) {
 #ifdef  VIEW_VISITOR_COUT
-    cout << "[cmmInterpreter] + visitType : scope( " << getScopeList( ) << " )" << endl;
+    cout << "[cmmInterpreter] + visitType : in scope( " << getScopeList( ) << " )" << endl;
 #endif
     antlr4::tree::TerminalNode *a = dynamic_cast<antlr4::tree::TerminalNode *>(ctx->children.at( 0 ));
 
