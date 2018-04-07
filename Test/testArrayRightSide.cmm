@@ -1,0 +1,14 @@
+void main(void) {
+    char a[5];
+    char a0,a1,a2,a3,a4;
+    int32_t i = 0;
+    a[0] = '2';
+    a[1] = '0';
+    a[2] = '1';
+    a[3] = '8';
+    a[4] = '\n';
+    while(i<5){
+        putchar(a[i]);
+        i++;
+    }
+}
