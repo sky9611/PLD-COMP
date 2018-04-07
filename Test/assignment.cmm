@@ -1,0 +1,17 @@
+
+void main(){
+    int32_t b = 3, c = 0, d = 5;
+    b = b+-c;
+    c = 1- -2;
+    d += 10;
+    purchar('b');
+    purchar('=');
+    purchar('0'+b);
+    purchar('\n');
+    purchar('c');
+    purchar('=');
+    purchar('0'+c);
+    purchar('d');
+    purchar('=');
+    purchar('0'+d);
+}

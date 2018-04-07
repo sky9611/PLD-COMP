@@ -1,0 +1,29 @@
+int32_t Ackermann(int32_t M,int32_t N) {
+    if(M == 0) {
+        return N+1;
+    } else {
+        if(N == 0) {
+            return Ackermann(M-1,1);
+        } else {
+            return Ackermann(M-1,(Ackermann(M,N-1)));
+        }
+    }
+}
+ 
+void main(void)
+{
+    int32_t I,J;
+    I = 1;
+    J = 1;
+    while(I<=2){
+        while(J<=10){
+            putchar('A');putchar('c');putchar('k');putchar('e');putchar('r');putchar('m');putchar('a');putchar('n');putchar('n');
+            putchar('(');putchar('0'+I);putchar(',');putchar('0'+J);putchar(')');putchar('=');
+            putchar('0'+Ackermann(I,J));
+            putchar('\n');
+            J++;
+        }
+        I++;
+    }
+    return 0;
+}
