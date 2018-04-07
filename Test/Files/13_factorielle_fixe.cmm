@@ -30,13 +30,9 @@ int64_t factorielle (int64_t nombre)
 }
  
 void main(void){
-{
     int64_t n = 5, resultat = 0;
 
     resultat = factorielle(n);
-
     putInt(resultat);
-   
- 
     return 0;
 }

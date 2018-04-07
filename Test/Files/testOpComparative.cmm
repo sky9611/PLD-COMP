@@ -29,4 +29,23 @@ void main(void){
 
     a = b && c;
     putchar('0'+a);
+
+    a = (b < c);
+    putchar('0'+a);
+
+    a = (b <= c);
+    putchar('0'+a);
+
+    a = (b == c);
+    putchar('0'+a);
+
+    a = (b > c);
+    putchar('0'+a);
+
+    a = (b >= c);
+    putchar('0'+a);
+
+    a = !(b);
+    putchar('0'+a);
+
 }

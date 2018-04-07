@@ -60,18 +60,35 @@ int32_t Ackermann(int32_t M,int32_t N) {
  
 void main(void)
 {
-    int32_t I;
-    int32_t J;
-    int32_t p;
+    int32_t I,J;
+    int32_t res;
     I = 1;
     J = 1;
     while(I<=2){
-        J=1;
+        J = 1;
         while(J<=10){
             putchar('A');putchar('c');putchar('k');putchar('e');putchar('r');putchar('m');putchar('a');putchar('n');putchar('n');
-            putchar('(');putchar('0'+I);putchar(',');putchar('0'+J);putchar(')');putchar('=');
-            p = Ackermann(I,J);
-            putchar('0'+p);
+            putchar('(');putchar('0'+I);putchar(',');
+            If(J < 10) {
+                putchar('0' + J);
+            } else {
+                putchar('10');
+            }
+            putchar(')');putchar('=');
+            res = Ackermann(I,J);
+            if(res >= 20)
+            {
+                putchar('2');
+                putchar('0'+res-20);
+            } else{
+                if(res >=10){
+                    putchar('1');
+                    putchar('0'+res-10);
+                } else {
+                    putchar('0'+res);
+                }
+            }
+            putchar('0'+res);
             putchar('\n');
             J++;
         }
