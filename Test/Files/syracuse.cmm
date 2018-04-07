@@ -12,9 +12,8 @@ int32_t syracuse(int32_t n){
 	}
 }
 void main(void){
+    int32_t a = 7;
 	int32_t b;
-	int32_t a;
-	a=7;
 	b=1;
 	b = syracuse(a);
 	if(b == 0){

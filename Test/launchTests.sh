@@ -10,5 +10,5 @@ for file in ./Files/*.cmm
 do
     filename="${file##*/}"
     echo "testing [${filename}]..."
-    ../bin/cmm
+    ../bin/cmm $filename
 done
