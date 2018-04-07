@@ -97,6 +97,7 @@ Opérateurs: `=` `+` `-` `*` `/` `%` `|` `&` `&&` `||`  `<` `<=` `==` `=>` `>` `
 	void FunctionName(){...}
 	void FunctionName(void){...}
 ```
+
 > **Note:** Les définitions doivent obligatoirement se faire avant tout *statement*.
 
 > **Note** Les paramètres ne peuvent pas être des tableaux.
@@ -192,6 +193,7 @@ while
     return;
     return <Expression>;
 ```
+
 > **Note:** Un Return est obligatoire pour les fonctions typées et un return doit être accessible afin que la fonction soit considéré comme correct.
 
 > **Note:** Les instructions après un return seront ignorées.

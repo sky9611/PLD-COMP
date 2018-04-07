@@ -1,0 +1,22 @@
+int32_t syracuse(int32_t n){
+	if(n == 1){
+		return 0;
+	}
+	else {
+		if(n%2==0){
+			return syracuse(n/2);
+		}
+		else{
+			return syracuse(3*n+1);
+		}
+	}
+}
+void main(void){
+    int32_t a = 7;
+	int32_t b;
+	b=1;
+	b = syracuse(a);
+	if(b == 0){
+		putchar('o');
+	}
+}

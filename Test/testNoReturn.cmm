@@ -1,0 +1,14 @@
+char func1(){
+
+}
+
+char func2(){
+    if(1){
+        return 'a';
+    }
+}
+
+void main(void){
+    func1();
+    func2();
+}
