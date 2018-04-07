@@ -24,6 +24,8 @@ string IRInstrUnaryOperator::OperatorToAsmOperator( UnaryOperator op ) {
     switch ( op ) {
         case MINUS:
             return "neg";
+        case NOT:
+            return "sete";
     }
 }
 
@@ -32,31 +34,19 @@ void IRInstrUnaryOperator::gen_asm_not( ostream &o ) {
 
     int size = bb->cfg->get_var_size( var );
 
-    string reg1 = ir::getAsmReg( 1, size );
-
-    if ( size == 32 ) {
-        o << "    " << "cmpl" << " " << "$0x0," << reg1 << endl;
-
-        o << "    " << "sete %al" << endl;
-
-        o << "    " << "movzbl %al, %eax" << endl;
-
-        ir::move( o, 1, dest, bb->cfg );
+     if ( size != 64 ) {
+        o << "    " << "cmpl" << " " << "$0, %eax"<< endl;
     }
-    else if ( size == 64 ) {
-        o << "    " << "cmpq" << " " << "$0x0," << reg1 << endl;
-
-        o << "    " << "sete %al" << endl;
-
-        o << "    " << "movzbl %al, %eax" << endl;
-
-        ir::move( o, 1, dest, bb->cfg );
+    else{
+        o << "    " << "cmpq" << " " << "$0, %rax"<< endl;
     }
 
+    o << "    " << "sete %al" << endl;
 
-    o << "    " << OperatorToAsmOperator( op ) << " " << reg1 << endl; //reg1 = reg1 <OPERATOR> reg2
+    o << "    " << "movzbl %al, %eax" << endl;
 
     ir::move( o, 1, dest, bb->cfg );
+
 }
 
 void IRInstrUnaryOperator::gen_asm_minus( ostream &o ) {

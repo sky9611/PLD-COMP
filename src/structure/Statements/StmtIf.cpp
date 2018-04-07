@@ -38,7 +38,7 @@ string StmtIf::buildIR( CFG *cfg ) const {
 
 
     //Copy les sorti du blockInit dans le nouveau block de de sortie blockOut
-    blockInit->exit_true = blockInit->exit_true;
+    blockOut->exit_true = blockInit->exit_true;
     blockOut->exit_false = blockInit->exit_false;
 
     //Modifi le parcour pour le cas ou le test est vrais
